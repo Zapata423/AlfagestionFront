@@ -1,56 +1,145 @@
-<script setup> </script>
+<script setup>
+import { ref } from "vue"
+import { useRouter } from "vue-router" 
+import { createEncargado } from "../services/encargados"
+
+const router = useRouter()
+
+// Datos del formulario
+const formData = ref({
+  nombre: "",
+  apellido: "",
+  telefono: "",
+  correo: "",
+  cargo: "", 
+  observaciones: "", 
+})
+
+// Método submit
+async function submitForm() {
+  try {
+    const data = await createEncargado(formData.value)
+    alert("Encargado creado con éxito.")
+    console.log("Respuesta del backend:", data)
+    router.push("/encargado_vista")
+  } catch (error) {
+    console.error("Error al crear Encargado:", error.response?.data || error)
+    alert("No se pudo registrar el Encargado.")
+  }
+}
+</script>
+
 <template>
+
   <div class="app-container">
+
+    <!-- Header -->
     <header class="main-header">
       <div class="header-left">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" alt="La Salle Logo" class="logo">
+
+        <img 
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" 
+          alt="La Salle Logo" 
+          class="logo"/>
+
         <nav class="main-nav">
           <a href="/ini_estudiante">Inicio</a>
           <a href="#" class="active-link">Mi perfil</a>
         </nav>
       </div>
+
       <div class="header-right">
         <div class="search-bar">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+            <path 
+              fill-rule="evenodd" 
+              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" 
+              clip-rule="evenodd" />
           </svg>
-          <input type="text" placeholder="Buscar">
+
+          <input type="text" placeholder="Buscar" />
         </div>
         <div class="profile-icon"></div>
       </div>
     </header>
 
+    <!-- Main content -->
     <main class="main-content">
-  <aside class="sidebar">
-  <ul class="sidebar-nav-list">
-    <li>
-      <a href="/encargadoi_registro" style="color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 28px; height: 28px;">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" />
-        </svg>
-      </a>
-    </li>
-    <li class="active">
-      Encargado
-    </li>
-  </ul>
-  <div class="sidebar-action">
-    <button class="submit-button">Subir</button>
-  </div>
-</aside>
-  <!-- ...resto del contenido... -->
+    
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <ul class="sidebar-nav-list">
+          <li>
+            <a
+              href="/encargadoi_registro"
+              style="color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+              
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5"/>
+              </svg>
+            </a>
 
+          </li>
+          <li class="active">
+            <a
+              href="/agregar_encargado"
+              style="color: inherit; text-decoration: none; display: block;"
+            >
+              Encargado
+            </a>
+          </li>
+        </ul>
 
+        <div class="sidebar-action">
+          <button class="submit-button" @click="submitForm">Subir</button>
+        </div>
+      </aside>
+
+      <!-- Formulario -->
       <section class="content-form">
         <form @submit.prevent="submitForm">
-          <input class="form-input span-3" type="text" placeholder="Nombre" v-model="formData.nombre">
-          <input class="form-input span-3" type="text" placeholder="Apellido" v-model="formData.apellido">
+          <input 
+          class="form-input span-3" 
+          type="text" 
+          placeholder="Nombres" 
+          v-model="formData.nombre" />
 
-          <input class="form-input span-2" type="text" placeholder="telefono" v-model="formData.telefono">
-          <input class="form-input span-2" type="email" placeholder="Correo" v-model="formData.correo">
-          <input class="form-input span-2" type="text" placeholder="Cargo" v-model="formData.cargo">
+          <input class="form-input span-3" 
+          type="text" 
+          placeholder="Apellidos" 
+          v-model="formData.apellido" />
 
-          <textarea class="form-input full-width" placeholder="Observaciones" v-model="formData.observaciones"></textarea>
+          <input 
+          class="form-input span-2" 
+          type="text" 
+          placeholder="Teléfono" 
+          v-model="formData.telefono" />
+
+          <input 
+          class="form-input span-2" 
+          type="email" 
+          placeholder="Correo" 
+          v-model="formData.correo" />
+
+          <input 
+          class="form-input span-2" 
+          type="text" 
+          placeholder="Cargo" 
+          v-model="formData.cargo" />
+
+          <textarea 
+          class="form-input full-width" 
+          placeholder="Observaciones" 
+          v-model="formData.observaciones"></textarea>
+
         </form>
       </section>
     </main>
@@ -80,6 +169,9 @@ export default {
   }
 }
 </script>
+
+
+
 
 <style scoped>
 /* Estilos Generales y de Encabezado (sin cambios) */
@@ -131,7 +223,7 @@ export default {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
 
-/* Barra Lateral (Sidebar) */
+/* Barra Lateral (Sidebar) con Flexbox para alinear botón abajo */
 .sidebar {
   width: 250px;
   padding: 20px;
@@ -153,7 +245,28 @@ export default {
 }
 .sidebar-nav-list li.active { background-color: #ff0000; color: white; font-weight: bold; }
 .sidebar-nav-list li.active::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #ff0000; }
+.sidebar-nav-list li svg { width: 28px; height: 28px; }
 
+/* Botón "Subir" en la barra lateral */
+.sidebar-action {
+    margin-top: auto; /* Empuja este contenedor al fondo */
+    padding-top: 20px;
+}
+.submit-button {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.submit-button:hover {
+    background-color: #d60000;
+}
 /* Estilos para el grupo de iconos */
 .icon-group {
     justify-content: space-around !important;

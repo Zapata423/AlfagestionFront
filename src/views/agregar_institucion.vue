@@ -11,7 +11,9 @@ const formData = ref({
   telefono: "",
   poblacion_intervenida: "",
   email: "",
-  direccion: "", // 👈 si no lo vas a usar, puedes quitarlo
+  direccion: "", 
+  barrio: "", 
+  ciudad: "", 
 })
 
 // Método submit
@@ -138,6 +140,12 @@ async function submitForm() {
             placeholder="Barrio"
             v-model="formData.barrio"
           />
+          <input
+            class="form-input"
+            type="text"
+            placeholder="Ciudad"
+            v-model="formData.ciudad"
+          />
         </form>
       </section>
     </main>
@@ -170,6 +178,8 @@ export default {
   }
 }
 </script>
+
+
 
 <style scoped>
 /* Estilos Generales y de Encabezado (sin cambios) */

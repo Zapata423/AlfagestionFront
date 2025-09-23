@@ -1,6 +1,40 @@
-<script setup> </script>
+<script setup>
+import { ref, onMounted } from "vue"
+import { getMisEncargados, deleteEncargado } from "../services/encargados"
+
+const encargados = ref([])
+const errorMsg = ref("")
+
+// 📌 Cargar encargados del usuario
+async function cargarEncargados() {
+  try {
+    encargados.value = await getMisEncargados()
+  } catch (error) {
+    console.error("Error cargando encargados:", error)
+    errorMsg.value = error.response?.data?.detail || "No se pudieron cargar los encargados"
+  }
+}
+
+// 📌 Eliminar encargado
+async function deleteEncargadoById(idToDelete) {
+  if (!confirm("¿Seguro que quieres eliminar este encargado?")) return
+  try {
+    await deleteEncargado(idToDelete)
+    encargados.value = encargados.value.filter(enc => enc.id !== idToDelete)
+  } catch (error) {
+    console.error("Error eliminando encargado:", error)
+    errorMsg.value = error.response?.data?.detail || "No se pudo eliminar el encargado"
+  }
+}
+
+onMounted(() => {
+  cargarEncargados()
+})
+</script>
+
 <template>
   <div class="app-container">
+    <!-- HEADER -->
     <header class="main-header">
       <div class="header-left">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" alt="La Salle Logo" class="logo">
@@ -20,17 +54,22 @@
       </div>
     </header>
 
+    <!-- MAIN -->
     <main class="main-content">
       <div class="content-header">
         <a class="add-button" href="/encargadoi_registro">Agregar encargado</a>
       </div>
 
       <section class="list-card">
-        <h2>Nombre encargado</h2>
+        <h2>Lista de Encargados</h2>
+
+        <!-- Mensaje de error -->
+        <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
+
         <ul class="item-list">
-          <li v-for="institution in institutions" :key="institution.id">
-            <span class="item-name">{{ institution.name }}</span>
-            <button class="delete-button" @click="deleteInstitution(institution.id)">Eliminar</button>
+          <li v-for="enc in encargados" :key="enc.id">
+            <span class="item-name">{{ enc.nombre }} </span>
+            <button class="delete-button" @click="deleteEncargadoById(enc.id)">Eliminar</button>
           </li>
         </ul>
       </section>
@@ -38,44 +77,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'InstitutionList',
-  data() {
-    return {
-      // Datos de ejemplo para la lista
-      institutions: [
-        { id: 1, name: 'Tutoria academica' },
-        { id: 2, name: 'Limpieza de parque' },
-        { id: 3, name: 'Ayuda a ancianos' },
-        { id: 4, name: 'Clases de apoyo escolar' },
-        { id: 5, name: 'recaudacion de fondos' }
-      ]
-    };
-  },
-  methods: {
-    // Método para eliminar una institución de la lista
-    deleteInstitution(idToDelete) {
-      this.institutions = this.institutions.filter(inst => inst.id !== idToDelete);
-    },
-    // Método de ejemplo para el botón de agregar
-    addInstitution() {
-      const newName = prompt("Introduce el nombre de la nueva institución:");
-      if (newName) {
-        const newId = this.institutions.length > 0 ? Math.max(...this.institutions.map(i => i.id)) + 1 : 1;
-        this.institutions.push({ id: newId, name: newName });
-      }
-    }
-  }
-}
-</script>
-
 <style scoped>
-/* Estilos Generales y del Encabezado */
+/* 🎨 Reutilizo tus estilos previos */
 .app-container {
   height: 100vh;
   width: 100vw;
-  /* El fondo ahora es un color sólido gris claro */
   background-color: #f0f2f5;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
@@ -101,87 +107,17 @@ export default {
 .search-bar input::placeholder { color: rgba(255, 255, 255, 0.7); }
 .profile-icon { width: 36px; height: 36px; background-color: #28a745; border-radius: 50%; border: 2px solid white; }
 
-/* Contenido Principal */
-.main-content {
-  flex-grow: 1;
-  padding: 30px 60px;
-}
+.main-content { flex-grow: 1; padding: 30px 60px; }
+.content-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.add-button { background-color: #00ff00; color: black; border: none; padding: 12px 25px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: transform 0.2s; }
+.add-button:hover { transform: scale(1.05); }
 
-/* Barra de título y botón de agregar */
-.content-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
-.section-title {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-.add-button {
-  background-color: #00ff00; /* Verde brillante */
-  color: black;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-.add-button:hover {
-  transform: scale(1.05);
-}
+.list-card { background: white; border-radius: 20px; padding: 25px 35px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+.list-card h2 { margin: 0 0 20px; font-size: 1.5rem; color: #333; }
 
-/* Tarjeta principal con la lista */
-.list-card {
-  background: white;
-  border-radius: 20px;
-  padding: 25px 35px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-.list-card h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #333;
-}
-.item-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-.item-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.item-name {
-  background-color: #e0e0e0;
-  padding: 12px 20px;
-  border-radius: 8px;
-  flex-grow: 1;
-  margin-right: 15px;
-  color: #444;
-}
-.delete-button {
-  background-color: #ff3b30; /* Rojo */
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-.delete-button:hover {
-  background-color: #e02b21;
-}
+.item-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; }
+.item-list li { display: flex; justify-content: space-between; align-items: center; }
+.item-name { background-color: #e0e0e0; padding: 12px 20px; border-radius: 8px; flex-grow: 1; margin-right: 15px; color: #444; }
+.delete-button { background-color: #ff3b30; color: white; border: none; padding: 10px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
+.delete-button:hover { background-color: #e02b21; }
 </style>
