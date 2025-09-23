@@ -5,7 +5,7 @@ import { getMisEncargados, deleteEncargado } from "../services/encargados"
 const encargados = ref([])
 const errorMsg = ref("")
 
-// 📌 Cargar encargados del usuario
+//  Cargar encargados del usuario
 async function cargarEncargados() {
   try {
     encargados.value = await getMisEncargados()
@@ -15,7 +15,7 @@ async function cargarEncargados() {
   }
 }
 
-// 📌 Eliminar encargado
+//  Eliminar encargado
 async function deleteEncargadoById(idToDelete) {
   if (!confirm("¿Seguro que quieres eliminar este encargado?")) return
   try {

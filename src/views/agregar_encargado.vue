@@ -105,6 +105,7 @@ async function submitForm() {
 
       <!-- Formulario -->
       <section class="content-form">
+      <h2>Agregar Encargado</h2>
         <form @submit.prevent="submitForm">
           <input 
           class="form-input span-3" 

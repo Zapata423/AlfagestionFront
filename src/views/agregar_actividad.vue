@@ -1,21 +1,56 @@
-<script setup> </script>
+<script setup>
+import { ref } from "vue"
+import { useRouter } from "vue-router"
+import { createActividad } from "../services/actividades"
+
+const router = useRouter()
+
+// Datos del formulario que coinciden con el serializer de Django
+const formData = ref({
+  titulo: "",
+  descripcion: "",
+  horas: "",
+  fecha_subida: "",
+  institucion: "",
+  encargado: "",
+  archivo: null,
+})
+
+// Método submit
+async function submitForm() {
+  try {
+    const payload = new FormData()
+    Object.keys(formData.value).forEach(key => {
+      if (formData.value[key] !== null) payload.append(key, formData.value[key])
+    })
+
+    const data = await createActividad(payload)
+    alert("Actividad creada con éxito.")
+    console.log("Respuesta del backend:", data)
+    router.push("/actividad_registro")
+  } catch (error) {
+    console.error("Error al crear Actividad:", error.response?.data || error)
+    alert("No se pudo registrar la Actividad.")
+  }
+}
+</script>
+
 <template>
   <div class="app-container">
+    <!-- HEADER -->
     <header class="main-header">
       <div class="header-left">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" alt="La Salle Logo" class="logo">
         <nav class="main-nav">
-          <a href="#">Inicio</a>
+          <a href="/ini_estudiante">Inicio</a>
           <a href="#" class="active-link">Mi perfil</a>
         </nav>
       </div>
       <div class="header-right">
         <div class="search-bar">
-          <!-- ... -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-  <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-</svg>
-<!-- ... -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+          </svg>
           <input type="text" placeholder="Buscar">
         </div>
         <div class="profile-icon"></div>
@@ -23,86 +58,55 @@
     </header>
 
     <main class="main-content">
-  <aside class="sidebar">
-  <ul class="sidebar-nav-list">
-    <li>
-      <a href="/actividad_registro" style="color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" />
-        </svg>
-      </a>
-    </li>
-    <li class="active">
-      <a href="/agregar_actividad" style="color: inherit; text-decoration: none; display: block;">
-        Actividad
-      </a>
-    </li>
-  </ul>
-</aside>
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="/actividad_registro" style="color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5"/>
+              </svg>
+            </a>
+          </li>
+          <li class="active">
+            <a href="/agregar_actividad" style="color: inherit; text-decoration: none; display: block;">Actividad</a>
+          </li>
+        </ul>
 
+        <!-- Botón "Subir" abajo con mismo estilo que ejemplo -->
+        <div class="sidebar-action">
+          <button class="submit-button" @click="submitForm">Subir</button>
+        </div>
+      </aside>
+
+      <!-- FORMULARIO -->
       <section class="content-form">
-        <form @submit.prevent="submitForm">
-          <input class="form-input full-width" type="text" placeholder="Nombre Actividad" v-model="formData.nombreActividad">
-
-          <input class="form-input" type="text" placeholder="fecha" v-model="formData.fecha">
-          <input class="form-input" type="text" placeholder="Numero de horas" v-model="formData.numeroHoras">
-
-          <select class="form-input" v-model="formData.institucion">
-            <option disabled value="">Institucion de proyeccion</option>
-            <option>Institución A</option>
-            <option>Institución B</option>
+        <h2>Agregar Actividad</h2>
+        <form>
+          <input class="form-input span-3" type="text" placeholder="Título de la Actividad" v-model="formData.titulo" />
+          <input class="form-input span-2" type="date" placeholder="Fecha" v-model="formData.fecha_subida" />
+          <input class="form-input span-2" type="number" placeholder="Número de horas" v-model="formData.horas" />
+          <select class="form-input span-3" v-model="formData.institucion">
+            <option disabled value="">Institución de proyección</option>
+            <option value="1">Institución A</option>
+            <option value="2">Institución B</option>
           </select>
-          <select class="form-input" v-model="formData.encargado">
+          <select class="form-input span-3" v-model="formData.encargado">
             <option disabled value="">Encargado</option>
-            <option>Encargado 1</option>
-            <option>Encargado 2</option>
+            <option value="1">Encargado 1</option>
+            <option value="2">Encargado 2</option>
           </select>
-
-          <textarea class="form-input full-width description" placeholder="Descripcion de la actividad" v-model="formData.descripcion"></textarea>
-
-          <div class="form-input full-width evidence-field">
-            <span>Evidencia</span>
-            <div class="evidence-actions">
-                <button type="button" class="icon-button" title="Adjuntar archivo">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.122 2.122l7.81-7.81" /></svg>
-                </button>
-                <button type="button" class="icon-button" title="Ver documento">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
-                </button>
-            </div>
-          </div>
+          <textarea class="form-input full-width" placeholder="Descripción" v-model="formData.descripcion"></textarea>
+          <input class="form-input full-width" type="file" @change="e => formData.archivo = e.target.files[0]" />
         </form>
       </section>
     </main>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'DashboardActividadForm',
-  data() {
-    return {
-      formData: {
-        nombreActividad: '',
-        fecha: '',
-        numeroHoras: '',
-        institucion: '',
-        encargado: '',
-        descripcion: ''
-      }
-    };
-  },
-  methods: {
-    submitForm() {
-      console.log('Datos del formulario:', this.formData);
-      alert('Revisa la consola para ver los datos del formulario.');
-    }
-  }
-}
-</script>
-
 <style scoped>
-/* Estilos Generales y de Encabezado (sin cambios) */
+/* Fondo y layout general */
+/* Contenedor principal y fondo */
 .app-container {
   height: 100vh;
   width: 100vw;
@@ -110,10 +114,12 @@ export default {
   background-size: cover;
   background-position: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
+
+/* Header */
 .main-header {
   background-color: #ff0000;
   color: white;
@@ -134,77 +140,72 @@ export default {
 .search-bar input::placeholder { color: rgba(255, 255, 255, 0.7); }
 .profile-icon { width: 36px; height: 36px; background-color: #28a745; border-radius: 50%; border: 2px solid white; }
 
-/* Contenido Principal */
-.main-content {
-  flex-grow: 1;
-  display: flex;
-  padding: 30px;
-  gap: 30px;
-}
+/* Main content */
+.main-content { flex-grow: 1; display: flex; padding: 30px; gap: 30px; }
 
-/* Efecto de Cristal (Glassmorphism) */
+/* Sidebar */
 .sidebar, .content-form {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(8px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
-
-/* Barra Lateral (Sidebar) */
 .sidebar {
   width: 250px;
   padding: 20px;
-  color: #333;
   display: flex;
   flex-direction: column;
 }
 .sidebar-nav-list { list-style: none; padding: 0; margin: 0; }
 .sidebar-nav-list li {
-    padding: 15px 20px;
-    font-weight: 500;
-    border-radius: 8px;
-    margin-bottom: 5px;
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 15px 20px;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .sidebar-nav-list li.active { background-color: #ff0000; color: white; font-weight: bold; }
-.sidebar-nav-list li.active::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #ff0000; }
+.sidebar-nav-list li.active::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #ff0000;
+}
 .sidebar-nav-list li svg { width: 28px; height: 28px; }
 
-/* Botón "Subir" */
+/* Botón "Subir" en sidebar */
 .sidebar-action {
-    margin-top: auto;
-    padding-top: 20px;
+  margin-top: auto; /* Lo empuja al fondo */
+  padding-top: 20px;
 }
 .submit-button {
-    background-color: #ff0000;
-    color: white;
-    border: none;
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
-.submit-button:hover {
-    background-color: #d60000;
-}
+.submit-button:hover { background-color: #d60000; }
 
-/* Formulario Central */
-.content-form {
-  flex-grow: 1;
-  padding: 25px 35px;
-}
+/* Formulario */
+.content-form { flex-grow: 1; padding: 25px 35px; }
 .content-form h2 { color: #333; margin-top: 0; margin-bottom: 25px; font-size: 24px; }
 form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
 }
 .form-input {
@@ -216,41 +217,9 @@ form {
   color: white;
   outline: none;
 }
-.form-input::placeholder { color: rgba(255, 255, 255, 0.8); }
+.form-input.span-2 { grid-column: span 2; }
+.form-input.span-3 { grid-column: span 3; }
 .form-input.full-width { grid-column: 1 / -1; }
-textarea.description { height: 80px; resize: vertical; }
+textarea.form-input { height: 120px; resize: vertical; }
 
-/* Estilos para los Select (desplegables) */
-select.form-input {
-  -webkit-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 1em;
-  color: rgba(255, 255, 255, 0.8); /* Color para la opción no seleccionada */
-}
-select.form-input:focus {
-    background-color: rgba(80, 80, 80, 0.7);
-}
-select.form-input option {
-    background-color: #505050;
-    color: white;
-}
-/* Cambia el color del texto cuando se selecciona una opción */
-select.form-input:valid {
-    color: white;
-}
-
-/* Campo de Evidencia */
-.evidence-field {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 500;
-}
-.evidence-actions { display: flex; gap: 10px; }
-.icon-button { background: transparent; border: none; cursor: pointer; color: white; padding: 5px; }
-.icon-button svg { width: 24px; height: 24px; }
 </style>

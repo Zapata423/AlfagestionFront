@@ -101,6 +101,7 @@ async function submitForm() {
       </aside>
 
       <section class="content-form">
+      <h2>Agregar Institucion</h2>
         <form @submit.prevent="submitForm">
           <input
             class="form-input full-width"

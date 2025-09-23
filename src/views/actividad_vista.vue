@@ -1,6 +1,40 @@
-<script setup> </script>
+<script setup>
+import { ref, onMounted } from "vue"
+import { getMisActividades, deleteActividad } from "../services/actividades"
+
+const actividades = ref([])
+const errorMsg = ref("")
+
+//  Cargar actividades del usuario
+async function cargarActividades() {
+  try {
+    actividades.value = await getMisActividades()
+  } catch (error) {
+    console.error("Error cargando actividades:", error)
+    errorMsg.value = error.response?.data?.detail || "No se pudieron cargar las actividades"
+  }
+}
+
+//  Eliminar actividad
+async function deleteActividadById(idToDelete) {
+  if (!confirm("¿Seguro que quieres eliminar esta actividad?")) return
+  try {
+    await deleteActividad(idToDelete)
+    actividades.value = actividades.value.filter(act => act.id !== idToDelete)
+  } catch (error) {
+    console.error("Error eliminando actividad:", error)
+    errorMsg.value = error.response?.data?.detail || "No se pudo eliminar la actividad"
+  }
+}
+
+onMounted(() => {
+  cargarActividades()
+})
+</script>
+
 <template>
   <div class="app-container">
+    <!-- HEADER -->
     <header class="main-header">
       <div class="header-left">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" alt="La Salle Logo" class="logo">
@@ -20,17 +54,22 @@
       </div>
     </header>
 
+    <!-- MAIN -->
     <main class="main-content">
       <div class="content-header">
         <a class="add-button" href="/actividad_registro">Agregar actividad</a>
       </div>
 
       <section class="list-card">
-        <h2>Actividades</h2>
+        <h2>Lista de Actividades</h2>
+
+        <!-- Mensaje de error -->
+        <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
+
         <ul class="item-list">
-          <li v-for="institution in institutions" :key="institution.id">
-            <span class="item-name">{{ institution.name }}</span>
-            <button class="delete-button" @click="deleteInstitution(institution.id)">Eliminar</button>
+          <li v-for="act in actividades" :key="act.id">
+            <span class="item-name">{{ act.titulo }}</span>
+            <button class="delete-button" @click="deleteActividadById(act.id)">Eliminar</button>
           </li>
         </ul>
       </section>
@@ -45,11 +84,6 @@ export default {
     return {
       // Datos de ejemplo para la lista
       institutions: [
-        { id: 1, name: 'Tutoria academica' },
-        { id: 2, name: 'Limpieza de parque' },
-        { id: 3, name: 'Ayuda a ancianos' },
-        { id: 4, name: 'Clases de apoyo escolar' },
-        { id: 5, name: 'recaudacion de fondos' }
       ]
     };
   },
