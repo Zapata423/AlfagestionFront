@@ -1,30 +1,54 @@
-<script setup> </script>
-<script>
-export default {
-  data() {
-    return {
-      sections: ['10', '11'],
-      selectedSection: '10',
-      groups: ['A', 'B', 'C', 'D', 'E'],
-      selectedGroup: 'A',
-      activeMenu: 'Solicitudes',
-      estudiantes: [
+<script setup>
+import { ref, onMounted, watch } from "vue"
+import { getEstudiantes } from "../services/listaEstudiantes"
 
-      ]
-    }
-  },
-  methods: {
-    aprobar(est) {
-      if (est.estado === "Pendiente") est.estado = "Aprobado";
-    }
+// Estado reactivo
+const sections = ["10", "11"]
+const selectedSection = ref("10")
+const groups = ["A", "B", "C", "D", "E"]
+const selectedGroup = ref("A")
+const estudiantes = ref([])
+const cargando = ref(false)
+const error = ref(false)
+
+// Formatear fecha
+function formatFecha(fechaIso) {
+  if (!fechaIso) return "—"
+  const fecha = new Date(fechaIso)
+  return fecha.toLocaleDateString("es-CO", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })
+}
+
+// Cargar estudiantes
+async function cargarEstudiantes() {
+  cargando.value = true
+  error.value = false
+  try {
+    const data = await getEstudiantes(selectedSection.value, selectedGroup.value)
+    estudiantes.value = data
+  } catch (err) {
+    console.error("Error cargando estudiantes:", err)
+    error.value = true
+  } finally {
+    cargando.value = false
   }
 }
+
+// Montaje y reactividad
+onMounted(cargarEstudiantes)
+watch([selectedSection, selectedGroup], cargarEstudiantes)
 </script>
 
 <template>
   <div class="main-container">
     <header class="header">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" class="logo" />
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s"
+        class="logo"
+      />
       <nav>
         <a href="/ini_docentes">Inicio</a>
         <a href="#">Mi perfil</a>
@@ -32,7 +56,9 @@ export default {
       <input class="search" placeholder="Buscar" />
       <div class="avatar"></div>
     </header>
+
     <div class="content">
+      <!-- ✅ Sidebar igual al original -->
       <aside class="sidebar">
         <div class="section-select">
           <div style="display: flex; gap: 10px;">
@@ -48,38 +74,45 @@ export default {
           </div>
         </div>
         <ul class="menu">
-          <li :class="{ active: activeMenu === 'Inicio' }" @click="activeMenu = 'Inicio'">
+          <li :class="{ active: false }">
             <a href="/ini_docentes" style="color: inherit; text-decoration: none;">🏠 Inicio</a>
           </li>
-          <li :class="{ active: activeMenu === 'Solicitudes' }" @click="activeMenu = 'Solicitudes'">
+          <li :class="{ active: true }">
             <a href="/solicitud_apro" style="color: inherit; text-decoration: none;">📄 Solicitudes</a>
           </li>
         </ul>
-        <button class="btn-subir">Subir</button>
       </aside>
+
+      <!-- ✅ Main content -->
       <main class="main-content">
         <div class="section-header">
-          <span class="section-title">Section {{ selectedSection }} - Grupo {{ selectedGroup }}</span>
+          <span class="section-title">
+            Section {{ selectedSection }} - Grupo {{ selectedGroup }}
+          </span>
         </div>
-        <div class="tabla-estudiantes">
+
+        <div v-if="cargando">⏳ Cargando estudiantes...</div>
+        <div v-else-if="error">⚠️ Error cargando datos</div>
+        <div v-else class="tabla-estudiantes">
           <table>
             <thead>
               <tr>
                 <th class="th-espaciado">Estudiante</th>
-                <th class="th-espaciado">Horas</th>
-                <th class="th-espaciado">H. verificadas</th>
-                <th class="th-espaciado">Ultima carga</th>
+                <th class="th-espaciado">Horas subidas</th>
+                <th class="th-espaciado">Horas verificadas</th>
+                <th class="th-espaciado">Última carga</th>
                 <th class="th-espaciado">.</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(est, i) in estudiantes" :key="i">
+              <tr v-for="est in estudiantes" :key="est.id">
                 <td class="estudiante">{{ est.nombre }}</td>
-                <td>{{ est.actividad }}</td>
-                <td>{{ est.horas }}</td>
-                <th class="th-espaciado">05/07/2025</th>
-                <td><a class="btn-evidencia" href="/actividades_ver">Ver Actividades</a></td>
+                <td>{{ est.horas_subidas }}</td>
+                <td>{{ est.horas_verificadas }}</td>
+                <td>{{ formatFecha(est.ultima_carga) }}</td>
+                <td>
+                  <a class="btn-evidencia" :href="`/actividades_ver/${est.id}`">Ver Actividades</a>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -88,6 +121,8 @@ export default {
     </div>
   </div>
 </template>
+
+
 
 <style scoped>
 .main-container { background: #f3f5f7; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif; }
@@ -105,7 +140,6 @@ export default {
 .menu { list-style: none; padding: 0; margin: 1rem 0 2rem 0; width: 100%; }
 .menu li { padding: 0.7rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer; font-weight: 600; color: #222; display: flex; align-items: center; gap: 0.7em; transition: background 0.2s; }
 .menu li.active, .menu li:hover { background: #ffd6d6; color: #d90000; }
-.btn-subir { background: #d90000; color: #fff; border: none; border-radius: 12px; padding: 0.7em 2em; font-size: 1.1em; font-weight: bold; margin-top: auto; cursor: pointer; width: 100%; }
 .main-content { flex: 1; padding: 1.5rem 2rem; }
 .section-header { margin-bottom: 1rem; }
 .section-title { background: #fff; border-radius: 8px; padding: 0.3rem 1.2rem; font-size: 1.1rem; color: #444; font-weight: 600; box-shadow: 0 2px 8px #0001; }
@@ -126,3 +160,5 @@ td { font-size: 1em; padding: 0.5em 0.7em; }
   .tabla-estudiantes { padding: 1rem; }
 }
 </style>
+
+
