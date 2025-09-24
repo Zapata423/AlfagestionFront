@@ -1,8 +1,69 @@
-<script setup> </script>
+<script setup>
+import { ref, computed, onMounted } from "vue"
+import { getActividadesConEstado } from "../services/progreso"
+
+// Lista de actividades
+const actividades = ref([])
+
+// Totales
+const totalHoras = ref(80) // Fijo en 80 horas
+const totalCompletadas = ref(0)
+
+// Estado de carga y error
+const cargando = ref(false)
+const error = ref(false)
+
+// Formatear fecha legible
+function formatFecha(fechaIso) {
+  if (!fechaIso) return ""
+  const fecha = new Date(fechaIso)
+  return fecha.toLocaleString("es-CO", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })
+}
+
+// Calcular porcentaje dinámico
+const porcentaje = computed(() => {
+  if (totalHoras.value === 0) return 0
+  return Math.min(100, Math.round((totalCompletadas.value / totalHoras.value) * 100))
+})
+
+// Cargar actividades
+async function cargarActividades() {
+  cargando.value = true
+  error.value = false
+  try {
+    const data = await getActividadesConEstado()
+    actividades.value = data
+
+    // Calcular solo horas aprobadas
+    totalCompletadas.value = data
+      .filter(act => act.estado === "Aprobada" || act.estado === "Aprobado")
+      .reduce((acc, act) => acc + act.horas, 0)
+
+  } catch (err) {
+    console.error("Error en Vue cargando actividades:", err)
+    error.value = true
+  } finally {
+    cargando.value = false
+  }
+}
+
+onMounted(() => {
+  cargarActividades()
+})
+</script>
+
+
 <template>
   <div class="horas-container">
     <header class="header">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" class="logo" />
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s"
+        class="logo"
+      />
       <nav>
         <a href="/ini_estudiante">Inicio</a>
         <a href="#">Mi perfil</a>
@@ -10,8 +71,12 @@
       <input class="search" placeholder="Buscar" />
       <div class="avatar"></div>
     </header>
+
     <main>
-      <h1 class="titulo">Horas completadas: {{ totalCompletadas }}/{{ totalHoras }}</h1>
+      <h1 class="titulo">
+        Horas completadas: {{ totalCompletadas }}/{{ totalHoras }}
+      </h1>
+
       <div class="progress-section">
         <div class="progress-bar-bg">
           <div class="progress-bar" :style="{ width: porcentaje + '%' }"></div>
@@ -21,7 +86,21 @@
           <span class="porcentaje">{{ porcentaje }}%</span>
         </div>
       </div>
-      <div class="tabla-actividades">
+
+      <div v-if="cargando" style="text-align:center; margin: 2rem;">
+        Cargando actividades...
+      </div>
+      <div
+        v-if="error"
+        style="text-align:center; margin: 2rem; color:red;"
+      >
+        Error cargando actividades
+      </div>
+
+      <div
+        v-if="!cargando && actividades.length > 0"
+        class="tabla-actividades"
+      >
         <table>
           <thead>
             <tr>
@@ -33,11 +112,17 @@
           </thead>
           <tbody>
             <tr v-for="(actividad, i) in actividades" :key="i">
-              <td class="actividad">{{ actividad.nombre }}</td>
+              <td class="actividad">{{ actividad.titulo }}</td>
               <td>{{ actividad.horas }}</td>
               <td style="padding-left: 20px;">
-                <span class="fecha" :class="{ rojo: actividad.estado === 'Pendiente', verde: actividad.estado === 'Aprobado' }">
-                  {{ actividad.fecha }}
+                <span
+                  class="fecha"
+                  :class="{
+                    rojo: actividad.estado === 'Pendiente',
+                    verde: actividad.estado === 'Aprobada' || actividad.estado === 'Aprobado'
+                  }"
+                >
+                  {{ formatFecha(actividad.fecha_subida) }}
                 </span>
               </td>
               <td>
@@ -45,7 +130,8 @@
                   class="estado"
                   :class="{
                     pendiente: actividad.estado === 'Pendiente',
-                    aprobado: actividad.estado === 'Aprobado'
+                    rechazado: actividad.estado === 'Rechazada' || actividad.estado === 'Rechazado',
+                    aprobado: actividad.estado === 'Aprobada' || actividad.estado === 'Aprobado'
                   }"
                 >
                   {{ actividad.estado }}
@@ -55,37 +141,16 @@
           </tbody>
         </table>
       </div>
+
+      <div
+        v-if="!cargando && actividades.length === 0"
+        style="text-align:center; margin: 2rem;"
+      >
+        No hay actividades registradas.
+      </div>
     </main>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      actividades: [
-        { nombre: "Tutoria academica", horas: 10, fecha: "10/08/2025", estado: "Pendiente" },
-        { nombre: "Limpieza de parque", horas: 5, fecha: "09/03/2025", estado: "Aprobado" },
-        { nombre: "Visita ancianos", horas: 7, fecha: "03/06/2025", estado: "Pendiente" },
-        { nombre: "Clases de apoyo escolar", horas: 5, fecha: "25/02/2025", estado: "Pendiente" },
-        { nombre: "recaudacion de fondos", horas: 15, fecha: "01/07/2025", estado: "Aprobado" }
-      ],
-      totalHoras: 100
-    }
-  },
-  computed: {
-    totalCompletadas() {
-      // Suma solo las horas de actividades aprobadas
-      return this.actividades
-        .filter(a => a.estado === "Aprobado")
-        .reduce((sum, a) => sum + a.horas, 0);
-    },
-    porcentaje() {
-      return Math.round((this.totalCompletadas / this.totalHoras) * 100);
-    }
-  }
-}
-</script>
 
 <style scoped>
 .horas-container {
@@ -233,17 +298,6 @@ td {
   color: #fff;
   border-radius: 10px 0 0 10px;
   font-weight: 600;
-}
-.fecha {
-  background: #ff3c3c;
-  color: #fff;
-  border-radius: 8px;
-  padding: 0.2em 1em;
-  font-weight: 600;
-  display: inline-block;
-}
-.fecha.verde {
-  background: #1ec900;
 }
 .estado {
   border-radius: 8px;

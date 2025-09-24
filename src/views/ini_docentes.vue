@@ -91,6 +91,25 @@ async function handleLogout() {
   </div>
 </template>
 
+
+<script>
+export default {
+  name: 'DashboardScreen',
+  data() {
+    return {
+      activeItem: 'gestion',
+      menuItems: [
+        { id: 'gestion', text: 'Verificar Horas y Evidencia', href: '/solicitud_apro', icon: '✅' },
+      ]
+    };
+  },
+  methods: {
+    setActiveItem(itemId) {
+      this.activeItem = itemId;
+    }
+  }
+}
+</script>
 <style scoped>
 #app-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

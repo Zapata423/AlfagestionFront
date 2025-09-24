@@ -9,16 +9,7 @@ export default {
       selectedGroup: 'A',
       activeMenu: 'Solicitudes',
       estudiantes: [
-        { nombre: "Alejandro", actividad: "-", horas: 55, estado: "Pendiente" },
-        { nombre: "Beatriz", actividad: "-", horas: 50, estado: "Aprobado" },
-        { nombre: "Camila", actividad: "-", horas: 22, estado: "Pendiente" },
-        { nombre: "Daniel", actividad: "-", horas: 45, estado: "Pendiente" },
-        { nombre: "Elena", actividad: "-", horas: 15, estado: "Aprobado" },
-        { nombre: "Fernando", actividad: "-", horas: 54, estado: "Pendiente" },
-        { nombre: "Gabriela", actividad: "-", horas: 20, estado: "Pendiente" },
-        { nombre: "Hugo", actividad: "-", horas: 12, estado: "Aprobado" },
-        { nombre: "Isabel", actividad: "-", horas: 10, estado: "Pendiente" },
-        { nombre: "Juan", actividad: "-", horas: 48, estado: "Pendiente" }
+
       ]
     }
   },

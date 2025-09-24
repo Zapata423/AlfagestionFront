@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { createActividad } from "../services/actividades"
+import { getMisInstituciones } from "../services/instituciones"
+import { getMisEncargados } from "../services/encargados"
 
 const router = useRouter()
 
-// Datos del formulario que coinciden con el serializer de Django
+// Datos del formulario
 const formData = ref({
   titulo: "",
   descripcion: "",
@@ -16,7 +18,23 @@ const formData = ref({
   archivo: null,
 })
 
-// Método submit
+// Listas dinámicas
+const instituciones = ref([])
+const encargados = ref([])
+
+// Cargar datos al montar el componente
+onMounted(async () => {
+  try {
+    instituciones.value = await getMisInstituciones()
+    console.log("Instituciones cargadas:", instituciones.value)
+    encargados.value = await getMisEncargados()
+    console.log("Encargados cargados:", encargados.value)
+  } catch (error) {
+    console.error("Error cargando datos:", error)
+  }
+})
+
+// Enviar formulario
 async function submitForm() {
   try {
     const payload = new FormData()
@@ -27,10 +45,10 @@ async function submitForm() {
     const data = await createActividad(payload)
     alert("Actividad creada con éxito.")
     console.log("Respuesta del backend:", data)
-    router.push("/actividad_registro")
+    router.push("/actividad_vista")
   } catch (error) {
-    console.error("Error al crear Actividad:", error.response?.data || error)
-    alert("No se pudo registrar la Actividad.")
+    console.error("Error al crear actividad:", error.response?.data || error)
+    alert("No se pudo registrar la actividad.")
   }
 }
 </script>
@@ -88,14 +106,24 @@ async function submitForm() {
           <input class="form-input span-2" type="number" placeholder="Número de horas" v-model="formData.horas" />
           <select class="form-input span-3" v-model="formData.institucion">
             <option disabled value="">Institución de proyección</option>
-            <option value="1">Institución A</option>
-            <option value="2">Institución B</option>
+            <option 
+              v-for="inst in instituciones" 
+              :key="inst.id" 
+              :value="inst.id">
+              {{ inst.nombre }}
+            </option>
           </select>
+
           <select class="form-input span-3" v-model="formData.encargado">
             <option disabled value="">Encargado</option>
-            <option value="1">Encargado 1</option>
-            <option value="2">Encargado 2</option>
+            <option 
+              v-for="enc in encargados" 
+              :key="enc.id" 
+              :value="enc.id">
+              {{ enc.nombre }} {{ enc.apellido }}
+            </option>
           </select>
+
           <textarea class="form-input full-width" placeholder="Descripción" v-model="formData.descripcion"></textarea>
           <input class="form-input full-width" type="file" @change="e => formData.archivo = e.target.files[0]" />
         </form>
