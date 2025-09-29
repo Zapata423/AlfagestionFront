@@ -14,3 +14,4 @@ export function getInstitucionDetalle(actividadId) {
   return api.get(`/actividades/${actividadId}/institucion/`)
     .then(res => res.data);
 }
+

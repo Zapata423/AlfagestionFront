@@ -1,4 +1,41 @@
-<script setup> </script>
+<script setup>
+import { reactive, onMounted } from "vue"
+import { useRoute } from "vue-router"
+import { getInstitucionDetalle } from "../services/evidencias"
+
+// tomar el parámetro de la ruta
+const route = useRoute()
+const actividadIdRaw = route.params.actividadId ?? route.params.id ?? route.query.actividadId
+const actividadId = actividadIdRaw ? Number(actividadIdRaw) : null
+
+// estado reactivo
+const formData = reactive({
+  nombre: '',
+  telefono: '',
+  poblacion_intervenida: '',
+  email: '',
+  direccion: '',
+  barrio: '',
+  ciudad: ''
+})
+
+onMounted(async () => {
+  if (!actividadId) return
+  try {
+    const institucion = await getInstitucionDetalle(actividadId)
+    formData.nombre = institucion.nombre ?? ''
+    formData.telefono = institucion.telefono ?? ''
+    formData.poblacion_intervenida = institucion.poblacion_intervenida ?? ''
+    formData.email = institucion.email ?? ''
+    formData.direccion = institucion.direccion ?? ''
+    formData.barrio = institucion.barrio ?? ''
+    formData.ciudad = institucion.ciudad ?? ''
+  } catch (err) {
+    console.error("Error cargando la institución:", err)
+  }
+})
+</script>
+
 <template>
   <div class="app-container">
     <header class="main-header">
@@ -21,66 +58,80 @@
     </header>
 
     <main class="main-content">
-     <aside class="sidebar">
-  <ul>
-    <li :class="{ active: false }">
-      <a href="/actividades_registro" style="color: inherit; text-decoration: none; display: block;">Actividad</a>
-    </li>
-    <li :class="{ active: false }">
-      <a href="/encargado_registro" style="color: inherit; text-decoration: none; display: block;">Encargado</a>
-    </li>
-    <li class="active">
-      <a href="/organizacion_registro" style="color: inherit; text-decoration: none; display: block;">Organizacion</a>
-    </li>
-    <li :class="{ active: false }">
-      <a href="/actividades_ver" style="color: inherit; text-decoration: none; display: block;">Volver</a>
-    </li>
-  </ul>
-</aside>
+      <aside class="sidebar">
+        <ul>
+          <li>
+            <router-link
+              :to="{ name: 'actividades_registro', params: { actividadId: actividadId } }"
+              style="color: inherit; text-decoration: none; display: block;"
+            >
+              Actividad
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{ name: 'encargado_registro', params: { actividadId: actividadId } }"
+              style="color: inherit; text-decoration: none; display: block;"
+            >
+              Encargado
+            </router-link>
+          </li>
+          <li class="active">
+            <router-link
+              :to="{ name: 'organizacion_registro', params: { actividadId: actividadId } }"
+              style="color: inherit; text-decoration: none; display: block;"
+            >
+              Institución
+            </router-link>
+          </li>
+          <li>
+            <a href="/actividades_ver" style="color: inherit; text-decoration: none; display: block;">Volver</a>
+          </li>
+        </ul>
+      </aside>
+
       <section class="content-form">
-        <h2>Section 23</h2>
-        <form @submit.prevent="submitForm">
-          <input class="form-input full-width" type="text" placeholder="Centro o lugar de proyeccion social" v-model="formData.centroSocial">
+        <h2>Institución de la Actividad</h2>
+        <form>
+          <div class="form-group full-width">
+            <label>Nombre de la Institución</label>
+            <input class="form-input full-width" type="text" v-model="formData.nombre" readonly>
+          </div>
 
-          <input class="form-input" type="text" placeholder="telefono" v-model="formData.telefono">
-          <input class="form-input" type="text" placeholder="Poblacion Intervenida" v-model="formData.poblacion">
-          <input class="form-input" type="email" placeholder="Correo" v-model="formData.correo">
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input class="form-input" type="text" v-model="formData.telefono" readonly>
+          </div>
 
-          <input class="form-input" type="text" placeholder="Direccion" v-model="formData.direccion">
-          <input class="form-input" type="text" placeholder="Barrio" v-model="formData.barrio">
-          <input class="form-input" type="text" placeholder="Ciudad" v-model="formData.ciudad">
+          <div class="form-group">
+            <label>Población Intervenida</label>
+            <input class="form-input" type="text" v-model="formData.poblacion_intervenida" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Correo Electrónico</label>
+            <input class="form-input" type="email" v-model="formData.email" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Dirección</label>
+            <input class="form-input" type="text" v-model="formData.direccion" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Barrio</label>
+            <input class="form-input" type="text" v-model="formData.barrio" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Ciudad</label>
+            <input class="form-input" type="text" v-model="formData.ciudad" readonly>
+          </div>
         </form>
       </section>
     </main>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'DashboardOrganizacion',
-  data() {
-    return {
-      // Objeto actualizado para almacenar los datos del nuevo formulario
-      formData: {
-        centroSocial: '',
-        telefono: '',
-        poblacion: '',
-        correo: '',
-        direccion: '',
-        barrio: '',
-        ciudad: ''
-      }
-    };
-  },
-  methods: {
-    // Método para manejar el envío del formulario
-    submitForm() {
-      console.log('Datos del formulario:', this.formData);
-      alert('Revisa la consola para ver los datos del formulario.');
-    }
-  }
-}
-</script>
 
 <style scoped>
 /* Estilos Generales (sin cambios) */
@@ -145,19 +196,22 @@ export default {
 .sidebar li.active { background-color: #ff0000; color: white; font-weight: bold; }
 .sidebar li.active::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #ff0000; }
 
-/* Formulario Central (ESTILOS ACTUALIZADOS) */
+/* Formulario Central */
 .content-form {
   flex-grow: 1;
   padding: 25px 35px;
 }
 .content-form h2 { color: #333; margin-top: 0; margin-bottom: 25px; font-size: 24px; }
 
-/* -- CAMBIO CLAVE: CSS Grid con 3 columnas -- */
+/* Grid de 3 columnas */
 form {
   display: grid;
-  /* Se define un grid simple de 3 columnas */
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
 }
 .form-input {
   background-color: rgba(80, 80, 80, 0.5);
@@ -170,7 +224,7 @@ form {
   transition: background-color 0.3s;
 }
 .form-input.full-width {
-  grid-column: 1 / -1; /* Hace que el campo ocupe las 3 columnas */
+  grid-column: 1 / -1; /* Mantiene tamaño original */
 }
 .form-input::placeholder {
   color: rgba(255, 255, 255, 0.8);
