@@ -1,4 +1,65 @@
-<script setup> </script>
+<script setup>
+import { onMounted, reactive } from "vue"
+import { useRoute } from "vue-router"
+import { getActividadDetalle } from "../services/evidencias"
+
+// tomar el parámetro de la ruta
+const route = useRoute()
+const actividadIdRaw = route.params.actividadId ?? route.params.id ?? route.query.actividadId
+const actividadId = actividadIdRaw ? Number(actividadIdRaw) : null
+
+// estado reactivo
+const formData = reactive({
+  nombreActividad: '',
+  fecha: '',
+  numeroHoras: '',
+  institucion: '',
+  encargado: '',
+  descripcion: '',
+  archivo_url: ''
+})
+
+function formatFecha(fechaIso) {
+  if (!fechaIso) return ''
+  try {
+    const fecha = new Date(fechaIso)
+    return fecha.toLocaleString("es-CO", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  } catch (e) {
+    return fechaIso
+  }
+}
+
+onMounted(async () => {
+  if (!actividadId) {
+    console.warn("No se encontró actividadId en la ruta")
+    return
+  }
+  try {
+    const actividad = await getActividadDetalle(actividadId)
+    formData.nombreActividad = actividad.titulo ?? ''
+    formData.fecha = formatFecha(actividad.fecha_subida)
+    formData.numeroHoras = actividad.horas ?? ''
+    formData.institucion = actividad.institucion_nombre ?? ''
+    formData.encargado = actividad.encargado_nombre ?? ''
+    formData.descripcion = actividad.descripcion ?? ''
+    formData.archivo_url = actividad.archivo_url ?? ''
+  } catch (err) {
+    console.error("Error cargando la actividad:", err)
+  }
+})
+
+function verEvidencia() {
+  if (formData.archivo_url) window.open(formData.archivo_url, "_blank")
+  else alert("No hay evidencia disponible.")
+}
+</script>
+
 <template>
   <div class="app-container">
     <header class="main-header">
@@ -21,52 +82,77 @@
     </header>
 
     <main class="main-content">
+      <!-- Sidebar -->
       <aside class="sidebar">
-  <ul>
-    <li class="active">
-      <a href="/actividades_registro" style="color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 28px; height: 28px;">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" />
-        </svg>
-      </a>
-    </li>
-    <li>
-      <a href="/encargado_registro" style="color: inherit; text-decoration: none; display: block;">Encargado</a>
-    </li>
-    <li>
-      <a href="/organizacion_registro" style="color: inherit; text-decoration: none; display: block;">Organizacion</a>
-    </li>
-    <li>
-      <a href="/actividades_ver" style="color: inherit; text-decoration: none; display: block;">Volver</a>
-    </li>
-  </ul>
-</aside>
+        <ul>
+          <li class="active">
+            <a href="/actividades_registro" style="color: inherit; text-decoration: none; display: block;">Actividad</a>
+          </li>
+          <li>
+            <a href="/encargado_registro" style="color: inherit; text-decoration: none; display: block;">Encargado</a>
+          </li>
+          <li>
+            <a href="/organizacion_registro" style="color: inherit; text-decoration: none; display: block;">Organizacion</a>
+          </li>
+          <li>
+            <a href="/actividades_ver" style="color: inherit; text-decoration: none; display: block;">Volver</a>
+          </li>
+        </ul>
+      </aside>
 
+      <!-- Formulario solo lectura -->
       <section class="content-form">
-        <h2>Section 27</h2>
-        <form @submit.prevent="submitForm">
-          <input class="form-input full-width" type="text" placeholder="Nombre Actividad" v-model="formData.nombreActividad">
+        <h2>Evidencia Actividad</h2>
+        <form>
+          <div class="form-group full-width">
+            <label>Nombre de la Actividad</label>
+            <input class="form-input full-width" type="text" v-model="formData.nombreActividad" readonly>
+          </div>
 
-          <input class="form-input" type="text" placeholder="Fecha" v-model="formData.fecha">
-          <input class="form-input" type="text" placeholder="Numero de horas" v-model="formData.numeroHoras">
-          <input class="form-input" type="text" placeholder="Institucion de proyeccion" v-model="formData.institucion">
-          <input class="form-input" type="text" placeholder="Encargado" v-model="formData.encargado">
+          <div class="form-group">
+            <label>Fecha</label>
+            <input class="form-input" type="text" v-model="formData.fecha" readonly>
+          </div>
 
-          <textarea class="form-input full-width description" placeholder="Descripcion de la actividad" v-model="formData.descripcion"></textarea>
+          <div class="form-group">
+            <label>Número de Horas</label>
+            <input class="form-input" type="text" v-model="formData.numeroHoras" readonly>
+          </div>
 
-          <div class="form-input full-width evidence-field">
-            <span>Evidencia</span>
-            <div class="evidence-actions">
-                <button type="button" class="icon-button" title="Adjuntar archivo">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.122 2.122l7.81-7.81" />
-                    </svg>
+          <div class="form-group">
+            <label>Institución</label>
+            <input class="form-input" type="text" v-model="formData.institucion" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Encargado</label>
+            <input class="form-input" type="text" v-model="formData.encargado" readonly>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Descripción</label>
+            <textarea class="form-input full-width description" v-model="formData.descripcion" readonly></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Evidencia</label>
+            <div class="form-input evidence-field">
+              <span v-if="!formData.archivo_url">No hay evidencia disponible</span>
+              <div class="evidence-actions">
+                <button type="button" class="icon-button" title="Ver documento" @click="verEvidencia">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19.5 14.25v-2.625a3.375 3.375 
+                      0 00-3.375-3.375h-1.5A1.125 1.125 
+                      0 0113.5 7.125v-1.5a3.375 3.375 
+                      0 00-3.375-3.375H8.25m2.25 
+                      0H5.625c-.621 0-1.125.504-1.125 
+                      1.125v17.25c0 .621.504 1.125 1.125 
+                      1.125h12.75c.621 0 1.125-.504 
+                      1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
                 </button>
-                <button type="button" class="icon-button" title="Ver documento">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                    </svg>
-                </button>
+              </div>
             </div>
           </div>
         </form>
@@ -74,32 +160,6 @@
     </main>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'DashboardFunctional',
-  data() {
-    return {
-      // Objeto para almacenar todos los datos del formulario
-      formData: {
-        nombreActividad: '',
-        fecha: '',
-        numeroHoras: '',
-        institucion: '',
-        encargado: '',
-        descripcion: ''
-      }
-    };
-  },
-  methods: {
-    // Puedes usar este método para ver los datos en la consola al enviar
-    submitForm() {
-      console.log('Datos del formulario:', this.formData);
-      alert('Revisa la consola para ver los datos del formulario.');
-    }
-  }
-}
-</script>
 
 <style scoped>
 /* Estilos Generales y Contenedor Principal */
@@ -146,7 +206,7 @@ export default {
 
 /* Efecto de Cristal (Glassmorphism) */
 .sidebar, .content-form {
-  background: rgba(255, 255, 255, 0.6); /* Más opaco para parecer más blanco */
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(8px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -172,32 +232,33 @@ export default {
 .content-form h2 { color: #333; margin-top: 0; margin-bottom: 25px; font-size: 24px; }
 form {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
 .form-input {
-  background-color: rgba(80, 80, 80, 0.5); /* Fondo oscuro como en la imagen */
+  background-color: rgba(80, 80, 80, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 12px 15px;
   font-size: 15px;
-  color: white; /* Color del texto que se escribe */
+  color: white;
   outline: none;
   transition: background-color 0.3s;
 }
-.form-input::placeholder {
-  color: rgba(255, 255, 255, 0.8); /* Color del texto de marcador */
-}
-.form-input:focus {
-  background-color: rgba(80, 80, 80, 0.7);
-}
-.form-input.full-width {
-  grid-column: 1 / -1; /* Ocupa todo el ancho del grid */
-}
-textarea.form-input {
-  height: 100px;
-  resize: vertical;
-}
+.form-input::placeholder { color: rgba(255, 255, 255, 0.8); }
+.form-input:focus { background-color: rgba(80, 80, 80, 0.7); }
+.form-group.full-width { grid-column: 1 / -1; }
+textarea.form-input { height: 100px; resize: vertical; }
 .evidence-field {
   display: flex;
   justify-content: space-between;

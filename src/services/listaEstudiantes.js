@@ -15,3 +15,12 @@ export async function getEstudiantes(grado = null, grupo = null) {
     throw error
   }
 }
+export async function getActividadesPorEstudiante(estudianteId) {
+  try {
+    const response = await api.get(`/estudiante/${estudianteId}/actividades/`)
+    return response.data
+  } catch (error) {
+    console.error(`Error cargando actividades del estudiante ${estudianteId}:`, error)
+    throw error
+  }
+}

@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted, watch } from "vue"
-import { getEstudiantes } from "../services/listaEstudiantes"
+import { useRouter } from "vue-router"
+import { getEstudiantes, } from "../services/listaEstudiantes"
 
-// Estado reactivo
+const router = useRouter()
+
 const sections = ["10", "11"]
 const selectedSection = ref("10")
 const groups = ["A", "B", "C", "D", "E"]
@@ -11,7 +13,6 @@ const estudiantes = ref([])
 const cargando = ref(false)
 const error = ref(false)
 
-// Formatear fecha
 function formatFecha(fechaIso) {
   if (!fechaIso) return "—"
   const fecha = new Date(fechaIso)
@@ -22,7 +23,6 @@ function formatFecha(fechaIso) {
   })
 }
 
-// Cargar estudiantes
 async function cargarEstudiantes() {
   cargando.value = true
   error.value = false
@@ -37,9 +37,18 @@ async function cargarEstudiantes() {
   }
 }
 
-// Montaje y reactividad
+// Función para ver actividades y navegar a actividades_ver con la id del estudiante
+function verActividades(estudiante) {
+  router.push({
+    name: "actividades_ver", // nombre de la ruta
+    params: { idEstudiante: estudiante.id } // pasamos el id del estudiante
+  })
+}
+
 onMounted(cargarEstudiantes)
-watch([selectedSection, selectedGroup], cargarEstudiantes)
+watch([selectedSection, selectedGroup], () => {
+  cargarEstudiantes()
+})
 </script>
 
 <template>
@@ -58,7 +67,6 @@ watch([selectedSection, selectedGroup], cargarEstudiantes)
     </header>
 
     <div class="content">
-      <!-- ✅ Sidebar igual al original -->
       <aside class="sidebar">
         <div class="section-select">
           <div style="display: flex; gap: 10px;">
@@ -83,7 +91,6 @@ watch([selectedSection, selectedGroup], cargarEstudiantes)
         </ul>
       </aside>
 
-      <!-- ✅ Main content -->
       <main class="main-content">
         <div class="section-header">
           <span class="section-title">
@@ -111,7 +118,9 @@ watch([selectedSection, selectedGroup], cargarEstudiantes)
                 <td>{{ est.horas_verificadas }}</td>
                 <td>{{ formatFecha(est.ultima_carga) }}</td>
                 <td>
-                  <a class="btn-evidencia" :href="`/actividades_ver/${est.id}`">Ver Actividades</a>
+                  <button class="btn-evidencia" @click="verActividades(est)">
+                    Ver Actividades
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -121,8 +130,6 @@ watch([selectedSection, selectedGroup], cargarEstudiantes)
     </div>
   </div>
 </template>
-
-
 
 <style scoped>
 .main-container { background: #f3f5f7; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif; }
@@ -149,16 +156,8 @@ th.th-espaciado { text-align: left; font-size: 1.1em; color: #222; padding-botto
 td { font-size: 1em; padding: 0.5em 0.7em; }
 .estudiante { background: #bdbdbd; color: #fff; border-radius: 10px 0 0 10px; font-weight: 600; }
 .btn-evidencia { background: #ff3c3c; color: #fff; border: none; border-radius: 8px; padding: 0.3em 1.2em; font-weight: 600; cursor: pointer; font-size: 1em; }
-.estado { border-radius: 8px; padding: 0.2em 1em; font-weight: 600; color: #fff; display: inline-block; }
-.estado.pendiente { background: #bdbdbd; color: #222; }
-.estado.aprobado { background: #222; color: #fff; }
-.btn-aprobar { background: #ff3c3c; color: #fff; border: none; border-radius: 12px; padding: 0.3em 1.2em; font-weight: 600; cursor: pointer; font-size: 1em; display: flex; align-items: center; gap: 0.5em; transition: background 0.2s; }
-.btn-aprobar.aprobado { background: #222; }
-.arrow { font-size: 0.9em; }
 @media (max-width: 900px) {
   .main-content { padding: 1rem 0.5rem; }
   .tabla-estudiantes { padding: 1rem; }
 }
 </style>
-
-

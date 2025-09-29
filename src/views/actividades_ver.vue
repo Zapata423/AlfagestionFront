@@ -1,27 +1,47 @@
-<script setup> </script>
 <script>
+import { getActividadesPorEstudiante } from "../services/listaEstudiantes"
+
 export default {
+  props: ["idEstudiante"],
   data() {
     return {
-      userName: 'Alejandro Bediya Mintoya', // Cambia este valor por el nombre que quieras mostrar
-      estudiantes: [
-        { nombre: "Alejandro", actividad: "-", horas: 55, estado: "Pendiente" },
-        { nombre: "Beatriz", actividad: "-", horas: 50, estado: "Aprobado" },
-        { nombre: "Camila", actividad: "-", horas: 22, estado: "Pendiente" },
-        { nombre: "Daniel", actividad: "-", horas: 45, estado: "Pendiente" },
-        { nombre: "Elena", actividad: "-", horas: 15, estado: "Aprobado" },
-        { nombre: "Fernando", actividad: "-", horas: 54, estado: "Pendiente" },
-        { nombre: "Gabriela", actividad: "-", horas: 20, estado: "Pendiente" },
-        { nombre: "Hugo", actividad: "-", horas: 12, estado: "Aprobado" },
-        { nombre: "Isabel", actividad: "-", horas: 10, estado: "Pendiente" },
-        { nombre: "Juan", actividad: "-", horas: 48, estado: "Pendiente" }
-      ]
+      userName: "Estudiante",
+      actividades: [],
+      cargando: false,
+      error: false,
     }
   },
-  methods: {
-    aprobar(est) {
-      if (est.estado === "Pendiente") est.estado = "Aprobado";
+methods: {
+  async cargarActividades() {
+    this.cargando = true
+    this.error = false
+    try {
+      const data = await getActividadesPorEstudiante(this.idEstudiante)
+      // formatear fechas
+      this.actividades = data.map(act => ({
+        ...act,
+        fecha_subida: this.formatearFecha(act.fecha_subida)
+      }))
+    } catch (err) {
+      console.error("Error cargando actividades:", err)
+      this.error = true
+    } finally {
+      this.cargando = false
     }
+  },
+  formatearFecha(fechaIso) {
+    const fecha = new Date(fechaIso)
+    return fecha.toLocaleString("es-CO", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  }
+},
+  mounted() {
+    this.cargarActividades()
   }
 }
 </script>
@@ -31,61 +51,56 @@ export default {
     <header class="header">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" class="logo" />
       <nav>
-        <a href="#">Inicio</a>
+        <a href="/ini_docentes">Inicio</a>
         <a href="#">Mi perfil</a>
       </nav>
       <input class="search" placeholder="Buscar" />
       <div class="avatar"></div>
     </header>
-    <div class="content">
-      <aside class="sidebar">
-        <div class="section-select">
-          <div style="display: flex; gap: 10px;">
 
-          </div>
-        </div>
-        <ul class="menu">
-          <li :class="{ active: activeMenu === 'Inicio' }" @click="activeMenu = 'Inicio'">
-            <a href="#inicio" style="color: inherit; text-decoration: none;">🏠 Inicio</a>
-          </li>
-          <li :class="{ active: activeMenu === 'Solicitudes' }" @click="activeMenu = 'Solicitudes'">
-            <a href="/solicitud_apro" style="color: inherit; text-decoration: none;">📄 Solicitudes</a>
-          </li>
-          <li :class="{ active: activeMenu === 'Evidencia' }" @click="activeMenu = 'Evidencia'">
-            <a href="/actividades_ver" style="color: inherit; text-decoration: none;">🖼️ Evidencia</a>
-          </li>
-        </ul>
-      </aside>
-      <main class="main-content">
-        <!-- Título con el nombre del estudiante -->
-        <h1 class="user-title">{{ userName }}</h1>
-        <div class="tabla-estudiantes">
-          <table>
-            <thead>
-              <tr>
-                <th class="th-espaciado">Actividad</th>
-                <th class="th-espaciado">Horas</th>
-                <th class="th-espaciado">Evidencia</th>
-                <th class="th-espaciado">Estado</th>
-                <th class="th-espaciado">.</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(est, i) in estudiantes" :key="i">
-                <td class="estudiante">{{ est.nombre }}</td>
-                <td>{{ est.actividad }}</td>
-                <td><a class="btn-evidencia" href="/actividades_registro">Ver Evidencia</a></td>
-                <th class="th-espaciado">05/07/2025</th>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </main>
-    </div>
+    <main class="main-content">
+      <h1 class="user-title">Actividades del estudiante {{ idEstudiante }}</h1>
+
+      <div v-if="cargando">⏳ Cargando actividades...</div>
+      <div v-else-if="error">⚠️ Error cargando actividades</div>
+      <div v-else class="tabla-estudiantes">
+        <table>
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Horas</th>
+              <th>Fecha subida</th>
+              <th>Estado</th>
+              <th>Evidencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="act in actividades" :key="act.id">
+              <td class="estudiante">{{ act.titulo }}</td>
+              <td>{{ act.horas }}</td>
+              <td>{{ act.fecha_subida }}</td>
+              <td>
+                <span class="estado" :class="act.estado.toLowerCase()">
+                  {{ act.estado }}
+                </span>
+              </td>
+              <td>
+                <router-link
+                  class="btn-evidencia"
+                  :to="{ name: 'actividades_registro', params: { actividadId: act.id } }"
+                >
+                  Ver Evidencia
+                </router-link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
   </div>
 </template>
+
+
 
 <style scoped>
 .main-container { background: #f3f5f7; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif; }
