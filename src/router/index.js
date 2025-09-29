@@ -87,14 +87,16 @@ const router = createRouter({
       props: true
     },
     {
-      path: "/encargado_registro",
+      path: "/encargado_registro/:actividadId",
       name: "encargado_registro",
-      component: encargado_registro
+      component: encargado_registro,
+      props: true
     },
     {
-      path: "/organizacion_registro",
+      path: "/organizacion_registro/:actividadId",
       name: "organizacion_registro",
-      component: organizacion_registro
+      component: organizacion_registro,
+      props: true
     },
     {
       path: "/",

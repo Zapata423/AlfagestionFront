@@ -86,13 +86,29 @@ function verEvidencia() {
       <aside class="sidebar">
         <ul>
           <li class="active">
-            <a href="/actividades_registro" style="color: inherit; text-decoration: none; display: block;">Actividad</a>
+            <router-link
+              :to="{ name: 'actividades_registro', params: { actividadId: actividadId } }"
+              style="color: inherit; text-decoration: none; display: block;"
+            >
+              Actividad
+            </router-link>
           </li>
+          
           <li>
-            <a href="/encargado_registro" style="color: inherit; text-decoration: none; display: block;">Encargado</a>
-          </li>
+            <router-link
+              :to="{ name: 'encargado_registro', params: { actividadId: actividadId } }"
+              style="color: inherit; text-decoration: none; display: block;"
+            >
+              Encargado
+            </router-link>
+          </li> 
           <li>
-            <a href="/organizacion_registro" style="color: inherit; text-decoration: none; display: block;">Organizacion</a>
+            <router-link
+              :to="{ name: 'organizacion_registro', params: { actividadId: actividadId } }"
+              style="color: inherit; text-decoration: none; display: block;"
+            >
+              Institucion
+            </router-link>
           </li>
           <li>
             <a href="/actividades_ver" style="color: inherit; text-decoration: none; display: block;">Volver</a>
@@ -269,4 +285,5 @@ textarea.form-input { height: 100px; resize: vertical; }
 .evidence-actions { display: flex; gap: 10px; }
 .icon-button { background: transparent; border: none; cursor: pointer; color: white; padding: 5px; }
 .icon-button svg { width: 24px; height: 24px; }
+
 </style>
