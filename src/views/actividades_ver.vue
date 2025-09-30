@@ -11,35 +11,35 @@ export default {
       error: false,
     }
   },
-methods: {
-  async cargarActividades() {
-    this.cargando = true
-    this.error = false
-    try {
-      const data = await getActividadesPorEstudiante(this.idEstudiante)
-      // formatear fechas
-      this.actividades = data.map(act => ({
-        ...act,
-        fecha_subida: this.formatearFecha(act.fecha_subida)
-      }))
-    } catch (err) {
-      console.error("Error cargando actividades:", err)
-      this.error = true
-    } finally {
-      this.cargando = false
+  methods: {
+    async cargarActividades() {
+      this.cargando = true
+      this.error = false
+      try {
+        const data = await getActividadesPorEstudiante(this.idEstudiante)
+        // formatear fechas
+        this.actividades = data.map(act => ({
+          ...act,
+          fecha_subida: this.formatearFecha(act.fecha_subida)
+        }))
+      } catch (err) {
+        console.error("Error cargando actividades:", err)
+        this.error = true
+      } finally {
+        this.cargando = false
+      }
+    },
+    formatearFecha(fechaIso) {
+      const fecha = new Date(fechaIso)
+      return fecha.toLocaleString("es-CO", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      })
     }
   },
-  formatearFecha(fechaIso) {
-    const fecha = new Date(fechaIso)
-    return fecha.toLocaleString("es-CO", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    })
-  }
-},
   mounted() {
     this.cargarActividades()
   }
@@ -72,6 +72,7 @@ methods: {
               <th>Fecha subida</th>
               <th>Estado</th>
               <th>Evidencia</th>
+              <th>Verificar</th>
             </tr>
           </thead>
           <tbody>
@@ -80,7 +81,7 @@ methods: {
               <td>{{ act.horas }}</td>
               <td>{{ act.fecha_subida }}</td>
               <td>
-                <span class="estado" :class="act.estado.toLowerCase()">
+                <span class="estado" :class="act.estado.trim().toLowerCase()">
                   {{ act.estado }}
                 </span>
               </td>
@@ -89,7 +90,17 @@ methods: {
                   class="btn-evidencia"
                   :to="{ name: 'actividades_registro', params: { actividadId: act.id } }"
                 >
-                  Ver Evidencia
+                  Evidencias
+                </router-link>
+              </td>
+              <td>
+                <router-link
+                  class="btn-verificar"
+                  :to="act.validacion_enviada 
+                      ? { name: 'editar_actividad', params: { actividadId: act.id } } 
+                      : { name: 'verificar_actividad', params: { actividadId: act.id } }"
+                >
+                  {{ act.validacion_enviada ? 'Editar' : 'Verificar' }}
                 </router-link>
               </td>
             </tr>
@@ -100,9 +111,8 @@ methods: {
   </div>
 </template>
 
-
-
 <style scoped>
+/* Mantiene el mismo CSS que ya tenías */
 .main-container { background: #f3f5f7; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif; }
 .header { display: flex; align-items: center; background: #d90000; padding: 0 2rem; height: 80px; }
 .logo { height: 60px; margin-right: 1rem; background: #fff; padding: 0.2rem 0.5rem; border-radius: 4px; }
@@ -127,12 +137,12 @@ table { width: 100%; border-collapse: separate; border-spacing: 0 0.7em; }
 th.th-espaciado { text-align: left; font-size: 1.1em; color: #222; padding-bottom: 0.5em; padding-left: 32px; padding-right: 32px; font-weight: bold; }
 td { font-size: 1em; padding: 0.5em 0.7em; }
 .estudiante { background: #bdbdbd; color: #fff; border-radius: 10px 0 0 10px; font-weight: 600; }
-.btn-evidencia { background: #ff3c3c; color: #fff; border: none; border-radius: 8px; padding: 0.3em 1.2em; font-weight: 600; cursor: pointer; font-size: 1em; }
-.estado { border-radius: 8px; padding: 0.2em 1em; font-weight: 600; color: #fff; display: inline-block; }
-.estado.pendiente { background: #bdbdbd; color: #222; }
-.estado.aprobado { background: #222; color: #fff; }
-.btn-aprobar { background: #ff3c3c; color: #fff; border: none; border-radius: 12px; padding: 0.3em 1.2em; font-weight: 600; cursor: pointer; font-size: 1em; display: flex; align-items: center; gap: 0.5em; transition: background 0.2s; }
-.btn-aprobar.aprobado { background: #222; }
+.btn-evidencia { background: #ff3c3c; color: #fff; border: none; border-radius: 8px; padding: 0.6em 2em; font-weight: 600; cursor: pointer; font-size: 1em; }
+.btn-verificar { background: #099e1d; color: #fff; border: none; border-radius: 8px; padding: 0.6em 2em; font-weight: 600; cursor: pointer; font-size: 1em; }
+.estado { border-radius: 8px; padding: 0.2em 1em; font-weight: 600; color: #000000; display: inline-block; }
+.estado.pendiente { background: #ffee00; color: #ffffff; }
+.estado.aprobada { background: #03ff20; color: #fff; }
+.estado.rechazada { background: #d90000; color: #ffffff; }
 .arrow { font-size: 0.9em; }
 .user-title {
   color: #d90000;

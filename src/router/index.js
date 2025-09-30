@@ -9,6 +9,7 @@ import solicitud_apro from '../views/solicitud_apro.vue'
 import ini_estudiante from '../views/ini_estudiante.vue'
 import ini_docentes from '../views/ini_docentes.vue'
 import actividades_ver from '../views/actividades_ver.vue'
+import verificar_actividad from '../views/verificar_actividad.vue'
 import actividades_registro from '../views/actividades_registro.vue'
 import encargado_registro from '../views/encargado_registro.vue'
 import organizacion_registro from '../views/organizacion_registro.vue'
@@ -81,6 +82,12 @@ const router = createRouter({
 
     },
     {
+      path: "/verificar_actividad/:idEstudiante/:actividadId",
+      name: "verificar_actividad",
+      component: verificar_actividad,
+      props: true
+    },
+    {
       path: "/actividades_registro/:idEstudiante/:actividadId",
       name: "actividades_registro",
       component: actividades_registro,
@@ -98,6 +105,7 @@ const router = createRouter({
       component: organizacion_registro,
       props: true
     },
+  
     {
       path: "/",
       name: "ini_rol",

@@ -1,10 +1,9 @@
-import axios from 'axios'
 
-const API_URL = "http://localhost:8000/api"
+import api from "./api"
 
 export async function loginDocente(email, password) {
   try {
-    const response = await axios.post(`${API_URL}/loginDocentes/`, {
+    const response = await api.post("/loginDocentes/", {
       email,
       password,
     })
@@ -18,20 +17,19 @@ export async function loginDocente(email, password) {
   }
 }
 
-
 export async function logoutDocente() {
   try {
-    const refresh = localStorage.getItem('refresh')
+    const refresh = localStorage.getItem("refresh")
     if (!refresh) {
       throw { detail: "No hay refresh token guardado" }
     }
 
-    const response = await axios.post(`${API_URL}/logout/`, { refresh })
+    const response = await api.post("/logout/", { refresh })
 
-    // Limpiar todo el storage local
-    localStorage.removeItem('access')
-    localStorage.removeItem('refresh')
-    localStorage.removeItem('user')
+
+    localStorage.removeItem("access")
+    localStorage.removeItem("refresh")
+    localStorage.removeItem("user")
 
     return response.data
   } catch (error) {
