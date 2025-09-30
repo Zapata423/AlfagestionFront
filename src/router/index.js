@@ -81,19 +81,19 @@ const router = createRouter({
 
     },
     {
-      path: "/actividades_registro/:actividadId",
+      path: "/actividades_registro/:idEstudiante/:actividadId",
       name: "actividades_registro",
       component: actividades_registro,
       props: true
     },
     {
-      path: "/encargado_registro/:actividadId",
+      path: "/encargado_registro/:idEstudiante/:actividadId",
       name: "encargado_registro",
       component: encargado_registro,
       props: true
     },
     {
-      path: "/organizacion_registro/:actividadId",
+      path: "/organizacion_registro/:idEstudiante/:actividadId",
       name: "organizacion_registro",
       component: organizacion_registro,
       props: true

@@ -111,7 +111,12 @@ function verEvidencia() {
             </router-link>
           </li>
           <li>
-            <a href="/actividades_ver" style="color: inherit; text-decoration: none; display: block;">Volver</a>
+            <router-link
+              :to="{ name: 'actividades_ver', params: { idEstudiante } }"
+              style="color: inherit; text-decoration: none; display: block;"
+            >
+              Volver
+            </router-link>
           </li>
         </ul>
       </aside>
