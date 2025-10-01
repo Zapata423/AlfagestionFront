@@ -32,6 +32,9 @@ async function handleLogin() {
 <template>
   <div class="login-container">
     <div class="login-form">
+
+      <a href="http://localhost:8080/" class="back-button">←</a>
+
       <h1 class="logo">AlfaGestion</h1>
       <h2 class="welcome-title">Bienvenido al sistema de Estudiantes</h2>
       <form @submit.prevent="handleLogin">
@@ -67,6 +70,7 @@ async function handleLogin() {
   justify-content: center;
   align-items: center;
   font-family: 'Roboto', sans-serif;
+  position: relative;
 }
 
 .login-form {
@@ -80,6 +84,7 @@ async function handleLogin() {
   text-align: center;
   width: 100%;
   max-width: 400px;
+  position: relative;
 }
 
 .logo {
@@ -118,12 +123,12 @@ async function handleLogin() {
   background-color: #fff;
   font-size: 1rem;
   transition: border-color 0.3s;
-  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  box-sizing: border-box;
 }
 
 .input-group input:focus {
   outline: none;
-  border-color: #e53935; /* Color rojo del botón */
+  border-color: #e53935;
 }
 
 .login-button {
@@ -131,7 +136,7 @@ async function handleLogin() {
   padding: 0.9rem;
   border: none;
   border-radius: 25px;
-  background-color: #e53935; /* Tono de rojo */
+  background-color: #e53935;
   color: white;
   font-size: 1.1rem;
   font-weight: bold;
@@ -141,7 +146,7 @@ async function handleLogin() {
 }
 
 .login-button:hover {
-  background-color: #c62828; /* Rojo más oscuro */
+  background-color: #c62828;
   transform: translateY(-2px);
 }
 
@@ -159,11 +164,32 @@ async function handleLogin() {
   text-decoration: underline;
 }
 
-
 .error-message {
   color: #e53935;
   margin-top: 1rem;
   font-size: 0.9rem;
   font-weight: bold;
+}
+
+/* Flecha para volver */
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #e53935;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color: #c62828;
+  transform: scale(1.1);
 }
 </style>

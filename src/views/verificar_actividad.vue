@@ -1,21 +1,23 @@
 <script setup>
 import { reactive } from "vue"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { validarActividad } from "../services/validaciones"
 
-// Obtener parámetro de la ruta
 const route = useRoute()
+const router = useRouter()
+
 const actividadIdRaw = route.params.actividadId ?? route.params.id ?? route.query.actividadId
 const actividadId = actividadIdRaw ? Number(actividadIdRaw) : null
 console.log("Actividad ID:", actividadId)
 
-// Estado reactivo para el formulario
+// Supongamos que idEstudiante viene como query o param
+let idEstudiante = route.params.idEstudiante ?? route.query.idEstudiante ?? null
+
 const formData = reactive({
   status: "",       // Estado de la actividad
   comentarios: ""   // Observaciones
 })
 
-// Enviar validación al backend
 async function onSubmit() {
   if (!actividadId) {
     alert("❌ No se pudo identificar la actividad")
@@ -35,16 +37,24 @@ async function onSubmit() {
     })
     console.log("Respuesta validación:", res)
     alert("✅ Actividad validada con éxito")
-    // Opcional: resetear formulario
     formData.status = ""
     formData.comentarios = ""
-  }catch (err) {
+  } catch (err) {
     console.error("Error validando actividad:", err.response?.data || err)
     alert("❌ Hubo un error al validar la actividad: " + JSON.stringify(err.response?.data))
   }
 }
 
+// Función para cancelar
+function onCancel() {
+  if (!idEstudiante) {
+    alert("❌ No se pudo identificar al estudiante")
+    return
+  }
+  router.push(`/actividades_ver/${idEstudiante}`)
+}
 </script>
+
 
 <template>
   <div class="app-container">
@@ -107,6 +117,9 @@ async function onSubmit() {
           <!-- Botón -->
           <div class="form-group full-width">
             <button type="submit" class="btn-guardar">Guardar Validación</button>
+          </div>
+          <div class="form-group full-width">
+            <button type="button" class="btn-cancelar" @click="onCancel">Cancelar</button>
           </div>
         </form>
       </section>
@@ -264,6 +277,21 @@ form {
   transition: transform 0.08s ease;
 }
 .btn-guardar:hover {
+  transform: translateY(-2px);
+}
+
+.btn-cancelar {
+  cursor: pointer;
+  background: #ff0000;
+  color: white;
+  font-weight: 700;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: transform 0.08s ease;
+}
+.btn-cancelar:hover {
   transform: translateY(-2px);
 }
 

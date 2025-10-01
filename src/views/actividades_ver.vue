@@ -49,18 +49,20 @@ export default {
 <template>
   <div class="main-container">
     <header class="header">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" class="logo" />
-      <nav>
-        <a href="/ini_docentes">Inicio</a>
-        <a href="#">Mi perfil</a>
-      </nav>
-      <input class="search" placeholder="Buscar" />
-      <div class="avatar"></div>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" class="logo" />
+    <nav>
+      <a href="/ini_docentes">Inicio</a>
+      <a href="#">Mi perfil</a>
+    </nav>
+    <input class="search" placeholder="Buscar" />
+    <div class="avatar"></div>
     </header>
 
-    <main class="main-content">
-      <h1 class="user-title">Actividades del estudiante {{ idEstudiante }}</h1>
-
+     <main class="main-content">
+      <a href="../solicitud_apro" class="back-button">←</a>
+      <div class="title-with-arrow"> 
+        <h1 class="user-title">Actividades del estudiante {{ idEstudiante }}</h1>
+        </div>
       <div v-if="cargando">⏳ Cargando actividades...</div>
       <div v-else-if="error">⚠️ Error cargando actividades</div>
       <div v-else class="tabla-estudiantes">
@@ -112,7 +114,7 @@ export default {
 </template>
 
 <style scoped>
-/* Mantiene el mismo CSS que ya tenías */
+/* ... (El CSS de los elementos de diseño como .main-container, .header, etc., se mantiene sin cambios) ... */
 .main-container { background: #f3f5f7; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif; }
 .header { display: flex; align-items: center; background: #d90000; padding: 0 2rem; height: 80px; }
 .logo { height: 60px; margin-right: 1rem; background: #fff; padding: 0.2rem 0.5rem; border-radius: 4px; }
@@ -144,14 +146,54 @@ td { font-size: 1em; padding: 0.5em 0.7em; }
 .estado.aprobada { background: #03ff20; color: #fff; }
 .estado.rechazada { background: #d90000; color: #ffffff; }
 .arrow { font-size: 0.9em; }
-.user-title {
-  color: #d90000;
-  font-size: 2em;
-  font-weight: bold;
-  margin-bottom: 1rem;
+
+/* ************************************************************ */
+/* ESTILOS MODIFICADOS PARA ALINEAR LA FLECHA A LA IZQUIERDA Y CENTRAR EL TÍTULO */
+.title-with-arrow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    max-width: 900px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    /* Quitamos el padding aquí y lo devolvemos al .main-content para que la flecha quede "pegada" al borde del contenedor centrado */
+    padding: 0; 
 }
+
+/* Eliminamos el elemento "fantasma" (::after) que se usó en el paso anterior */
+/* .title-with-arrow::after { ... } */
+
+.back-button {
+    background-color: #e53935;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-decoration: none;
+    margin-right: 1rem; 
+}
+
+.back-button:hover {
+    background-color: #c62828;
+    transform: scale(1.1);
+}
+
+.user-title {
+    color: #d90000;
+    font-size: 2em;
+    font-weight: bold;
+    /* CAMBIO CLAVE: Usamos margin-left: auto y margin-right: auto para centrar el título con respecto al espacio restante, que es todo el ancho después de la flecha. */
+    margin-left: auto; 
+    margin-right: auto;
+}
+/* ************************************************************ */
+
 @media (max-width: 900px) {
-  .main-content { padding: 1rem 0.5rem; }
-  .tabla-estudiantes { padding: 1rem; }
+    .main-content { padding: 1rem 0.5rem; }
+    .tabla-estudiantes { padding: 1rem; }
+    /* El .title-with-arrow ya no tiene padding, pero nos aseguramos de que el .main-content sí lo tenga */
 }
 </style>

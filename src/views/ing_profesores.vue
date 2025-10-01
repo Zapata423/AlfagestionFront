@@ -32,6 +32,7 @@ async function handleLogin() {
 <template>
 <div class="login-container">
   <div class="login-form">
+    <a href="http://localhost:8080/" class="back-button">←</a>
     <h1 class="logo">AlfaGestion</h1>
     <h2 class="welcome-title">Bienvenido al sistema de Docentes</h2>
 
@@ -167,5 +168,25 @@ text-decoration: underline;
   margin-top: 1rem;
   font-size: 0.9rem;
   font-weight: bold;
+}
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #e53935;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color: #c62828;
+  transform: scale(1.1);
 }
 </style>

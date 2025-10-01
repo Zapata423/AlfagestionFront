@@ -1,11 +1,16 @@
 <script setup>
 import { reactive, onMounted } from "vue"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { editarValidacionActividad, obtenerValidacionActividad } from "../services/validaciones"
 
 const route = useRoute()
+const router = useRouter()
+
 const actividadIdRaw = route.params.actividadId ?? route.params.id ?? route.query.actividadId
 const actividadId = actividadIdRaw ? Number(actividadIdRaw) : null
+
+// Supongamos que idEstudiante viene en la validación o como query
+let idEstudiante = route.params.idEstudiante ?? route.query.idEstudiante ?? null
 
 const formData = reactive({
   status: "",
@@ -21,6 +26,8 @@ onMounted(async () => {
     if (res) {
       formData.status = res.status
       formData.comentarios = res.comentarios
+      // Si viene del backend, tomamos idEstudiante
+      if (!idEstudiante && res.estudiante_id) idEstudiante = res.estudiante_id
     } else {
       alert("❌ No se encontró la validación de esta actividad")
     }
@@ -54,7 +61,17 @@ async function onSubmit() {
     alert("❌ Hubo un error al editar la validación: " + JSON.stringify(err.response?.data))
   }
 }
+
+// Función para cancelar
+function onCancel() {
+  if (!idEstudiante) {
+    alert("❌ No se pudo identificar al estudiante")
+    return
+  }
+  router.push(`/actividades_ver/${idEstudiante}`)
+}
 </script>
+
 
 
 <template>
@@ -118,6 +135,9 @@ async function onSubmit() {
           <!-- Botón -->
           <div class="form-group full-width">
             <button type="submit" class="btn-guardar">Guardar Validación</button>
+          </div>
+          <div class="form-group full-width">
+            <button type="button" class="btn-cancelar" @click="onCancel">Cancelar</button>
           </div>
         </form>
       </section>
@@ -275,6 +295,21 @@ form {
   transition: transform 0.08s ease;
 }
 .btn-guardar:hover {
+  transform: translateY(-2px);
+}
+
+.btn-cancelar {
+  cursor: pointer;
+  background: #ff0000;
+  color: white;
+  font-weight: 700;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: transform 0.08s ease;
+}
+.btn-cancelar:hover {
   transform: translateY(-2px);
 }
 

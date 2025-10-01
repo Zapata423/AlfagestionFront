@@ -82,11 +82,11 @@ watch([selectedSection, selectedGroup], () => {
           </div>
         </div>
         <ul class="menu">
-          <li :class="{ active: false }">
-            <a href="/ini_docentes" style="color: inherit; text-decoration: none;">🏠 Inicio</a>
-          </li>
           <li :class="{ active: true }">
             <a href="/solicitud_apro" style="color: inherit; text-decoration: none;">📄 Solicitudes</a>
+          </li>
+          <li :class="{ active: false }">
+            <a href="/ini_docentes" style="color: inherit; text-decoration: none;"> Volver</a>
           </li>
         </ul>
       </aside>
