@@ -97,7 +97,7 @@ export default {
                 <router-link
                   class="btn-verificar"
                   :to="act.tiene_validacion 
-                      ? { name: '',  } 
+                      ? { name: 'editar_verificacion', params: { idEstudiante, actividadId: act.id, verificacionId: act.validacion_id } } 
                       : { name: 'verificar_actividad', params: { actividadId: act.id } }"
                 >
                   {{ act.tiene_validacion ? 'Editar' : 'Verificar' }}

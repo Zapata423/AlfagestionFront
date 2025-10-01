@@ -89,7 +89,7 @@ const router = createRouter({
       props: true
     },
     {
-    path: "/verificacion/:validacionId/editar",
+    path: "/editar_verificacion/:idEstudiante/:actividadId/:verificacionId",
     name: "editar_verificacion",
     component: editar_verificacion,
     props: true
