@@ -10,6 +10,7 @@ import ini_estudiante from '../views/ini_estudiante.vue'
 import ini_docentes from '../views/ini_docentes.vue'
 import actividades_ver from '../views/actividades_ver.vue'
 import verificar_actividad from '../views/verificar_actividad.vue'
+import editar_verificacion from '../views/editar_verificacion.vue'
 import actividades_registro from '../views/actividades_registro.vue'
 import encargado_registro from '../views/encargado_registro.vue'
 import organizacion_registro from '../views/organizacion_registro.vue'
@@ -86,6 +87,12 @@ const router = createRouter({
       name: "verificar_actividad",
       component: verificar_actividad,
       props: true
+    },
+    {
+    path: "/verificacion/:validacionId/editar",
+    name: "editar_verificacion",
+    component: editar_verificacion,
+    props: true
     },
     {
       path: "/actividades_registro/:idEstudiante/:actividadId",

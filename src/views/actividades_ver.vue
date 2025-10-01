@@ -96,11 +96,11 @@ export default {
               <td>
                 <router-link
                   class="btn-verificar"
-                  :to="act.validacion_enviada 
-                      ? { name: 'editar_actividad', params: { actividadId: act.id } } 
+                  :to="act.tiene_validacion 
+                      ? { name: '',  } 
                       : { name: 'verificar_actividad', params: { actividadId: act.id } }"
                 >
-                  {{ act.validacion_enviada ? 'Editar' : 'Verificar' }}
+                  {{ act.tiene_validacion ? 'Editar' : 'Verificar' }}
                 </router-link>
               </td>
             </tr>
