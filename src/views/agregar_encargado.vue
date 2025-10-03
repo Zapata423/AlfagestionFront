@@ -27,13 +27,17 @@ async function submitForm() {
     alert("No se pudo registrar el Encargado.")
   }
 }
+
+// Función para simular la acción del botón "Cancelar" y navegar a otra vista
+function cancelAction() {
+  router.push('/encargado_vista')
+}
 </script>
 
 <template>
 
   <div class="app-container">
 
-    <!-- Header -->
     <header class="main-header">
       <div class="header-left">
 
@@ -63,10 +67,8 @@ async function submitForm() {
       </div>
     </header>
 
-    <!-- Main content -->
     <main class="main-content">
     
-      <!-- Sidebar -->
       <aside class="sidebar">
         <ul class="sidebar-nav-list">
           <li>
@@ -97,13 +99,15 @@ async function submitForm() {
             </a>
           </li>
         </ul>
-
-        <div class="sidebar-action">
-          <button class="submit-button" @click="submitForm">Subir</button>
+        
+        <div class="sidebar-action action-margin">
+          <button class="submit-button green-button" @click="submitForm">Subir</button>
         </div>
-      </aside>
+        <div class="sidebar-action">
+          <button class="cancel-button" @click="cancelAction">Cancelar</button>
+        </div>
+        </aside>
 
-      <!-- Formulario -->
       <section class="content-form">
       <h2>Agregar Encargado</h2>
         <form @submit.prevent="submitForm">
@@ -163,6 +167,7 @@ export default {
     };
   },
   methods: {
+    // Esta función es ignorada por <script setup> pero se mantiene por estructura
     submitForm() {
       console.log('Datos del formulario:', this.formData);
       alert('Revisa la consola para ver los datos del formulario.');
@@ -170,8 +175,6 @@ export default {
   }
 }
 </script>
-
-
 
 
 <style scoped>
@@ -226,7 +229,7 @@ export default {
 
 /* Barra Lateral (Sidebar) con Flexbox para alinear botón abajo */
 .sidebar {
-  width: 250px;
+  width: 227px;
   padding: 20px;
   color: #333;
   display: flex;
@@ -248,13 +251,19 @@ export default {
 .sidebar-nav-list li.active::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #ff0000; }
 .sidebar-nav-list li svg { width: 28px; height: 28px; }
 
-/* Botón "Subir" en la barra lateral */
-.sidebar-action {
-    margin-top: auto; /* Empuja este contenedor al fondo */
+/* Contenedor de Acción para el botón "Subir" (usa margin-top: auto) */
+.sidebar-action.action-margin {
+    margin-top: auto; /* Empuja el botón "Subir" y el grupo de botones al fondo */
     padding-top: 20px;
 }
-.submit-button {
-    background-color: #ff0000;
+/* Contenedor de Acción para el botón "Cancelar" */
+.sidebar-action:not(.action-margin) {
+    padding-top: 10px; /* Separación entre botones */
+}
+
+/* Estilo para el Botón SUBIR (VERDE) */
+.submit-button.green-button {
+    background-color: #28a745; /* Verde */
     color: white;
     border: none;
     width: 100%;
@@ -265,38 +274,13 @@ export default {
     cursor: pointer;
     transition: background-color 0.2s;
 }
-.submit-button:hover {
-    background-color: #d60000;
-}
-/* Estilos para el grupo de iconos */
-.icon-group {
-    justify-content: space-around !important;
-}
-.icon-btn {
-    background: #e0e0e0;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: #555;
-}
-.icon-btn svg { width: 24px; height: 24px; }
-.icon-btn.code-icon {
-    background-color: #28a745;
-    color: white;
+.submit-button.green-button:hover {
+    background-color: #218838;
 }
 
-/* Botón "Subir" en la barra lateral */
-.sidebar-action {
-    margin-top: auto;
-    padding-top: 20px;
-}
-.submit-button {
-    background-color: #ff0000;
+/* Estilo para el Botón CANCELAR (ROJO) */
+.cancel-button {
+    background-color: #ff0000; /* Rojo */
     color: white;
     border: none;
     width: 100%;
@@ -307,11 +291,11 @@ export default {
     cursor: pointer;
     transition: background-color 0.2s;
 }
-.submit-button:hover {
+.cancel-button:hover {
     background-color: #d60000;
 }
 
-/* Formulario Central */
+/* Formulario Central (sin cambios en inputs) */
 .content-form {
   flex-grow: 1;
   padding: 25px 35px;

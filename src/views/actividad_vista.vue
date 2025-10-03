@@ -55,6 +55,7 @@ onMounted(() => {
     </header>
 
     <!-- MAIN -->
+     <a href="/ini_estudiante" class="back-button">←</a>
     <main class="main-content">
       <div class="content-header">
         <a class="add-button" href="/actividad_registro">Agregar actividad</a>
@@ -144,7 +145,7 @@ export default {
 /* Barra de título y botón de agregar */
 .content-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 25px;
 }
@@ -157,8 +158,8 @@ export default {
   font-weight: bold;
 }
 .add-button {
-  background-color: #00ff00; /* Verde brillante */
-  color: black;
+  background-color: #28a745; /* Verde brillante */
+  color: rgb(255, 255, 255);
   border: none;
   padding: 12px 25px;
   border-radius: 8px;
@@ -217,5 +218,25 @@ export default {
 }
 .delete-button:hover {
   background-color: #e02b21;
+}
+.back-button {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  background-color: #e53935;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color: #c62828;
+  transform: scale(1.1);
 }
 </style>

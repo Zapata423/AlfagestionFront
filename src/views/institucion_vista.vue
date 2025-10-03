@@ -51,6 +51,7 @@ onMounted(() => {
     </header>
 
     <!-- CONTENIDO PRINCIPAL -->
+    <a href="/ini_estudiante" class="back-button">←</a>
     <main class="main-content">
       <div class="content-header">
         <a class="add-button" href="/institucion_registro">Agregar institución</a>
@@ -118,13 +119,13 @@ onMounted(() => {
 }
 .content-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 25px;
 }
 .add-button {
-  background-color: #00ff00;
-  color: black;
+  background-color: #28a745;
+  color: rgb(255, 255, 255);
   border: none;
   padding: 12px 25px;
   border-radius: 8px;
@@ -148,4 +149,24 @@ onMounted(() => {
 .item-name { background-color: #e0e0e0; padding: 12px 20px; border-radius: 8px; flex-grow: 1; margin-right: 15px; color: #444; }
 .delete-button { background-color: #ff3b30; color: white; border: none; padding: 10px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
 .delete-button:hover { background-color: #e02b21; }
+.back-button {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  background-color: #e53935;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color: #c62828;
+  transform: scale(1.1);
+}
 </style>

@@ -28,6 +28,9 @@ async function submitForm() {
     alert("No se pudo registrar la institución.")
   }
 }
+function cancelAction() {
+  router.push('/institucion_vista')
+}
 </script>
 
 <template>
@@ -95,10 +98,13 @@ async function submitForm() {
             </a>
           </li>
         </ul>
-        <div class="sidebar-action">
+        <div class="sidebar-action action-margin">
           <button class="submit-button" @click="submitForm">Subir</button>
         </div>
-      </aside>
+        <div class="sidebar-action">
+          <button class="cancel-button" @click="cancelAction">Cancelar</button>
+        </div>
+        </aside>
 
       <section class="content-form">
       <h2>Agregar Institucion</h2>
@@ -159,7 +165,6 @@ export default {
   name: 'DashboardInstitucionForm',
   data() {
     return {
-      // Objeto para almacenar los datos del formulario
       formData: {
         centroSocial: '',
         telefono: '',
@@ -172,6 +177,7 @@ export default {
     };
   },
   methods: {
+    // Nota: esta función submitForm es ignorada por Vue si existe en <script setup>
     submitForm() {
       console.log('Datos del formulario:', this.formData);
       alert('Revisa la consola para ver los datos del formulario.');
@@ -179,7 +185,6 @@ export default {
   }
 }
 </script>
-
 
 
 <style scoped>
@@ -234,7 +239,7 @@ export default {
 
 /* Barra Lateral (Sidebar) con Flexbox para alinear botón abajo */
 .sidebar {
-  width: 250px;
+  width: 227px;
   padding: 20px;
   color: #333;
   display: flex;
@@ -256,13 +261,39 @@ export default {
 .sidebar-nav-list li.active::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #ff0000; }
 .sidebar-nav-list li svg { width: 28px; height: 28px; }
 
-/* Botón "Subir" en la barra lateral */
+/* Botón "Subir" y contenedor general de acción */
 .sidebar-action {
-    margin-top: auto; /* Empuja este contenedor al fondo */
-    padding-top: 20px;
+    /* Quitamos margin-top: auto del contenedor general para que los dos botones
+       se muestren al final del sidebar, pero añadimos una clase de margen
+       al botón superior para separarlos. */
+    padding-top: 5px; /* Reducido para juntar los botones */
 }
+.action-margin {
+    margin-top: auto; /* Solo el primer contenedor de acción empuja hacia abajo */
+    padding-top: 20px !important;
+}
+
+/* Estilo para el botón Subir (verde por defecto en tu código, lo mantengo) */
 .submit-button {
-    background-color: #ff0000;
+    background-color: #28a745; /* Color verde para el botón Subir */
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 10px; /* Separación entre botones */
+}
+.submit-button:hover {
+    background-color: #218838;
+}
+
+/* NUEVO ESTILO: Botón Cancelar (ROJO) */
+.cancel-button {
+    background-color: #ff0000; /* Color rojo para el botón Cancelar */
     color: white;
     border: none;
     width: 100%;
@@ -273,11 +304,12 @@ export default {
     cursor: pointer;
     transition: background-color 0.2s;
 }
-.submit-button:hover {
+.cancel-button:hover {
     background-color: #d60000;
 }
 
-/* Formulario Central */
+
+/* Formulario Central (sin cambios) */
 .content-form {
   flex-grow: 1;
   padding: 25px 35px;

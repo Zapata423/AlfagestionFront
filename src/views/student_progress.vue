@@ -58,6 +58,7 @@ onMounted(() => {
 
 
 <template>
+  
   <div class="horas-container">
     <header class="header">
       <img
@@ -73,6 +74,7 @@ onMounted(() => {
     </header>
 
     <main>
+    <a href="/ini_estudiante" class="back-button">←</a>
       <h1 class="titulo">
         Horas completadas: {{ totalCompletadas }}/{{ totalHoras }}
       </h1>
@@ -313,6 +315,9 @@ td {
 .estado.aprobado {
   background: #1ec900;
 }
+.estado.rechazado {
+  background: #ff0000;
+}
 tr {
   background: #bdbdbd;
   border-radius: 12px;
@@ -332,5 +337,25 @@ tr td:last-child {
     padding: 1rem 1.5rem;
     font-size: 1.5rem;
   }
+}
+.back-button {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  background-color: #e53935;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color: #c62828;
+  transform: scale(1.1);
 }
 </style>

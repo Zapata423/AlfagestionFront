@@ -183,11 +183,11 @@ function verEvidencia() {
 </template>
 
 <style scoped>
-/* Estilos Generales y Contenedor Principal */
+/* Contenedor principal */
 .app-container {
   height: 100vh;
   width: 100vw;
-  background-image: url('https://scontent.feoh3-1.fna.fbcdn.net/v/t51.75761-15/481610614_18306353359227867_8885988781752331401_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG48Zk_KecLM9jpd4x-t2rKj7P_FqscypGPs_8WqxzKkZxSA_-z3Fof4PiSfNPs7L6jOELnYlGZlzGvlQLEcX-z&_nc_ohc=_mGcrzTpfGIQ7kNvwEge5VC&_nc_oc=AdkkzlL0pOOyV-hcvk2snjL4QhWpfE8Z-zkAWpDPhzoJr0X2d_uy8GKgaCIjuj6VYwKK-q41zaOoYHPX28WNk1-v&_nc_zt=23&_nc_ht=scontent.feoh3-1.fna&_nc_gid=hWl9J-dgLl_yZm5Zo6bs5g&oh=00_AfZg3EH2GU7GPpJRh08rIw4pdgVGr5X965b7dV5I-IrrEQ&oe=68CA8FD1');
+  background-image: url('/img/fondo 1.jpeg');  
   background-size: cover;
   background-position: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -207,15 +207,53 @@ function verEvidencia() {
   height: 60px;
   flex-shrink: 0;
 }
-.header-left, .header-right { display: flex; align-items: center; gap: 25px; }
-.logo { height: 45px; }
-.main-nav a { color: white; text-decoration: none; font-weight: 500; padding: 8px 15px; border-radius: 6px; transition: background-color 0.2s; }
-.main-nav a.active-link, .main-nav a:hover { background-color: rgba(0, 0, 0, 0.2); }
-.search-bar { display: flex; align-items: center; background-color: rgba(0, 0, 0, 0.2); padding: 5px 10px; border-radius: 20px; }
-.search-bar svg { width: 18px; height: 18px; margin-right: 5px; }
-.search-bar input { background: transparent; border: none; color: white; outline: none; }
-.search-bar input::placeholder { color: rgba(255, 255, 255, 0.7); }
-.profile-icon { width: 36px; height: 36px; background-color: #28a745; border-radius: 50%; border: 2px solid white; }
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+.logo {
+  height: 45px;
+}
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+.main-nav a.active-link, .main-nav a:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+.search-bar svg {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+.search-bar input {
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+}
+.search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+.profile-icon {
+  width: 36px;
+  height: 36px;
+  background-color: #28a745;
+  border-radius: 50%;
+  border: 2px solid white;
+}
 
 /* Contenido Principal */
 .main-content {
@@ -224,38 +262,77 @@ function verEvidencia() {
   padding: 30px;
   gap: 30px;
 }
-
-/* Efecto de Cristal (Glassmorphism) */
 .sidebar, .content-form {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255,255,255,0.6);
   backdrop-filter: blur(8px);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.1);
 }
 
-/* Barra Lateral */
+/* Sidebar */
 .sidebar {
-  width: 250px;
+  width: 321px;
   padding: 20px;
   color: #333;
 }
-.sidebar ul { list-style: none; padding: 0; margin: 0; }
-.sidebar li { padding: 15px 20px; font-weight: 500; border-radius: 8px; margin-bottom: 5px; cursor: pointer; position: relative; }
-.sidebar li.active { background-color: #ff0000; color: white; font-weight: bold; }
-.sidebar li.active::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #ff0000; }
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar li {
+  padding: 15px 20px;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  position: relative;
+}
+.sidebar li.active {
+  background-color: #ff0000;
+  color: white;
+  font-weight: bold;
+}
+.sidebar li.active::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #ff0000;
+}
 
-/* Formulario Central */
+/* Formulario - Estilos del Código 1 */
 .content-form {
   flex-grow: 1;
   padding: 25px 35px;
 }
-.content-form h2 { color: #333; margin-top: 0; margin-bottom: 25px; font-size: 24px; }
+.content-form h2 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 24px;
+}
 form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr); /* 6 columnas para flexibilidad, copiado de Codigo 1 */
   gap: 20px;
 }
+
+/* Clases de ancho del Código 1 */
+.form-group.half-width {
+  grid-column: span 3;
+}   /* ocupa la mitad (3/6) */
+.form-group.third-width {
+  grid-column: span 2;
+}  /* ocupa un tercio (2/6) */
+.form-group.full-width {
+  grid-column: 1 / -1;
+}   /* ocupa todo el ancho */
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -266,20 +343,28 @@ form {
   font-weight: 600;
   color: #333;
 }
-.form-input {
-  background-color: rgba(80, 80, 80, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 12px 15px;
-  font-size: 15px;
-  color: white;
-  outline: none;
-  transition: background-color 0.3s;
+.form-input { 
+  background-color: rgba(80,80,80,0.5); 
+  border: 1px solid rgba(255,255,255,0.1); 
+  border-radius: 8px; 
+  padding: 12px 15px; 
+  font-size: 15px; 
+  color: white; 
+  outline: none; 
+  transition: background-color 0.3s; 
 }
-.form-input::placeholder { color: rgba(255, 255, 255, 0.8); }
-.form-input:focus { background-color: rgba(80, 80, 80, 0.7); }
-.form-group.full-width { grid-column: 1 / -1; }
-textarea.form-input { height: 100px; resize: vertical; }
+.form-input::placeholder {
+  color: rgba(255,255,255,0.8);
+}
+.form-input:focus {
+  background-color: rgba(80,80,80,0.7);
+}
+textarea.form-input {
+  height: 100px;
+  resize: vertical;
+}
+
+/* Estilos específicos para Evidencia */
 .evidence-field {
   display: flex;
   justify-content: space-between;
@@ -287,8 +372,19 @@ textarea.form-input { height: 100px; resize: vertical; }
   color: rgba(255, 255, 255, 0.8);
   font-weight: 500;
 }
-.evidence-actions { display: flex; gap: 10px; }
-.icon-button { background: transparent; border: none; cursor: pointer; color: white; padding: 5px; }
-.icon-button svg { width: 24px; height: 24px; }
-
+.evidence-actions {
+  display: flex;
+  gap: 10px;
+}
+.icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  padding: 5px;
+}
+.icon-button svg {
+  width: 24px;
+  height: 24px;
+}
 </style>

@@ -14,9 +14,18 @@ console.log("Actividad ID:", actividadId)
 let idEstudiante = route.params.idEstudiante ?? route.query.idEstudiante ?? null
 
 const formData = reactive({
-  status: "",       // Estado de la actividad
-  comentarios: ""   // Observaciones
+  status: "", 
+  comentarios: "" 
 })
+
+// Función para cancelar y navegar al listado de actividades del estudiante
+function onCancel() {
+  if (!idEstudiante) {
+    alert("❌ No se pudo identificar al estudiante")
+    return
+  }
+  router.push(`/actividades_ver/${idEstudiante}`)
+}
 
 async function onSubmit() {
   if (!actividadId) {
@@ -37,28 +46,20 @@ async function onSubmit() {
     })
     console.log("Respuesta validación:", res)
     alert("✅ Actividad validada con éxito")
-    formData.status = ""
-    formData.comentarios = ""
+    
+    // Llama a la función de cancelación para redirigir después del éxito
+    onCancel() 
+    
   } catch (err) {
     console.error("Error validando actividad:", err.response?.data || err)
     alert("❌ Hubo un error al validar la actividad: " + JSON.stringify(err.response?.data))
   }
-}
-
-// Función para cancelar
-function onCancel() {
-  if (!idEstudiante) {
-    alert("❌ No se pudo identificar al estudiante")
-    return
-  }
-  router.push(`/actividades_ver/${idEstudiante}`)
 }
 </script>
 
 
 <template>
   <div class="app-container">
-    <!-- Encabezado -->
     <header class="main-header">
       <div class="header-left">
         <img
@@ -86,13 +87,11 @@ function onCancel() {
       </div>
     </header>
 
-    <!-- Contenido principal -->
     <main class="main-content">
       <section class="content-form">
         <h2>Validar Actividad</h2>
         <form @submit.prevent="onSubmit">
           
-          <!-- Select de estado -->
           <div class="form-group select-center">
             <label>Selecciona el estado de la actividad</label>
             <select class="form-input full-width" v-model="formData.status">
@@ -103,7 +102,6 @@ function onCancel() {
             </select>
           </div>
 
-          <!-- Comentarios -->
           <div class="form-group full-width">
             <label>Comentarios</label>
             <textarea
@@ -114,7 +112,6 @@ function onCancel() {
             ></textarea>
           </div>
 
-          <!-- Botón -->
           <div class="form-group full-width">
             <button type="submit" class="btn-guardar">Guardar Validación</button>
           </div>

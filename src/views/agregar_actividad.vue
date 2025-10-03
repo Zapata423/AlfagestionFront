@@ -51,11 +51,14 @@ async function submitForm() {
     alert("No se pudo registrar la actividad.")
   }
 }
+
+function cancelAction() {
+  router.push('/actividad_vista')
+}
 </script>
 
 <template>
   <div class="app-container">
-    <!-- HEADER -->
     <header class="main-header">
       <div class="header-left">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" alt="La Salle Logo" class="logo">
@@ -76,7 +79,6 @@ async function submitForm() {
     </header>
 
     <main class="main-content">
-      <!-- SIDEBAR -->
       <aside class="sidebar">
         <ul class="sidebar-nav-list">
           <li>
@@ -91,13 +93,14 @@ async function submitForm() {
           </li>
         </ul>
 
-        <!-- Botón "Subir" abajo con mismo estilo que ejemplo -->
-        <div class="sidebar-action">
-          <button class="submit-button" @click="submitForm">Subir</button>
+        <div class="sidebar-action action-margin">
+          <button class="submit-button green-button" @click="submitForm">Subir</button>
         </div>
-      </aside>
+        <div class="sidebar-action">
+          <button class="cancel-button" @click="cancelAction">Cancelar</button>
+        </div>
+        </aside>
 
-      <!-- FORMULARIO -->
       <section class="content-form">
         <h2>Agregar Actividad</h2>
         <form>
@@ -147,7 +150,7 @@ async function submitForm() {
   overflow: hidden;
 }
 
-/* Header */
+/* Header (sin cambios) */
 .main-header {
   background-color: #ff0000;
   color: white;
@@ -168,10 +171,10 @@ async function submitForm() {
 .search-bar input::placeholder { color: rgba(255, 255, 255, 0.7); }
 .profile-icon { width: 36px; height: 36px; background-color: #28a745; border-radius: 50%; border: 2px solid white; }
 
-/* Main content */
+/* Main content (sin cambios) */
 .main-content { flex-grow: 1; display: flex; padding: 30px; gap: 30px; }
 
-/* Sidebar */
+/* Sidebar (sin cambios en layout principal) */
 .sidebar, .content-form {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(8px);
@@ -179,7 +182,7 @@ async function submitForm() {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .sidebar {
-  width: 250px;
+  width: 227px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -209,13 +212,18 @@ async function submitForm() {
 }
 .sidebar-nav-list li svg { width: 28px; height: 28px; }
 
-/* Botón "Subir" en sidebar */
+/* Botones en sidebar */
 .sidebar-action {
-  margin-top: auto; /* Lo empuja al fondo */
-  padding-top: 20px;
+  padding-top: 10px; /* Espaciado entre botones */
 }
-.submit-button {
-  background-color: #ff0000;
+.sidebar-action.action-margin {
+  margin-top: auto; /* Empuja el primer botón (Subir) y el resto al fondo */
+  padding-top: 20px; /* Espacio superior para separarlo del menú */
+}
+
+/* Estilo para el Botón SUBIR (VERDE) */
+.submit-button.green-button {
+  background-color: #28a745; /* Verde */
   color: white;
   border: none;
   width: 100%;
@@ -226,9 +234,27 @@ async function submitForm() {
   cursor: pointer;
   transition: background-color 0.2s;
 }
-.submit-button:hover { background-color: #d60000; }
+.submit-button.green-button:hover { background-color: #218838; }
 
-/* Formulario */
+/* Estilo para el Botón CANCELAR (ROJO) */
+.cancel-button {
+  background-color: #ff0000; /* Rojo */
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.cancel-button:hover {
+  background-color: #d60000;
+}
+
+
+/* Formulario (sin cambios en layout) */
 .content-form { flex-grow: 1; padding: 25px 35px; }
 .content-form h2 { color: #333; margin-top: 0; margin-bottom: 25px; font-size: 24px; }
 form {
@@ -248,6 +274,9 @@ form {
 .form-input.span-2 { grid-column: span 2; }
 .form-input.span-3 { grid-column: span 3; }
 .form-input.full-width { grid-column: 1 / -1; }
+.form-input::placeholder { color: rgba(255, 255, 255, 0.8); }
 textarea.form-input { height: 120px; resize: vertical; }
 
+/* Se eliminan los estilos antiguos de back-button y submit-button si no tenían clases específicas */
+/* Se mantuvieron los back-button:hover y submit-button:hover */
 </style>

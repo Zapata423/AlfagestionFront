@@ -35,6 +35,7 @@ onMounted(() => {
 <template>
   <div class="app-container">
     <!-- HEADER -->
+
     <header class="main-header">
       <div class="header-left">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" alt="La Salle Logo" class="logo">
@@ -55,6 +56,7 @@ onMounted(() => {
     </header>
 
     <!-- MAIN -->
+    <a href="/ini_estudiante" class="back-button">←</a>
     <main class="main-content">
       <div class="content-header">
         <a class="add-button" href="/encargadoi_registro">Agregar encargado</a>
@@ -108,8 +110,8 @@ onMounted(() => {
 .profile-icon { width: 36px; height: 36px; background-color: #28a745; border-radius: 50%; border: 2px solid white; }
 
 .main-content { flex-grow: 1; padding: 30px 60px; }
-.content-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-.add-button { background-color: #00ff00; color: black; border: none; padding: 12px 25px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: transform 0.2s; }
+.content-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 25px; }
+.add-button { background-color: #28a745; color: rgb(255, 255, 255); border: none; padding: 12px 25px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: transform 0.2s; }
 .add-button:hover { transform: scale(1.05); }
 
 .list-card { background: white; border-radius: 20px; padding: 25px 35px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
@@ -120,4 +122,25 @@ onMounted(() => {
 .item-name { background-color: #e0e0e0; padding: 12px 20px; border-radius: 8px; flex-grow: 1; margin-right: 15px; color: #444; }
 .delete-button { background-color: #ff3b30; color: white; border: none; padding: 10px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
 .delete-button:hover { background-color: #e02b21; }
+
+.back-button {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  background-color: #e53935;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color: #c62828;
+  transform: scale(1.1);
+}
 </style>
