@@ -32,10 +32,13 @@ onMounted(() => {
 
 <template>
   <div class="app-container">
-    <!-- NAVBAR -->
     <header class="main-header">
       <div class="header-left">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" alt="La Salle Logo" class="logo">
+        <img 
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" 
+          alt="La Salle Logo" 
+          class="logo"
+        >
         <nav class="main-nav">
           <a href="/ini_estudiante" class="active-link">Inicio</a>
           <a href="/instituciones">Instituciones</a>
@@ -43,14 +46,15 @@ onMounted(() => {
       </div>
       <div class="header-right">
         <div class="search-bar">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="white" fill="none"/></svg>
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" stroke="white" fill="none"/>
+          </svg>
           <input type="text" placeholder="Buscar..." />
         </div>
         <div class="profile-icon"></div>
       </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <a href="/ini_estudiante" class="back-button">←</a>
     <main class="main-content">
       <div class="content-header">
@@ -58,25 +62,46 @@ onMounted(() => {
       </div>
 
       <section class="list-card">
-        <h2>Instituciones</h2>
+        <h2>Instituciones Registradas</h2>
 
-        <!-- Error -->
         <p v-if="errorMsg" style="color: red; font-weight: bold">
           {{ errorMsg }}
         </p>
 
-        <!-- Lista -->
-        <ul class="item-list">
-          <li v-for="institution in institutions" :key="institution.id">
-            <span class="item-name">{{ institution.nombre }}</span>
-            <button
-              class="delete-button"
-              @click="deleteInstitution(institution.id)"
-            >
-              Eliminar
-            </button>
-          </li>
-        </ul>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Población Intervenida</th>
+                <th>Barrio</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-if="institutions.length === 0 && !errorMsg">
+                <td colspan="6" class="empty-row">No tienes instituciones registradas.</td>
+              </tr>
+              <tr v-for="institution in institutions" :key="institution.id">
+                <td>{{ institution.nombre }}</td>
+                <td>{{ institution.poblacion_intervenida }}</td>
+                <td>{{ institution.barrio }}</td>
+                <td>{{ institution.direccion }}</td>
+                <td>{{ institution.telefono }}</td>
+                <td class="action-cell">
+                  <button
+                    class="delete-button"
+                    @click="deleteInstitution(institution.id)"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
     </main>
   </div>
@@ -136,7 +161,7 @@ onMounted(() => {
 }
 .add-button:hover { transform: scale(1.05); }
 
-/* Lista */
+/* Lista (Ahora tabla) */
 .list-card {
   background: white;
   border-radius: 20px;
@@ -144,11 +169,71 @@ onMounted(() => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .list-card h2 { margin-top: 0; margin-bottom: 20px; font-size: 1.5rem; color: #333; }
-.item-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; }
-.item-list li { display: flex; justify-content: space-between; align-items: center; }
-.item-name { background-color: #e0e0e0; padding: 12px 20px; border-radius: 8px; flex-grow: 1; margin-right: 15px; color: #444; }
-.delete-button { background-color: #ff3b30; color: white; border: none; padding: 10px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
+
+/* 🆕 Estilos para la Tabla */
+.table-container {
+  overflow-x: auto;
+}
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  min-width: 800px;
+}
+.data-table th {
+  text-align: left;
+  padding: 10px 15px;
+  font-weight: 600;
+  color: #555;
+  background-color: #f0f0f0;
+}
+.data-table td {
+  padding: 15px 15px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
+  color: #333;
+  font-size: 0.95rem;
+}
+.data-table tbody tr:hover td {
+  background-color: #f3f3f3;
+}
+.data-table tbody tr td:first-child {
+  border-left: 5px solid #ff0000;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  font-weight: 500;
+}
+.data-table tbody tr td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.action-cell {
+  text-align: center;
+  width: 100px;
+}
+.empty-row {
+  text-align: center;
+  padding: 20px !important;
+  font-style: italic;
+  color: #777;
+  background-color: white !important;
+  border-left: none !important;
+}
+
+/* Botón Eliminar */
+.delete-button { 
+  background-color: #ff3b30; 
+  color: white; 
+  border: none; 
+  padding: 8px 15px; 
+  border-radius: 6px; 
+  font-weight: bold; 
+  cursor: pointer; 
+  transition: background-color 0.2s; 
+}
 .delete-button:hover { background-color: #e02b21; }
+
+/* Botón de regreso */
 .back-button {
   position: fixed;
   top: 80px;
@@ -164,7 +249,6 @@ onMounted(() => {
   z-index: 1000;
   text-decoration: none;
 }
-
 .back-button:hover {
   background-color: #c62828;
   transform: scale(1.1);

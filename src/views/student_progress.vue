@@ -24,6 +24,16 @@ function formatFecha(fechaIso) {
   })
 }
 
+/**
+ * Función para generar la URL de la página de comentarios.
+ * @param {number | string} actividadId - El ID de la actividad.
+ * @returns {string} La URL de destino.
+ */
+function getComentariosUrl(actividadId) {
+  // **DEFINICIÓN DE LA RUTA**: Modifica la ruta base según tu aplicación
+  return `/ver_comentarios/${actividadId}`
+}
+
 // Calcular porcentaje dinámico
 const porcentaje = computed(() => {
   if (totalHoras.value === 0) return 0
@@ -56,9 +66,7 @@ onMounted(() => {
 })
 </script>
 
-
 <template>
-  
   <div class="horas-container">
     <header class="header">
       <img
@@ -74,7 +82,7 @@ onMounted(() => {
     </header>
 
     <main>
-    <a href="/ini_estudiante" class="back-button">←</a>
+      <a href="/ini_estudiante" class="back-button">←</a>
       <h1 class="titulo">
         Horas completadas: {{ totalCompletadas }}/{{ totalHoras }}
       </h1>
@@ -110,6 +118,7 @@ onMounted(() => {
               <th>Horas</th>
               <th style="padding-left: 20px;">Fecha</th>
               <th>Estado</th>
+              <th>Comentarios</th>
             </tr>
           </thead>
           <tbody>
@@ -117,13 +126,7 @@ onMounted(() => {
               <td class="actividad">{{ actividad.titulo }}</td>
               <td>{{ actividad.horas }}</td>
               <td style="padding-left: 20px;">
-                <span
-                  class="fecha"
-                  :class="{
-                    rojo: actividad.estado === 'Pendiente',
-                    verde: actividad.estado === 'Aprobada' || actividad.estado === 'Aprobado'
-                  }"
-                >
+                <span class="fecha">
                   {{ formatFecha(actividad.fecha_subida) }}
                 </span>
               </td>
@@ -138,6 +141,11 @@ onMounted(() => {
                 >
                   {{ actividad.estado }}
                 </span>
+              </td>
+              <td>
+                <a :href="getComentariosUrl(actividad.id)" class="comentarios-btn">
+                  Ver Comentarios
+                </a>
               </td>
             </tr>
           </tbody>
@@ -322,8 +330,30 @@ tr {
   background: #bdbdbd;
   border-radius: 12px;
 }
+
+/* Estilos para el botón de Comentarios */
+.comentarios-btn {
+  display: inline-block;
+  background-color: #5d5dff; /* Azul distintivo */
+  color: white;
+  padding: 0.4em 0.8em;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.comentarios-btn:hover {
+  background-color: #4a4aed;
+}
+
 tr td:last-child {
   border-radius: 0 10px 10px 0;
+  /* Asegura que el botón se vea bien */
+  text-align: center;
 }
 @media (max-width: 700px) {
   .tabla-actividades {

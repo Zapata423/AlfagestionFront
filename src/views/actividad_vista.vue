@@ -5,7 +5,24 @@ import { getMisActividades, deleteActividad } from "../services/actividades"
 const actividades = ref([])
 const errorMsg = ref("")
 
-//  Cargar actividades del usuario
+// Formatea una fecha ISO a formato local (dd/mm/yyyy hh:mm)
+function formatFecha(fechaIso) {
+  if (!fechaIso) return ''
+  try {
+    const fecha = new Date(fechaIso)
+    return fecha.toLocaleString("es-CO", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  } catch (e) {
+    return fechaIso
+  }
+}
+
+// Cargar actividades del usuario
 async function cargarActividades() {
   try {
     actividades.value = await getMisActividades()
@@ -15,7 +32,7 @@ async function cargarActividades() {
   }
 }
 
-//  Eliminar actividad
+// Eliminar actividad
 async function deleteActividadById(idToDelete) {
   if (!confirm("¿Seguro que quieres eliminar esta actividad?")) return
   try {
@@ -27,6 +44,12 @@ async function deleteActividadById(idToDelete) {
   }
 }
 
+// Abrir el archivo en nueva pestaña
+function verEvidencia(url) {
+  if (url) window.open(url, "_blank")
+  else alert("No hay evidencia disponible.")
+}
+
 onMounted(() => {
   cargarActividades()
 })
@@ -34,7 +57,6 @@ onMounted(() => {
 
 <template>
   <div class="app-container">
-    <!-- HEADER -->
     <header class="main-header">
       <div class="header-left">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" alt="La Salle Logo" class="logo">
@@ -54,8 +76,7 @@ onMounted(() => {
       </div>
     </header>
 
-    <!-- MAIN -->
-     <a href="/ini_estudiante" class="back-button">←</a>
+    <a href="/ini_estudiante" class="back-button">←</a>
     <main class="main-content">
       <div class="content-header">
         <a class="add-button" href="/actividad_registro">Agregar actividad</a>
@@ -64,53 +85,53 @@ onMounted(() => {
       <section class="list-card">
         <h2>Lista de Actividades</h2>
 
-        <!-- Mensaje de error -->
         <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
 
-        <ul class="item-list">
-          <li v-for="act in actividades" :key="act.id">
-            <span class="item-name">{{ act.titulo }}</span>
-            <button class="delete-button" @click="deleteActividadById(act.id)">Eliminar</button>
-          </li>
-        </ul>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Horas</th>
+                <th>Institución</th>
+                <th>Encargado</th>
+                <th>Fecha</th>
+                <th>Archivo</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-if="actividades.length === 0 && !errorMsg">
+                <td colspan="7" class="empty-row">No tienes actividades registradas.</td>
+              </tr>
+              <tr v-for="act in actividades" :key="act.id">
+                <td>{{ act.titulo }}</td> 
+                <td>{{ act.horas }}</td>
+                <td>{{ act.institucion_nombre }}</td>
+                <td>{{ act.encargado_nombre }}</td>
+                <td>{{ formatFecha(act.fecha_subida) }}</td>
+                <td class="action-cell">
+                  <button class="view-file-button" @click="verEvidencia(act.archivo)">
+                    Ver Archivo
+                  </button>
+                </td>
+                <td class="action-cell">
+                  <button class="delete-button" @click="deleteActividadById(act.id)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
     </main>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'InstitutionList',
-  data() {
-    return {
-      // Datos de ejemplo para la lista
-      institutions: [
-      ]
-    };
-  },
-  methods: {
-    // Método para eliminar una institución de la lista
-    deleteInstitution(idToDelete) {
-      this.institutions = this.institutions.filter(inst => inst.id !== idToDelete);
-    },
-    // Método de ejemplo para el botón de agregar
-    addInstitution() {
-      const newName = prompt("Introduce el nombre de la nueva institución:");
-      if (newName) {
-        const newId = this.institutions.length > 0 ? Math.max(...this.institutions.map(i => i.id)) + 1 : 1;
-        this.institutions.push({ id: newId, name: newName });
-      }
-    }
-  }
-}
-</script>
-
 <style scoped>
-/* Estilos Generales y del Encabezado */
+/* Estilos generales */
 .app-container {
   height: 100vh;
   width: 100vw;
-  /* El fondo ahora es un color sólido gris claro */
   background-color: #f0f2f5;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
@@ -136,30 +157,19 @@ export default {
 .search-bar input::placeholder { color: rgba(255, 255, 255, 0.7); }
 .profile-icon { width: 36px; height: 36px; background-color: #28a745; border-radius: 50%; border: 2px solid white; }
 
-/* Contenido Principal */
 .main-content {
   flex-grow: 1;
   padding: 30px 60px;
 }
-
-/* Barra de título y botón de agregar */
 .content-header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-bottom: 25px;
 }
-.section-title {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
 .add-button {
-  background-color: #28a745; /* Verde brillante */
-  color: rgb(255, 255, 255);
+  background-color: #28a745;
+  color: #fff;
   border: none;
   padding: 12px 25px;
   border-radius: 8px;
@@ -168,57 +178,84 @@ export default {
   cursor: pointer;
   transition: transform 0.2s;
 }
-.add-button:hover {
-  transform: scale(1.05);
-}
+.add-button:hover { transform: scale(1.05); }
 
-/* Tarjeta principal con la lista */
 .list-card {
   background: white;
   border-radius: 20px;
   padding: 25px 35px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
-.list-card h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
+.list-card h2 { margin: 0 0 20px; font-size: 1.5rem; color: #333; }
+
+.table-container { overflow-x: auto; }
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  min-width: 1000px;
+}
+.data-table th {
+  text-align: left;
+  padding: 10px 15px;
+  font-weight: 600;
+  color: #555;
+  background-color: #f0f0f0;
+}
+.data-table td {
+  padding: 15px 15px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
   color: #333;
+  font-size: 0.95rem;
 }
-.item-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.data-table tbody tr:hover td { background-color: #f3f3f3; }
+.data-table tbody tr td:first-child {
+  border-left: 5px solid #ff0000;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  font-weight: 500;
 }
-.item-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.data-table tbody tr td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
-.item-name {
-  background-color: #e0e0e0;
-  padding: 12px 20px;
-  border-radius: 8px;
-  flex-grow: 1;
-  margin-right: 15px;
-  color: #444;
+
+.action-cell { text-align: center; width: 100px; }
+.empty-row {
+  text-align: center;
+  padding: 20px !important;
+  font-style: italic;
+  color: #777;
+  background-color: white !important;
+  border-left: none !important;
 }
-.delete-button {
-  background-color: #ff3b30; /* Rojo */
+
+.delete-button { 
+  background-color: #ff3b30; 
+  color: white; 
+  border: none; 
+  padding: 8px 15px; 
+  border-radius: 6px; 
+  font-weight: bold; 
+  cursor: pointer; 
+  transition: background-color 0.2s; 
+}
+.delete-button:hover { background-color: #e02b21; }
+
+.view-file-button {
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 25px;
-  border-radius: 8px;
+  padding: 8px 15px;
+  border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s;
+  white-space: nowrap;
 }
-.delete-button:hover {
-  background-color: #e02b21;
-}
+.view-file-button:hover { background-color: #0056b3; }
+
 .back-button {
   position: fixed;
   top: 80px;
@@ -234,7 +271,6 @@ export default {
   z-index: 1000;
   text-decoration: none;
 }
-
 .back-button:hover {
   background-color: #c62828;
   transform: scale(1.1);
