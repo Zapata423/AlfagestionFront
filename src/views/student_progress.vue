@@ -77,7 +77,6 @@ onMounted(() => {
         <a href="/ini_estudiante">Inicio</a>
         <a href="#">Mi perfil</a>
       </nav>
-      <input class="search" placeholder="Buscar" />
       <div class="avatar"></div>
     </header>
 
@@ -191,14 +190,7 @@ onMounted(() => {
   margin: 0 1rem;
   text-decoration: none;
 }
-.search {
-  border-radius: 20px;
-  border: none;
-  padding: 0.5rem 1rem;
-  margin-right: 1rem;
-  background: #fff;
-  width: 180px;
-}
+
 .avatar {
   width: 40px;
   height: 40px;

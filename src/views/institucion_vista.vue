@@ -45,12 +45,6 @@ onMounted(() => {
         </nav>
       </div>
       <div class="header-right">
-        <div class="search-bar">
-          <svg viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8" stroke="white" fill="none"/>
-          </svg>
-          <input type="text" placeholder="Buscar..." />
-        </div>
         <div class="profile-icon"></div>
       </div>
     </header>
@@ -131,10 +125,6 @@ onMounted(() => {
 .logo { height: 45px; }
 .main-nav a { color: white; text-decoration: none; font-weight: 500; padding: 8px 15px; border-radius: 6px; }
 .main-nav a.active-link, .main-nav a:hover { background-color: rgba(0, 0, 0, 0.2); }
-.search-bar { display: flex; align-items: center; background-color: rgba(0, 0, 0, 0.2); padding: 5px 10px; border-radius: 20px; }
-.search-bar svg { width: 18px; height: 18px; margin-right: 5px; }
-.search-bar input { background: transparent; border: none; color: white; outline: none; }
-.search-bar input::placeholder { color: rgba(255, 255, 255, 0.7); }
 .profile-icon { width: 36px; height: 36px; background-color: #28a745; border-radius: 50%; border: 2px solid white; }
 
 /* Contenido Principal */

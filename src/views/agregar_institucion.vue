@@ -48,20 +48,6 @@ function cancelAction() {
         </nav>
       </div>
       <div class="header-right">
-        <div class="search-bar">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-              clip-rule="evenodd"
-            />
-          </svg>
-          <input type="text" placeholder="Buscar" />
-        </div>
         <div class="profile-icon"></div>
       </div>
     </header>
@@ -214,10 +200,6 @@ export default {
 .logo { height: 45px; }
 .main-nav a { color: white; text-decoration: none; font-weight: 500; padding: 8px 15px; border-radius: 6px; }
 .main-nav a.active-link, .main-nav a:hover { background-color: rgba(0, 0, 0, 0.2); }
-.search-bar { display: flex; align-items: center; background-color: rgba(0, 0, 0, 0.2); padding: 5px 10px; border-radius: 20px; }
-.search-bar svg { width: 18px; height: 18px; margin-right: 5px; }
-.search-bar input { background: transparent; border: none; color: white; outline: none; }
-.search-bar input::placeholder { color: rgba(255, 255, 255, 0.7); }
 .profile-icon { width: 36px; height: 36px; background-color: #28a745; border-radius: 50%; border: 2px solid white; }
 
 /* Contenido Principal */

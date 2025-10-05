@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ing_profesores from '../views/ing_profesores.vue'
 import ing_estudiantes from '../views/ing_estudiantes.vue'
+import ing_admin from '../views/ing_admin.vue'
 import olvid_contrasena from '../views/olvid_contrasena.vue'
 import Student_progress from '../views/student_progress.vue'
 import evidencia_sub from '../views/evidencia_sub.vue'
@@ -8,6 +9,7 @@ import pregun_frecu from '../views/pregun_frecu.vue'
 import solicitud_apro from '../views/solicitud_apro.vue'
 import ini_estudiante from '../views/ini_estudiante.vue'
 import ini_docentes from '../views/ini_docentes.vue'
+import ini_admin from '../views/ini_admin.vue'
 import actividades_ver from '../views/actividades_ver.vue'
 import verificar_actividad from '../views/verificar_actividad.vue'
 import editar_verificacion from '../views/editar_verificacion.vue'
@@ -16,6 +18,8 @@ import actividades_registro from '../views/actividades_registro.vue'
 import encargado_registro from '../views/encargado_registro.vue'
 import organizacion_registro from '../views/organizacion_registro.vue'
 import ini_rol from '../views/ini_rol.vue'
+import registrar_estudiante from '../views/registrar_estudiante.vue'
+import registrar_docente from '../views/registrar_docente.vue'
 import institucion_registro from '@/views/institucion_registro.vue'
 import agregar_institucion from '@/views/agregar_institucion.vue'
 import encargadoi_registro from '@/views/encargadoi_registro.vue'
@@ -39,6 +43,11 @@ const router = createRouter({
       path: "/ing_estudiantes",
       name: "ing_estudiantes",
       component: ing_estudiantes
+    },
+        {
+      path: "/ing_admin",
+      name: "ing_admin",
+      component: ing_admin
     },
     {
       path: "/olvid_contrasena",
@@ -74,6 +83,11 @@ const router = createRouter({
       path: "/ini_docentes",
       name: "ini_docentes",
       component: ini_docentes
+    },
+    {
+      path: "/ini_admin",
+      name: "ini_admin",
+      component: ini_admin
     },
     {
 
@@ -169,7 +183,18 @@ const router = createRouter({
       path: "/institucion_vista",
       name: "institucion_vista",
       component: institucion_vista
+    },
+    {
+      path: "/registrar_estudiante",
+      name: "registrar_estudiante",
+      component: registrar_estudiante
+    },
+    {
+      path: "/registrar_docente",
+      name: "registrar_docente",
+      component: registrar_docente
     }
+
   ]
 })
 
