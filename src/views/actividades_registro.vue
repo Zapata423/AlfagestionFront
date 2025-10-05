@@ -2,6 +2,7 @@
 import { onMounted, reactive } from "vue"
 import { useRoute } from "vue-router"
 import { getActividadDetalle } from "../services/evidencias"
+import docenteNavbar from "./docenteNavbar.vue"
 
 // tomar el parámetro de la ruta
 const route = useRoute()
@@ -62,17 +63,7 @@ function verEvidencia() {
 
 <template>
   <div class="app-container">
-    <header class="main-header">
-      <div class="header-left">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" alt="La Salle Logo" class="logo">
-        <nav class="main-nav">
-          <a href="#">Inicio</a>
-          <a href="#" class="active-link">Mi perfil</a>
-        </nav>
-      </div>
-      <div class="header-right">
-      </div>
-    </header>
+    <docenteNavbar/>
 
     <main class="main-content">
       <!-- Sidebar -->
@@ -187,44 +178,6 @@ function verEvidencia() {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-/* Encabezado */
-.main-header {
-  background-color: #ff0000;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-  height: 60px;
-  flex-shrink: 0;
-}
-.header-left, .header-right {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-.logo {
-  height: 45px;
-}
-.main-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 8px 15px;
-  border-radius: 6px;
-  transition: background-color 0.2s;
-}
-.main-nav a.active-link, .main-nav a:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-.profile-icon {
-  width: 36px;
-  height: 36px;
-  background-color: #28a745;
-  border-radius: 50%;
-  border: 2px solid white;
 }
 
 /* Contenido Principal */

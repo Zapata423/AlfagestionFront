@@ -4,7 +4,6 @@ import ing_estudiantes from '../views/ing_estudiantes.vue'
 import ing_admin from '../views/ing_admin.vue'
 import olvid_contrasena from '../views/olvid_contrasena.vue'
 import Student_progress from '../views/student_progress.vue'
-import evidencia_sub from '../views/evidencia_sub.vue'
 import pregun_frecu from '../views/pregun_frecu.vue'
 import solicitud_apro from '../views/solicitud_apro.vue'
 import ini_estudiante from '../views/ini_estudiante.vue'
@@ -14,6 +13,7 @@ import actividades_ver from '../views/actividades_ver.vue'
 import verificar_actividad from '../views/verificar_actividad.vue'
 import editar_verificacion from '../views/editar_verificacion.vue'
 import ver_comentarios from '../views/ver_comentarios.vue'
+import perfil_estudiante from '../views/perfil_estudiante.vue'
 import actividades_registro from '../views/actividades_registro.vue'
 import encargado_registro from '../views/encargado_registro.vue'
 import organizacion_registro from '../views/organizacion_registro.vue'
@@ -63,11 +63,6 @@ const router = createRouter({
       path: "/pregun_frecu",
       name: "pregun_frecu",
       component: pregun_frecu
-    },
-    {
-      path: "/evidencia_sub",
-      name: "evidencia_sub",
-      component: evidencia_sub
     },
     {
       path: "/solicitud_apro",
@@ -143,6 +138,11 @@ const router = createRouter({
       path: "/institucion_registro",
       name: "institucion_registro",
       component: institucion_registro
+    },
+    {
+      path: "/perfil_estudiante",
+      name: "perfil_estudiante",
+      component: perfil_estudiante
     },
     {
       path: "/agregar_institucion",

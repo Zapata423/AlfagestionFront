@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { getMisInstituciones, deleteInstitucion } from "../services/instituciones"
+import estudianteNavbar from "./estudianteNavbar.vue"
 
 const institutions = ref([])
 const errorMsg = ref("")
@@ -32,23 +33,7 @@ onMounted(() => {
 
 <template>
   <div class="app-container">
-    <header class="main-header">
-      <div class="header-left">
-        <img 
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" 
-          alt="La Salle Logo" 
-          class="logo"
-        >
-        <nav class="main-nav">
-          <a href="/ini_estudiante" class="active-link">Inicio</a>
-          <a href="/instituciones">Instituciones</a>
-        </nav>
-      </div>
-      <div class="header-right">
-        <div class="profile-icon"></div>
-      </div>
-    </header>
-
+    <estudianteNavbar />
     <a href="/ini_estudiante" class="back-button">←</a>
     <main class="main-content">
       <div class="content-header">
@@ -85,10 +70,7 @@ onMounted(() => {
                 <td>{{ institution.direccion }}</td>
                 <td>{{ institution.telefono }}</td>
                 <td class="action-cell">
-                  <button
-                    class="delete-button"
-                    @click="deleteInstitution(institution.id)"
-                  >
+                  <button class="delete-button" @click="deleteInstitution(institution.id)">
                     Eliminar
                   </button>
                 </td>
@@ -102,7 +84,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Estilos Generales y del Encabezado */
 .app-container {
   height: 100vh;
   width: 100vw;
@@ -111,36 +92,22 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
 }
-.main-header {
-  background-color: #ff0000;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-  height: 60px;
-  flex-shrink: 0;
-}
-.header-left, .header-right { display: flex; align-items: center; gap: 25px; }
-.logo { height: 45px; }
-.main-nav a { color: white; text-decoration: none; font-weight: 500; padding: 8px 15px; border-radius: 6px; }
-.main-nav a.active-link, .main-nav a:hover { background-color: rgba(0, 0, 0, 0.2); }
-.profile-icon { width: 36px; height: 36px; background-color: #28a745; border-radius: 50%; border: 2px solid white; }
 
-/* Contenido Principal */
 .main-content {
   flex-grow: 1;
   padding: 30px 60px;
 }
+
 .content-header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-bottom: 25px;
 }
+
 .add-button {
   background-color: #28a745;
-  color: rgb(255, 255, 255);
+  color: #fff;
   border: none;
   padding: 12px 25px;
   border-radius: 8px;
@@ -149,27 +116,36 @@ onMounted(() => {
   cursor: pointer;
   transition: transform 0.2s;
 }
-.add-button:hover { transform: scale(1.05); }
 
-/* Lista (Ahora tabla) */
+.add-button:hover {
+  transform: scale(1.05);
+}
+
 .list-card {
   background: white;
   border-radius: 20px;
   padding: 25px 35px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
-.list-card h2 { margin-top: 0; margin-bottom: 20px; font-size: 1.5rem; color: #333; }
 
-/* 🆕 Estilos para la Tabla */
+.list-card h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
 .table-container {
   overflow-x: auto;
 }
+
 .data-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px;
   min-width: 800px;
 }
+
 .data-table th {
   text-align: left;
   padding: 10px 15px;
@@ -177,6 +153,7 @@ onMounted(() => {
   color: #555;
   background-color: #f0f0f0;
 }
+
 .data-table td {
   padding: 15px 15px;
   background-color: #f9f9f9;
@@ -184,23 +161,28 @@ onMounted(() => {
   color: #333;
   font-size: 0.95rem;
 }
+
 .data-table tbody tr:hover td {
   background-color: #f3f3f3;
 }
+
 .data-table tbody tr td:first-child {
   border-left: 5px solid #ff0000;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   font-weight: 500;
 }
+
 .data-table tbody tr td:last-child {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+
 .action-cell {
   text-align: center;
   width: 100px;
 }
+
 .empty-row {
   text-align: center;
   padding: 20px !important;
@@ -210,23 +192,24 @@ onMounted(() => {
   border-left: none !important;
 }
 
-/* Botón Eliminar */
-.delete-button { 
-  background-color: #ff3b30; 
-  color: white; 
-  border: none; 
-  padding: 8px 15px; 
-  border-radius: 6px; 
-  font-weight: bold; 
-  cursor: pointer; 
-  transition: background-color 0.2s; 
+.delete-button {
+  background-color: #ff3b30;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
-.delete-button:hover { background-color: #e02b21; }
 
-/* Botón de regreso */
+.delete-button:hover {
+  background-color: #e02b21;
+}
+
 .back-button {
   position: fixed;
-  top: 80px;
+  top: 75px;
   left: 20px;
   background-color: #e53935;
   border: none;
@@ -239,6 +222,7 @@ onMounted(() => {
   z-index: 1000;
   text-decoration: none;
 }
+
 .back-button:hover {
   background-color: #c62828;
   transform: scale(1.1);

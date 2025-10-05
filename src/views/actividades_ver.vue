@@ -1,7 +1,9 @@
 <script>
 import { getActividadesPorEstudiante } from "../services/listaEstudiantes"
+import docenteNavbar from "./docenteNavbar.vue"
 
 export default {
+  components: { docenteNavbar },
   props: ["idEstudiante"],
   data() {
     return {
@@ -48,16 +50,7 @@ export default {
 
 <template>
   <div class="main-container">
-    <header class="header">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s" class="logo" />
-    <nav>
-      <a href="/ini_docentes">Inicio</a>
-      <a href="#">Mi perfil</a>
-    </nav>
-    <input class="search" placeholder="Buscar" />
-    <div class="avatar"></div>
-    </header>
-
+    <docenteNavbar/>
      <main class="main-content">
       <a href="../solicitud_apro" class="back-button">←</a>
       <div class="title-with-arrow"> 
@@ -116,12 +109,6 @@ export default {
 <style scoped>
 /* ... (El CSS de los elementos de diseño como .main-container, .header, etc., se mantiene sin cambios) ... */
 .main-container { background: #f3f5f7; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif; }
-.header { display: flex; align-items: center; background: #d90000; padding: 0 2rem; height: 80px; }
-.logo { height: 60px; margin-right: 1rem; background: #fff; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.header nav { flex: 1; }
-.header nav a { color: #000; font-weight: bold; margin: 0 1rem; text-decoration: none; }
-.search { border-radius: 20px; border: none; padding: 0.5rem 1rem; margin-right: 1rem; background: #fff; width: 180px; }
-.avatar { width: 40px; height: 40px; background: #1ec900; border-radius: 50%; margin-left: 1rem; }
 .content { display: flex; margin-top: 1rem; }
 .sidebar { width: 220px; background: #fff; border-radius: 0 0 24px 24px; margin-left: 1rem; margin-top: 0.5rem; padding: 1.5rem 1rem 1rem 1rem; box-shadow: 0 2px 8px #0001; display: flex; flex-direction: column; align-items: flex-start; min-height: 500px; }
 .section-select { width: 100%; margin-bottom: 1.5rem; }
