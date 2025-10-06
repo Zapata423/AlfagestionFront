@@ -1,12 +1,73 @@
 <script setup>
+import { ref, onMounted } from 'vue' // Importa onMounted
 import { useRouter } from 'vue-router'
-import { logoutDocente } from '../services/authDocentes'  // 
+import { logoutDocente } from '../services/authDocentes'
+import { getDocentePerfil } from '../services/perfilDocente' // Importa el servicio de perfil
 
 const router = useRouter()
+const BASE_URL = "http://localhost:8000" // Define la URL base
+
+// Estado reactivo para los datos del docente
+const docenteData = ref({
+  nombre: "Cargando...",
+  apellido: "",
+  cargo: "Cargando...",
+  foto_url: null, // Inicializa con null para la foto
+})
+
+// Estado para el elemento activo del menú
+const activeItem = ref('gestion') // Define activeItem como ref
+
+const menuItems = ref([ // Define menuItems como ref
+  { id: 'gestion', text: 'Verificar Horas y Evidencia', href: '/solicitud_apro', icon: '✅' },
+  { id: 'perfil', text: 'Perfil Docente', href: '/perfil_docente' }, // Cambié a 'perfil' por consistencia
+])
+
+// Función para establecer el elemento activo del menú
+function setActiveItem(itemId) {
+  activeItem.value = itemId
+  router.push(menuItems.value.find(item => item.id === itemId).href)
+}
+
+
+// Función para cargar los datos del docente
+async function fetchDocenteData() {
+  try {
+    const data = await getDocentePerfil()
+    
+    // Construir la URL completa de la foto si existe y es relativa
+    let fotoUrlAbsoluta = data.docente.foto
+    if (fotoUrlAbsoluta && fotoUrlAbsoluta.startsWith("/")) {
+      fotoUrlAbsoluta = `${BASE_URL}${fotoUrlAbsoluta}`
+    }
+
+    docenteData.value = {
+      nombre: data.docente.nombre || "N/A",
+      apellido: data.docente.apellido || "N/A",
+      cargo: data.cargo || "Docente", // Obtiene el cargo del Usuario
+      foto_url: fotoUrlAbsoluta || null,
+    }
+  } catch (error) {
+    console.error("Error al cargar datos del docente para el navbar:", error)
+    // Establecer valores por defecto en caso de error
+    docenteData.value = {
+      nombre: "Error",
+      apellido: "Carga",
+      cargo: "Desconocido",
+      foto_url: null,
+    }
+  }
+}
+
+// Cargar los datos del docente al montar el componente
+onMounted(() => {
+  fetchDocenteData()
+})
+
 
 async function handleLogout() {
   try {
-    await logoutDocente() // 
+    await logoutDocente()
     router.push('/ing_profesores') // redirige al login de docentes
   } catch (error) {
     console.error('Error al cerrar sesión:', error)
@@ -38,13 +99,13 @@ async function handleLogout() {
       <aside class="sidebar-nav">
         <div class="user-profile">
           <img
-            src="https://www.footballdatabase.eu/images/photos/players/2014-2015/a_61/61663.jpg"
+            :src="docenteData.foto_url || 'https://via.placeholder.com/60?text=Prof'" 
             alt="User Avatar"
             class="avatar"
           />
           <div class="user-info">
-            <span class="user-name">Bienvenido,</span>
-            <span class="user-role">Docente</span>
+            <span class="user-name">Bienvenido, {{ docenteData.nombre }} {{ docenteData.apellido }}</span>
+            <span class="user-role">{{ docenteData.cargo }}</span>
           </div>
         </div>
 
@@ -55,7 +116,7 @@ async function handleLogout() {
                 class="nav-button"
                 :class="{ active: activeItem === item.id }"
                 :href="item.href"
-                @click="setActiveItem(item.id)"
+                @click.prevent="setActiveItem(item.id)"
               >
                 <span v-html="item.icon"></span>
                 {{ item.text }}
@@ -64,7 +125,6 @@ async function handleLogout() {
           </ul>
         </nav>
 
-        <!-- Botón de logout -->
         <div class="logout-section">
           <button class="nav-button logout" @click="handleLogout">
             <svg
@@ -78,39 +138,21 @@ async function handleLogout() {
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 
-                   2.25 0 00-2.25 2.25v13.5A2.25 2.25 
-                   0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 
-                   9l-3 3m0 0l3 3m-3-3h12.75"
+                  2.25 0 00-2.25 2.25v13.5A2.25 2.25 
+                  0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 
+                  9l-3 3m0 0l3 3m-3-3h12.75"
               />
             </svg>
             Cerrar sesión
           </button>
         </div>
       </aside>
-    </main>
+      </main>
   </div>
 </template>
 
-
-<script>
-export default {
-  name: 'DashboardScreen',
-  data() {
-    return {
-      activeItem: 'gestion',
-      menuItems: [
-        { id: 'gestion', text: 'Verificar Horas y Evidencia', href: '/solicitud_apro', icon: '✅' },
-      ]
-    };
-  },
-  methods: {
-    setActiveItem(itemId) {
-      this.activeItem = itemId;
-    }
-  }
-}
-</script>
 <style scoped>
+/* Tu estilo existente */
 #app-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   height: 100vh;
@@ -172,6 +214,7 @@ export default {
   border-radius: 50%;
   border: 2px solid #d90429;
   margin-right: 15px;
+  object-fit: cover; /* Asegura que la imagen no se distorsione */
 }
 .user-info {
   display: flex;

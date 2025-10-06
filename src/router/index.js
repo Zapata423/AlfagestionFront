@@ -14,6 +14,7 @@ import verificar_actividad from '../views/verificar_actividad.vue'
 import editar_verificacion from '../views/editar_verificacion.vue'
 import ver_comentarios from '../views/ver_comentarios.vue'
 import perfil_estudiante from '../views/perfil_estudiante.vue'
+import perfil_docente from '../views/perfil_docente.vue'
 import actividades_registro from '../views/actividades_registro.vue'
 import encargado_registro from '../views/encargado_registro.vue'
 import organizacion_registro from '../views/organizacion_registro.vue'
@@ -143,6 +144,11 @@ const router = createRouter({
       path: "/perfil_estudiante",
       name: "perfil_estudiante",
       component: perfil_estudiante
+    },
+    {
+      path: "/perfil_docente",
+      name: "perfil_docente",
+      component: perfil_docente
     },
     {
       path: "/agregar_institucion",

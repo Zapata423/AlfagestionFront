@@ -1,34 +1,3 @@
-<template>
-  <header class="main-header">
-    <div class="header-left">
-      <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s"
-        alt="La Salle Logo"
-        class="logo"
-      />
-      <nav class="main-nav">
-        <a href="/ini_estudiante">Inicio</a>
-        <a href="/perfil_estudiante" class="active-link">Mi perfil</a>
-      </nav>
-    </div>
-    <div class="header-right">
-      <div class="search-bar">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            fill-rule="evenodd"
-            d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        <input type="text" placeholder="Buscar" />
-      </div>
-      <div class="profile-icon" :class="{ 'default-bg': !fotoUrl }">
-        <img v-if="fotoUrl" :src="fotoUrl" alt="Foto de perfil" class="profile-img-nav" />
-        <span v-else class="fallback-text">Foto</span>
-      </div>
-    </div>
-  </header>
-</template>
 
 <script setup>
 import { ref, onMounted } from "vue"
@@ -59,6 +28,28 @@ onMounted(() => {
   fetchProfilePhoto()
 })
 </script>
+
+<template>
+  <header class="main-header">
+    <div class="header-left">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTMmJbMKvDEyFeEF-G5P9V-kci3mquWZwqEg&s"
+        alt="La Salle Logo"
+        class="logo"
+      />
+      <nav class="main-nav">
+        <a href="/ini_estudiante">Inicio</a>
+        <a href="/perfil_estudiante" class="active-link">Mi perfil</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="profile-icon" :class="{ 'default-bg': !fotoUrl }">
+        <img v-if="fotoUrl" :src="fotoUrl" alt="Foto de perfil" class="profile-img-nav" />
+        <span v-else class="fallback-text">Foto</span>
+      </div>
+    </div>
+  </header>
+</template>
 
 <style scoped>
 .main-header {
@@ -96,33 +87,6 @@ onMounted(() => {
 .main-nav a:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.2);
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-
-.search-bar svg {
-  width: 18px;
-  height: 18px;
-  margin-right: 5px;
-  fill: white;
-}
-
-.search-bar input {
-  background: transparent;
-  border: none;
-  color: white;
-  outline: none;
-}
-
-.search-bar input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
 .profile-icon {
   width: 36px;
   height: 36px;

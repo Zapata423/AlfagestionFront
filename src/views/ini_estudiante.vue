@@ -11,11 +11,12 @@ const estudianteNombre = ref('Estudiante')
 const fotoUrl = ref(null)
 
 const menuItems = ref([
-  { id: 'gestion', text: 'Gestion de Horas', href: '/student_progress', icon: '🕒' },
-  { id: 'registradas', text: 'Agregar Institucion', href: '/institucion_vista', icon: '📋' },
-  { id: 'mapa', text: 'Agregar Encargado', href: '/encargado_vista', icon: '🗺️' },
-  { id: 'calendario', text: 'Agregar Actividades', href: '/actividad_vista', icon: '📅' },
-  { id: 'informativo', text: 'Módulo informativo', href: '/pregun_frecu', icon: 'ℹ️' }
+  { id: 'gestion', text: 'Gestion de Horas', href: '/student_progress' },
+  { id: 'registradas', text: 'Agregar Institucion', href: '/institucion_vista'},
+  { id: 'mapa', text: 'Agregar Encargado', href: '/encargado_vista' },
+  { id: 'calendario', text: 'Agregar Actividades', href: '/actividad_vista'},
+  { id: 'perfil', text: 'Perfil Estudiante', href: '/perfil_estudiante' },
+  { id: 'informativo', text: 'Módulo informativo', href: '/pregun_frecu' },
 ])
 const activeItem = ref('gestion')
 
@@ -100,7 +101,6 @@ onMounted(() => {
                 :href="item.href"
                 @click="setActiveItem(item.id)"
               >
-                <span v-html="item.icon"></span>
                 {{ item.text }}
               </a>
             </li>

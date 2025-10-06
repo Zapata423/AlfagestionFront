@@ -1,3 +1,47 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { getDocentePerfil } from '../services/perfilDocente' // Importa el servicio
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const BASE_URL = "http://localhost:8000" // Define la URL base
+
+// Estado reactivo para los datos esenciales del docente
+const docenteData = ref({
+  foto_url: null, // Foto de perfil
+  rol: "Docente" // Rol por defecto
+})
+
+// Función para cargar los datos del docente
+async function fetchDocenteData() {
+  try {
+    const data = await getDocentePerfil()
+    
+    // Construir la URL completa de la foto si existe y es relativa
+    let fotoUrlAbsoluta = data.docente.foto
+    if (fotoUrlAbsoluta && fotoUrlAbsoluta.startsWith("/")) {
+      fotoUrlAbsoluta = `${BASE_URL}${fotoUrlAbsoluta}`
+    }
+
+    docenteData.value.foto_url = fotoUrlAbsoluta || null
+    // Nota: El rol está en el modelo Usuario, pero aquí solo usamos el nombre 'Docente'
+  } catch (error) {
+    console.error("Error al cargar datos del docente para el header:", error)
+    docenteData.value.foto_url = null // Deja el placeholder
+  }
+}
+
+// Cargar los datos del docente al montar el componente
+onMounted(() => {
+  fetchDocenteData()
+})
+
+// Función para navegar al perfil cuando se haga click en el ícono
+function goToProfile() {
+  router.push('/perfil_docente')
+}
+</script>
+
 <template>
   <header class="main-header">
     <div class="header-left">
@@ -7,36 +51,39 @@
         class="logo"
       />
       <nav class="main-nav">
-        <a href="#">Inicio</a>
-        <a href="#" class="active-link">Mi perfil</a>
+        <a href="/ini_docentes">Inicio</a>
+        <a 
+          href="/perfil_docente" 
+          :class="{ 'active-link': $route.path === '/perfil_docente' }"
+        >Mi perfil</a>
       </nav>
     </div>
     <div class="header-right">
-      <div class="search-bar">
-        <svg
+      <div 
+        class="profile-icon" 
+        @click="goToProfile" 
+        :style="{ 'background-image': docenteData.foto_url ? `url(${docenteData.foto_url})` : 'none' }"
+        :title="docenteData.rol"
+      >
+        <svg v-if="!docenteData.foto_url"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
+          viewBox="0 0 24 24"
+          fill="white"
+          class="placeholder-svg"
         >
           <path
             fill-rule="evenodd"
-            d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+            d="M7.5 6a4.5 4.5 0 119 0a4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.615-7.812-1.7a.75.75 0 01-.437-.695z"
             clip-rule="evenodd"
           />
         </svg>
-        <input type="text" placeholder="Buscar" />
       </div>
-      <div class="profile-icon"></div>
     </div>
   </header>
 </template>
 
-<script setup>
-
-</script>
-
 <style scoped>
-/* Encabezado */
+/* Estilos existentes */
 .main-header {
   background-color: #ff0000;
   color: white;
@@ -69,37 +116,35 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Barra de Búsqueda */
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.2);
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-.search-bar svg {
-  width: 18px;
-  height: 18px;
-  margin-right: 5px;
-  fill: white; /* Asegura que el ícono sea blanco */
-}
-.search-bar input {
-  background: transparent;
-  border: none;
-  color: white;
-  outline: none;
-}
-.search-bar input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* Icono de Perfil */
+/* Icono de Perfil Dinámico (Modificado) */
 .profile-icon {
   width: 36px;
   height: 36px;
-  background-color: #28a745;
+  background-color: #d60000; /* Color de fallback/placeholder */
   border-radius: 50%;
   border: 2px solid white;
+  cursor: pointer;
+  
+  /* Estilos para la imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  /* Contenedor para el SVG de placeholder */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.profile-icon .placeholder-svg {
+    width: 30px; /* Tamaño del SVG dentro del círculo */
+    height: 30px;
+    fill: white; /* Color del ícono de persona */
+}
+
+/* Aseguramos que el estado activo se defina si usas Vue Router */
+.main-nav a.active-link {
+    background-color: rgba(0, 0, 0, 0.2);
 }
 </style>
-
