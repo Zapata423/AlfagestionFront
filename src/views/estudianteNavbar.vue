@@ -51,6 +51,16 @@ onMounted(() => {
   </header>
 </template>
 
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+}
+</style>
+
 <style scoped>
 .main-header {
   background-color: #ff0000;

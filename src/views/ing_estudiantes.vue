@@ -33,7 +33,7 @@ async function handleLogin() {
   <div class="login-container">
     <div class="login-form">
 
-      <a href="http://localhost:8080/" class="back-button">←</a>
+      <a href="/" class="back-button">←</a>
 
       <h1 class="logo">AlfaGestion</h1>
       <h2 class="welcome-title">Bienvenido al sistema de Estudiantes</h2>
@@ -51,7 +51,7 @@ async function handleLogin() {
 
       <!-- Mensaje de error -->
       <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
-      <a href="/olvid_contrasena" class="forgot-password">¿Olvidaste tu contraseña?</a>
+
     </div>
   </div>
 </template>
@@ -61,7 +61,7 @@ async function handleLogin() {
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Roboto:wght@400;500;700&display=swap');
 
 .login-container {
-  background-image: url('/img/fondo 1.jpeg');
+  background-image: url('../assets/img/patio.png');
   background-size: cover;
   background-position: center;
   height: 100vh;

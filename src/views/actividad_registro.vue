@@ -36,17 +36,21 @@ function cancelAction() {
       <section class="content-panel">
         <div class="info-text">
           <blockquote class="welcome-quote">
-            “Bienvenido al registro de horas de proyección social, donde podrás organizar y validar tus actividades de manera sencilla y efectiva.”
+            “Bienvenido al registro de actividades correspondientes a las horas de proyección social, donde podrás registrar y gestionar tus actividades de manera ágil y efectiva.”
           </blockquote>
           <hr class="separator" />
           <p>
-            Este formulario te permite registrar tus horas de proyección social de forma organizada. Está dividido en tres partes:
+            Este formulario ha sido diseñado para facilitar el registro organizado de tus actividades de proyección social. Ten en cuenta las siguientes recomendaciones antes de completar la información:
           </p>
           <ol>
-            <li><strong>Institución y encargado:</strong> datos básicos de la institución y responsable</li>
-            <li><strong>Datos del responsable :</strong> información personal del encargado (nombre, teléfono, correo, cargo).</li>
-            <li><strong>Registro de actividad :</strong> detalles de la actividad realizada, horas, fecha, institución, encargado y evidencia adjunta.</li>
+            <li>El registro consta de siete campos, los cuales deben ser diligenciados con precisión y responsabilidad.</li>
+            <li>Antes de completar el formulario, asegúrate de tener registrada al menos una institución y un encargado.</li>
+            <li>Adjunta evidencias claras y verificables de las actividades realizadas, ya que serán revisadas y validadas por un docente.</li>
+            <li>En caso de no contar con algún dato o si este no aplica, llenalo con: <strong>N/A</strong> y explica la razón en el campo de observaciones.</li>
           </ol>
+          <p>
+            Ante cualquier duda, dirígete al <strong>Módulo Informativo</strong> o contacta a un docente responsable.
+          </p>
         </div>
       </section>
     </main>
@@ -60,11 +64,10 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos Generales y de Encabezado */
 .app-container {
   height: 100vh;
   width: 100vw;
-  background-image: url('/img/fondo 1.jpeg');
+  background-image: url('../assets/img/juegos.png');
   background-size: cover;
   background-position: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -92,7 +95,7 @@ export default {
 
 /* Barra Lateral (Sidebar) */
 .sidebar {
-  width: 256px;
+  width: 316px;
   padding: 20px;
   color: #333;
   display: flex;

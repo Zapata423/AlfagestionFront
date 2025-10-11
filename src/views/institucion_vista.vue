@@ -83,14 +83,20 @@ onMounted(() => {
   </div>
 </template>
 
+
+
 <style scoped>
 .app-container {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   background-color: #f0f2f5;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  background: url('../assets/img/prescolar.png') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
 }
 
 .main-content {
@@ -115,6 +121,7 @@ onMounted(() => {
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s;
+  text-decoration: none;
 }
 
 .add-button:hover {
@@ -150,8 +157,7 @@ onMounted(() => {
   text-align: left;
   padding: 10px 15px;
   font-weight: 600;
-  color: #555;
-  background-color: #f0f0f0;
+
 }
 
 .data-table td {

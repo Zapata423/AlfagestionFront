@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ing_profesores from '../views/ing_profesores.vue'
 import ing_estudiantes from '../views/ing_estudiantes.vue'
 import ing_admin from '../views/ing_admin.vue'
-import olvid_contrasena from '../views/olvid_contrasena.vue'
 import Student_progress from '../views/student_progress.vue'
 import pregun_frecu from '../views/pregun_frecu.vue'
 import solicitud_apro from '../views/solicitud_apro.vue'
@@ -49,11 +48,6 @@ const router = createRouter({
       path: "/ing_admin",
       name: "ing_admin",
       component: ing_admin
-    },
-    {
-      path: "/olvid_contrasena",
-      name: "olvid_contrasena",
-      component: olvid_contrasena
     },
     {
       path: "/student_progress",

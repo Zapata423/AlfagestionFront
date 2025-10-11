@@ -7,7 +7,6 @@ export default {
   props: ["idEstudiante"],
   data() {
     return {
-      userName: "Estudiante",
       actividades: [],
       cargando: false,
       error: false,
@@ -19,7 +18,6 @@ export default {
       this.error = false
       try {
         const data = await getActividadesPorEstudiante(this.idEstudiante)
-        // formatear fechas
         this.actividades = data.map(act => ({
           ...act,
           fecha_subida: this.formatearFecha(act.fecha_subida)
@@ -51,11 +49,12 @@ export default {
 <template>
   <div class="main-container">
     <docenteNavbar/>
-     <main class="main-content">
+    <main class="main-content">
       <a href="../solicitud_apro" class="back-button">←</a>
       <div class="title-with-arrow"> 
-        <h1 class="user-title">Actividades del estudiante {{ idEstudiante }}</h1>
-        </div>
+        <h1 class="user-title">Actividades Del Estudiante</h1>
+      </div>
+
       <div v-if="cargando">⏳ Cargando actividades...</div>
       <div v-else-if="error">⚠️ Error cargando actividades</div>
       <div v-else class="tabla-estudiantes">
@@ -107,80 +106,108 @@ export default {
 </template>
 
 <style scoped>
-/* ... (El CSS de los elementos de diseño como .main-container, .header, etc., se mantiene sin cambios) ... */
-.main-container { background: #f3f5f7; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif; }
-.content { display: flex; margin-top: 1rem; }
-.sidebar { width: 220px; background: #fff; border-radius: 0 0 24px 24px; margin-left: 1rem; margin-top: 0.5rem; padding: 1.5rem 1rem 1rem 1rem; box-shadow: 0 2px 8px #0001; display: flex; flex-direction: column; align-items: flex-start; min-height: 500px; }
-.section-select { width: 100%; margin-bottom: 1.5rem; }
-.section-select select { width: 100px; padding: 0.3rem 0.5rem; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 0.5rem; font-size: 1rem; }
-.section-label { background: #eee; border-radius: 8px; padding: 0.2rem 0.7rem; font-size: 1rem; color: #222; font-weight: 600; text-align: center; }
-.menu { list-style: none; padding: 0; margin: 1rem 0 2rem 0; width: 100%; }
-.menu li { padding: 0.7rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer; font-weight: 600; color: #222; display: flex; align-items: center; gap: 0.7em; transition: background 0.2s; }
-.menu li.active, .menu li:hover { background: #ffd6d6; color: #d90000; }
-.btn-subir { background: #d90000; color: #fff; border: none; border-radius: 12px; padding: 0.7em 2em; font-size: 1.1em; font-weight: bold; margin-top: auto; cursor: pointer; width: 100%; }
-.main-content { flex: 1; padding: 1.5rem 2rem; }
-.section-header { margin-bottom: 1rem; }
-.section-title { background: #fff; border-radius: 8px; padding: 0.3rem 1.2rem; font-size: 1.1rem; color: #444; font-weight: 600; box-shadow: 0 2px 8px #0001; }
-.tabla-estudiantes { background: #fff; border-radius: 24px; padding: 2rem; margin: 0 auto; max-width: 900px; box-shadow: 0 2px 8px #0001; }
-table { width: 100%; border-collapse: separate; border-spacing: 0 0.7em; }
-th.th-espaciado { text-align: left; font-size: 1.1em; color: #222; padding-bottom: 0.5em; padding-left: 32px; padding-right: 32px; font-weight: bold; }
-td { font-size: 1em; padding: 0.5em 0.7em; }
-.estudiante { background: #bdbdbd; color: #fff; border-radius: 10px 0 0 10px; font-weight: 600; }
-.btn-evidencia { background: #ff3c3c; color: #fff; border: none; border-radius: 8px; padding: 0.6em 2em; font-weight: 600; cursor: pointer; font-size: 1em; }
-.btn-verificar { background: #099e1d; color: #fff; border: none; border-radius: 8px; padding: 0.6em 2em; font-weight: 600; cursor: pointer; font-size: 1em; }
-.estado { border-radius: 8px; padding: 0.2em 1em; font-weight: 600; color: #000000; display: inline-block; }
-.estado.pendiente { background: #ffee00; color: #ffffff; }
-.estado.aprobada { background: #03ff20; color: #fff; }
-.estado.rechazada { background: #d90000; color: #ffffff; }
-.arrow { font-size: 0.9em; }
-
-/* ************************************************************ */
-/* ESTILOS MODIFICADOS PARA ALINEAR LA FLECHA A LA IZQUIERDA Y CENTRAR EL TÍTULO */
-.title-with-arrow {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    max-width: 900px; 
-    margin-left: auto; 
-    margin-right: auto; 
-    /* Quitamos el padding aquí y lo devolvemos al .main-content para que la flecha quede "pegada" al borde del contenedor centrado */
-    padding: 0; 
+.main-container {
+  min-height: 100vh;
+  background-image: url("../assets/img/patio.png"); /* fondo tipo patio */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-/* Eliminamos el elemento "fantasma" (::after) que se usó en el paso anterior */
-/* .title-with-arrow::after { ... } */
+.main-content {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  background-color: rgba(255,255,255,0.85);
+  border-radius: 24px;
+  margin: 1rem auto;
+  max-width: 1000px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.title-with-arrow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .back-button {
-    background-color: #e53935;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    padding: 0.5rem 0.8rem;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    text-decoration: none;
-    margin-right: 1rem; 
+  background-color: #e53935;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  text-decoration: none;
+  margin-right: 1rem;
 }
-
 .back-button:hover {
-    background-color: #c62828;
-    transform: scale(1.1);
+  background-color: #c62828;
+  transform: scale(1.1);
 }
 
 .user-title {
-    color: #d90000;
-    font-size: 2em;
-    font-weight: bold;
-    /* CAMBIO CLAVE: Usamos margin-left: auto y margin-right: auto para centrar el título con respecto al espacio restante, que es todo el ancho después de la flecha. */
-    margin-left: auto; 
-    margin-right: auto;
+  color: #d90000;
+  font-size: 2em;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
 }
-/* ************************************************************ */
+
+.tabla-estudiantes {
+  background: #fff;
+  border-radius: 24px;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 900px;
+  box-shadow: 0 2px 8px #0001;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.7em;
+}
+
+td, th {
+  text-align: center;
+  font-size: 1em;
+  padding: 0.5em 0.7em;
+}
+
+.btn-evidencia {
+  background: #ff3c3c;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.6em 2em;
+  font-weight: 600;
+}
+
+.btn-verificar {
+  background: #099e1d;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.6em 2em;
+  font-weight: 600;
+}
+
+.estado {
+  border-radius: 8px;
+  padding: 0.2em 1em;
+  font-weight: 600;
+  display: inline-block;
+}
+.estado.pendiente { background: #ffee00; color: #000; }
+.estado.aprobada { background: #03ff20; color: #fff; }
+.estado.rechazada { background: #d90000; color: #fff; }
 
 @media (max-width: 900px) {
-    .main-content { padding: 1rem 0.5rem; }
-    .tabla-estudiantes { padding: 1rem; }
-    /* El .title-with-arrow ya no tiene padding, pero nos aseguramos de que el .main-content sí lo tenga */
+  .main-content { padding: 1rem 0.5rem; }
+  .tabla-estudiantes { padding: 1rem; }
 }
 </style>

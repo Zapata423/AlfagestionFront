@@ -51,19 +51,22 @@ function cancelAction() {
       <section class="content-panel">
         <div class="info-text">
           <blockquote class="welcome-quote">
-            "Bienvenido al registro de instituciones, donde podrás gestionar, organizar y validar la información de manera sencilla y efectiva."
+            “Bienvenido al registro de instituciones, donde podrás ingresar la información de las entidades de manera clara, ordenada y eficiente.”
           </blockquote>
           <hr class="separator" />
           <p>
-            Este formulario te permite registrar Instituciones de manera organizada. Está dividido en tres partes:
+            Este formulario ha sido diseñado para facilitar el registro de las instituciones en las cuales realizas tus horas de proyección social. Antes de completar la información, ten en cuenta las siguientes recomendaciones:
           </p>
           <ol>
-            <li><strong>Datos de la institución:</strong> nombre, tipo, dirección, teléfono y correo institucional.</li>
-            <li><strong>Encargado o representante:</strong> Información básica del responsable (nombre, cargo, correo y teléfono).</li>
-            <li><strong>Gestión de registro:</strong> confirmar, guardar y disponer la institución para su uso en actividades o proyectos.</li>
-            
+            <li>El registro consta de siete campos, los cuales deben ser diligenciados con precisión y responsabilidad.</li>
+            <li>Antes de completar el formulario, asegúrate de que la institución esté autorizada por el colegio.</li>
+            <li>Registra únicamente datos verificables de las instituciones, ya que serán revisados y validados por un docente.</li>
+            <li>En caso de no contar con algún dato o si este no aplica, ingresa <strong>N/A</strong> </li>
+            <li>Ten en cuenta que, al eliminar una institución registrada, se eliminarán automáticamente las actividades asociadas a ella.</li>
           </ol>
-          
+          <p>
+            Ante cualquier duda, dirígete al <strong>Módulo Informativo</strong> o contacta a un docente responsable.
+          </p>
         </div>
       </section>
     </main>
@@ -79,7 +82,7 @@ function cancelAction() {
 .app-container {
   height: 100vh;
   width: 100vw;
-  background-image: url('/img/fondo 1.jpeg');
+  background-image: url('../assets/img/prescolar.png');
   background-size: cover;
   background-position: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -106,12 +109,12 @@ function cancelAction() {
 }
 
 /* ---------------------------------------------------- */
-/* ESTILOS DEL SIDEBAR DEL CÓDIGO 1 (Aplicados al CÓDIGO 2) */
+/* ESTILOS DEL SIDEBAR (Conservados) */
 /* ---------------------------------------------------- */
 
 /* Barra Lateral (Sidebar) con Flexbox para alinear botón abajo */
 .sidebar {
-  width: 250px;
+  width: 342px;
   padding: 20px;
   color: #333;
   display: flex;
@@ -161,7 +164,7 @@ function cancelAction() {
 }
 
 /* ---------------------------------------------------- */
-/* ESTILOS DE CONTENT-PANEL (Panel de Contenido Informativo) del CÓDIGO 2 (sin cambios) */
+/* ESTILOS DE CONTENT-PANEL (Panel de Contenido) - MODIFICADOS PARA COINCIDIR CON EL SEGUNDO CUADRO */
 /* ---------------------------------------------------- */
 
 .content-panel {
@@ -185,20 +188,24 @@ function cancelAction() {
     padding: 0 20px;
     border: none;
 }
+/* 🚀 MODIFICADO: Separador con ancho del 100% (del Componente 2) y 3px de alto */
 .separator {
     border: none;
-    height: 2px;
+    height: 3px; 
     background-color: #ff0000;
-    width: 80%;
+    width: 100%; 
     margin: 0 auto 30px auto;
 }
+/* 🚀 MODIFICADO: Párrafos alineados a la izquierda (del Componente 2) */
 .info-text p {
     margin-bottom: 25px;
+    text-align: left; 
 }
+/* 🚀 MODIFICADO: Lista (ol) alineada a la izquierda y padding (del Componente 2) */
 .info-text ol {
     text-align: left;
-    padding-left: 40px;
-    display: inline-block;
+    padding-left: 25px; 
+    /* Se elimina 'display: inline-block;' */
 }
 .info-text ol li {
     margin-bottom: 15px;

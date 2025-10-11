@@ -19,7 +19,7 @@ const docenteData = ref({
 const activeItem = ref('gestion') // Define activeItem como ref
 
 const menuItems = ref([ // Define menuItems como ref
-  { id: 'gestion', text: 'Verificar Horas y Evidencia', href: '/solicitud_apro', icon: '✅' },
+  { id: 'gestion', text: 'Verificar Horas y Evidencia', href: '/solicitud_apro'},
   { id: 'perfil', text: 'Perfil Docente', href: '/perfil_docente' }, // Cambié a 'perfil' por consistencia
 ])
 
@@ -118,7 +118,6 @@ async function handleLogout() {
                 :href="item.href"
                 @click.prevent="setActiveItem(item.id)"
               >
-                <span v-html="item.icon"></span>
                 {{ item.text }}
               </a>
             </li>
@@ -181,7 +180,7 @@ async function handleLogout() {
 .content-area {
   flex-grow: 1;
   display: flex;
-  background: url('/img/fondo 1.jpeg')
+  background: url('../assets/img/juegos.png')
     no-repeat center center;
   background-size: cover;
   position: relative;

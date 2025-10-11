@@ -119,7 +119,7 @@ async function onSubmit() {
 .app-container {
   height: 100vh;
   width: 100vw;
-  background-image: url('/img/fondo 1.jpeg');
+  background-image: url('../assets/img/patio.png');
   background-size: cover;
   background-position: center;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

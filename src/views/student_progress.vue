@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue"
 import { getActividadesConEstado } from "../services/progreso"
-import estudianteNavbar from "./estudianteNavbar.vue" // 💡 PASO 1: Importar el Navbar común
+import estudianteNavbar from "./estudianteNavbar.vue"
 
 // Lista de actividades
 const actividades = ref([])
@@ -23,7 +23,7 @@ function getComentariosUrl(actividadId) {
 
 const cargando = ref(false)
 const error = ref(false)
-const totalHoras = ref(100) // Puedes ajustarlo según tu lógica
+const totalHoras = ref(80)
 const totalCompletadas = ref(0)
 
 const porcentaje = computed(() => {
@@ -54,8 +54,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <estudianteNavbar />
   <div class="horas-container">
-    <estudianteNavbar />
+    <div class="background-overlay"></div>
     <main>
       <a href="/ini_estudiante" class="back-button">←</a>
       <h1 class="titulo">
@@ -128,15 +129,32 @@ onMounted(() => {
 
 <style scoped>
 .horas-container {
-  background: #f3f5f7;
+  background-image: url('../assets/img/prescolar.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: #333;
   min-height: 100vh;
   font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+  position: relative;
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 1;
 }
 
 main {
   padding: 2rem 0;
   max-width: 900px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .titulo {
@@ -144,6 +162,8 @@ main {
   font-size: 2.3rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
 }
 
 .progress-section {
@@ -202,36 +222,64 @@ main {
 }
 
 .tabla-actividades {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 24px;
   padding: 2rem;
   margin: 0 auto;
   max-width: 800px;
-  box-shadow: 0 2px 8px #0001;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 0.7em;
+  border-spacing: 0 0.5em;
 }
 
 th {
   text-align: left;
   font-size: 1.2em;
-  color: #222;
+  color: #333;
   padding-bottom: 0.5em;
+  padding-left: 0.7em;
 }
 
 td {
   font-size: 1.1em;
-  padding: 0.5em 0.7em;
+  padding: 0.4em 0.7em;
+}
+
+tr {
+  background: none;
+  border-radius: 12px;
+  transition: transform 0.1s;
+}
+
+tr:nth-child(odd) td {
+  background-color: #f7f7f7;
+}
+
+tr:nth-child(even) td {
+  background-color: #e3e3e3;
+}
+
+tr:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+tr td:first-child {
+  border-radius: 10px 0 0 10px;
+  padding-left: 1.5em;
+}
+
+tr td:last-child {
+  border-radius: 0 10px 10px 0;
+  text-align: center;
 }
 
 .actividad {
-  background: #bdbdbd;
-  color: #fff;
-  border-radius: 10px 0 0 10px;
+  color: #000000;
   font-weight: 600;
 }
 
@@ -256,16 +304,11 @@ td {
   background: #ff0000;
 }
 
-tr {
-  background: #bdbdbd;
-  border-radius: 12px;
-}
-
 .comentarios-btn {
   display: inline-block;
   background-color: #5d5dff;
   color: white;
-  padding: 0.4em 0.8em;
+  padding: 0.2em 1em;
   border-radius: 6px;
   text-decoration: none;
   font-weight: 600;
@@ -277,11 +320,6 @@ tr {
 
 .comentarios-btn:hover {
   background-color: #4a4aed;
-}
-
-tr td:last-child {
-  border-radius: 0 10px 10px 0;
-  text-align: center;
 }
 
 @media (max-width: 700px) {
@@ -319,4 +357,3 @@ tr td:last-child {
   transform: scale(1.1);
 }
 </style>
-

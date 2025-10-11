@@ -152,15 +152,16 @@ export default {
 <style scoped>
 /* Estilos Generales y de Encabezado (sin cambios) */
 .app-container {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  background-image: url('/img/fondo 1.jpeg');
-  background-size: cover;
-  background-position: center;
+  background-color: #f0f2f5;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  background: url('../assets/img/cafeteria.png') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
 }
 /* Contenido Principal */
 .main-content {

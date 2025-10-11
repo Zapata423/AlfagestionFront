@@ -12,9 +12,9 @@ const fotoUrl = ref(null)
 
 const menuItems = ref([
   { id: 'gestion', text: 'Gestion de Horas', href: '/student_progress' },
-  { id: 'registradas', text: 'Agregar Institucion', href: '/institucion_vista'},
-  { id: 'mapa', text: 'Agregar Encargado', href: '/encargado_vista' },
   { id: 'calendario', text: 'Agregar Actividades', href: '/actividad_vista'},
+  { id: 'registradas', text: 'Agregar Instituciones', href: '/institucion_vista'},
+  { id: 'mapa', text: 'Agregar Encargados', href: '/encargado_vista' },
   { id: 'perfil', text: 'Perfil Estudiante', href: '/perfil_estudiante' },
   { id: 'informativo', text: 'Módulo informativo', href: '/pregun_frecu' },
 ])
@@ -168,7 +168,7 @@ onMounted(() => {
 .content-area {
   flex-grow: 1;
   display: flex;
-  background: url('/img/fondo 1.jpeg') no-repeat center center;
+  background: url('../assets/img/patio.png') no-repeat center center;
   background-size: cover;
   position: relative;
 }

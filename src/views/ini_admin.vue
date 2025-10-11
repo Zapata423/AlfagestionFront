@@ -38,12 +38,12 @@ async function handleLogout() {
       <aside class="sidebar-nav">
         <div class="user-profile">
           <img
-            src="https://www.footballdatabase.eu/images/photos/players/2014-2015/a_61/61663.jpg"
+            src="../assets/img/admin.png"
             alt="User Avatar"
             class="avatar"
           />
           <div class="user-info">
-            <span class="user-name">Bienvenido,</span>
+            <span class="user-name">Bienvenido</span>
             <span class="user-role">Administrador</span>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default {
 .content-area {
   flex-grow: 1;
   display: flex;
-  background: url('/img/fondo 1.jpeg')
+  background: url('../assets/img/cafeteria.png')
     no-repeat center center;
   background-size: cover;
   position: relative;

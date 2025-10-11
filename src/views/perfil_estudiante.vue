@@ -185,11 +185,7 @@ function goHome() {
           <p>{{ estudianteData.grado }}{{ estudianteData.grupo }}</p>
         </div>
 
-        <ul class="sidebar-nav-list">
-          <li class="active">
-            <a href="#" style="color: inherit; text-decoration: none; display: block;">Mi Perfil</a>
-          </li>
-        </ul>
+
 
         <div class="sidebar-action action-margin" v-if="!isEditing">
           <button class="submit-button" @click="editProfile">Editar Perfil</button>
@@ -285,7 +281,7 @@ function goHome() {
 .app-container {
   height: 100vh;
   width: 100vw;
-  background-image: url("/img/fondo 1.jpeg");
+  background-image: url("../assets/img/prescolar.png");
   background-size: cover;
   background-position: center;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -334,11 +330,6 @@ function goHome() {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.sidebar-nav-list li.active {
-  background-color: #ff0000;
-  color: white;
-  font-weight: bold;
 }
 
 .sidebar-action {

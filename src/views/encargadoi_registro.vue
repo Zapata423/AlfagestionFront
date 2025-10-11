@@ -33,22 +33,27 @@ function cancelAction() {
         </div>
       </aside>
 
-      <section class="content-panel">
-        <div class="info-text">
-          <blockquote class="welcome-quote">
-            "Bienvenido al registro de encargados, donde podrás ingresar y gestionar la información de los responsables de manera sencilla y efectiva."
-          </blockquote>
-          <hr class="separator" />
-          <p>
-            Este formulario te permite registrar encargados de manera organizada. Está dividido en tres partes:
-          </p>
-          <ol>
-            <li><strong>Datos personales:</strong> nombre completo, documento de identidad, teléfono y correo electrónico</li>
-            <li><strong>Información institucional:</strong> institución a la que pertenece, cargo que desempeña y área de trabajo.</li>
-            <li><strong>Gestión de registro:</strong> confirmar y guardar los datos del encargado para asociarlo a proyectos o actividades.</li>
-          </ol>
-        </div>
-      </section>
+        <section class="content-panel">
+          <div class="info-text">
+            <blockquote class="welcome-quote">
+              “Bienvenido al registro de encargados, donde podrás ingresar la información de la persona responsable de acompañar tu proceso de proyección social de manera clara, ordenada y eficiente.”
+            </blockquote>
+            <hr class="separator" />
+            <p>
+              Este formulario ha sido diseñado para facilitar el registro de los encargados asociados a las instituciones en las cuales realizas tus horas de proyección social. Antes de completar la información, ten en cuenta las siguientes recomendaciones:
+            </p>
+            <ol>
+              <li>El registro consta de seis campos, los cuales deben ser diligenciados con precisión y responsabilidad.</li>
+              <li>Registra únicamente datos verificables de la persona encargada, ya que serán revisados y validados por un docente.</li>
+              <li>En caso de no contar con algún dato o si este no aplica, ingresa <strong>N/A</strong> y acláralo en el campo de observaciones.</li>
+              <li>Si aún no cuentas con un encargado asignado, ingresa <strong>N/A</strong> en todos los campos y justifica la razón en las observaciones.</li>
+              <li>Ten en cuenta que, al eliminar un encargado registrado, se eliminarán automáticamente las actividades asociadas a este.</li>
+            </ol>
+            <p>
+              Ante cualquier duda, dirígete al <strong>Módulo Informativo</strong> o contacta a un docente responsable.
+            </p>
+          </div>
+        </section>
     </main>
   </div>
 </template>
@@ -60,17 +65,17 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos Generales y de Encabezado (sin cambios) */
 .app-container {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  background-image: url('/img/fondo 1.jpeg');
-  background-size: cover;
-  background-position: center;
+  background-color: #f0f2f5;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  background: url('../assets/img/cafeteria.png') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
 }
 /* Contenido Principal (sin cambios) */
 .main-content {
@@ -91,7 +96,7 @@ export default {
 
 /* Barra Lateral (Sidebar) - MODIFICADO para usar Flexbox y empujar el botón */
 .sidebar {
-  width: 268px;
+  width: 387px;
   padding: 20px;
   color: #333;
   /* CAMBIO: Añadimos display flex y flex-direction column */
