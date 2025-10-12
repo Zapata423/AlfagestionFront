@@ -25,22 +25,22 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente:
 
 ---
 
-##  Instalación del proyecto
+## Instalación del proyecto
 
 Sigue estos pasos para ejecutar el proyecto localmente:
 
-# 2Entra en el directorio del proyecto
+# Entra en el directorio del proyecto
 cd AlfagestionFront
 
-#  Instala las dependencias
+# Instala las dependencias
 npm install
 
-#  Inicia el servidor de desarrollo
+# Inicia el servidor de desarrollo
 npm run serve
 
 ---
 
-## 🌐 Ejecución
+##  Ejecución
 
 Una vez ejecutado el comando anterior, abre tu navegador y visita:
 
@@ -48,7 +48,7 @@ Una vez ejecutado el comando anterior, abre tu navegador y visita:
 http://localhost:8080/
 ```
 
-## 📁 Estructura del proyecto
+##  Estructura del proyecto
 
 ```
 AlfagestionFront/
