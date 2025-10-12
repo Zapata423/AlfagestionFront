@@ -7,7 +7,7 @@ Este proyecto proporciona un entorno visual intuitivo para que estudiantes, doce
 
 ---
 
-## 🚀 Tecnologías utilizadas
+##  Tecnologías utilizadas
 
 * [Vue.js](https://vuejs.org/) — Framework principal de desarrollo.
 * [Vue Router](https://router.vuejs.org/) — Manejo de rutas y navegación.
@@ -16,7 +16,7 @@ Este proyecto proporciona un entorno visual intuitivo para que estudiantes, doce
 
 ---
 
-## ⚙️ Requisitos previos
+##  Requisitos previos
 
 Antes de comenzar, asegúrate de tener instalado lo siguiente:
 
@@ -25,7 +25,7 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente:
 
 ---
 
-## 🧩 Instalación del proyecto
+##  Instalación del proyecto
 
 Sigue estos pasos para ejecutar el proyecto localmente:
 
@@ -66,14 +66,14 @@ AlfagestionFront/
 
 ---
 
-## 🧠 Recomendaciones
+##  Recomendaciones
 
 * Asegúrate de tener configurado el backend de **AlfaGestión** antes de iniciar la interfaz.
 * Puedes modificar las variables de entorno en `.env` si el proyecto las utiliza para conectarse con la API.
 
 ---
 
-## 👥 Autores
+##  Autores
 
 Desarrollado por el equipo de **AlfaGestión**.
 Mantenido por **Miguel Zapata**.
