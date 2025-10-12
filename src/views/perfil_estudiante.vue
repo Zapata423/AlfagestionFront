@@ -121,6 +121,7 @@ function goHome() {
 <template>
   <div class="app-container">
     <estudianteNavbar />
+
     <main class="main-content">
       <aside class="sidebar">
         <div class="profile-header">
@@ -184,8 +185,6 @@ function goHome() {
           <h3>{{ estudianteData.nombres }} {{ estudianteData.apellidos }}</h3>
           <p>{{ estudianteData.grado }}{{ estudianteData.grupo }}</p>
         </div>
-
-
 
         <div class="sidebar-action action-margin" v-if="!isEditing">
           <button class="submit-button" @click="editProfile">Editar Perfil</button>
@@ -277,7 +276,6 @@ function goHome() {
   outline: none;
   border-bottom-color: #d60000;
 }
-
 .app-container {
   height: 100vh;
   width: 100vw;
@@ -289,14 +287,12 @@ function goHome() {
   display: flex;
   flex-direction: column;
 }
-
 .main-content {
   flex-grow: 1;
   display: flex;
   padding: 30px;
   gap: 30px;
 }
-
 .sidebar,
 .content-view {
   background: rgba(255, 255, 255, 0.65);
@@ -305,7 +301,6 @@ function goHome() {
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
-
 .sidebar {
   width: 250px;
   padding: 20px;
@@ -313,7 +308,6 @@ function goHome() {
   display: flex;
   flex-direction: column;
 }
-
 .sidebar-nav-list {
   list-style: none;
   padding: 0;
@@ -331,7 +325,6 @@ function goHome() {
   justify-content: center;
   align-items: center;
 }
-
 .sidebar-action {
   padding-top: 5px;
 }
@@ -339,7 +332,6 @@ function goHome() {
   margin-top: auto;
   padding-top: 20px !important;
 }
-
 .submit-button {
   background-color: #28a745;
   color: white;
@@ -356,7 +348,6 @@ function goHome() {
 .submit-button:hover {
   background-color: #218838;
 }
-
 .cancel-button {
   background-color: #ff0000;
   color: white;
@@ -372,12 +363,10 @@ function goHome() {
 .cancel-button:hover {
   background-color: #d60000;
 }
-
 .profile-header {
   text-align: center;
   padding: 10px 0;
 }
-
 .profile-avatar-wrapper {
   position: relative;
   width: 80px;
@@ -439,7 +428,6 @@ function goHome() {
   color: #555;
   font-size: 14px;
 }
-
 .content-view {
   flex-grow: 1;
   padding: 25px 35px;
@@ -452,13 +440,11 @@ function goHome() {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 10px;
 }
-
 .data-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-
 .data-item {
   padding: 10px 15px;
   border-radius: 8px;
@@ -489,7 +475,6 @@ function goHome() {
 .data-item.one-third {
   grid-column: span 1;
 }
-
 .active-status {
   color: #28a745 !important;
   font-weight: bold !important;

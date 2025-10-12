@@ -1,55 +1,47 @@
 <script setup>
-import { ref, onMounted } from 'vue' // Importa onMounted
+
+import { ref, onMounted } from 'vue' 
 import { useRouter } from 'vue-router'
 import { logoutDocente } from '../services/authDocentes'
-import { getDocentePerfil } from '../services/perfilDocente' // Importa el servicio de perfil
+import { getDocentePerfil } from '../services/perfilDocente'
 
 const router = useRouter()
-const BASE_URL = "http://localhost:8000" // Define la URL base
+const BASE_URL = "http://localhost:8000" 
 
-// Estado reactivo para los datos del docente
 const docenteData = ref({
   nombre: "Cargando...",
   apellido: "",
   cargo: "Cargando...",
-  foto_url: null, // Inicializa con null para la foto
+  foto_url: null, 
 })
 
-// Estado para el elemento activo del menú
-const activeItem = ref('gestion') // Define activeItem como ref
+const activeItem = ref('gestion')
 
-const menuItems = ref([ // Define menuItems como ref
+const menuItems = ref([ 
   { id: 'gestion', text: 'Verificar Horas y Evidencia', href: '/solicitud_apro'},
-  { id: 'perfil', text: 'Perfil Docente', href: '/perfil_docente' }, // Cambié a 'perfil' por consistencia
+  { id: 'perfil', text: 'Perfil Docente', href: '/perfil_docente' }, 
 ])
 
-// Función para establecer el elemento activo del menú
 function setActiveItem(itemId) {
   activeItem.value = itemId
   router.push(menuItems.value.find(item => item.id === itemId).href)
 }
 
-
-// Función para cargar los datos del docente
 async function fetchDocenteData() {
   try {
     const data = await getDocentePerfil()
-    
-    // Construir la URL completa de la foto si existe y es relativa
     let fotoUrlAbsoluta = data.docente.foto
     if (fotoUrlAbsoluta && fotoUrlAbsoluta.startsWith("/")) {
       fotoUrlAbsoluta = `${BASE_URL}${fotoUrlAbsoluta}`
     }
-
     docenteData.value = {
       nombre: data.docente.nombre || "N/A",
       apellido: data.docente.apellido || "N/A",
-      cargo: data.cargo || "Docente", // Obtiene el cargo del Usuario
+      cargo: data.cargo || "Docente", 
       foto_url: fotoUrlAbsoluta || null,
     }
   } catch (error) {
     console.error("Error al cargar datos del docente para el navbar:", error)
-    // Establecer valores por defecto en caso de error
     docenteData.value = {
       nombre: "Error",
       apellido: "Carga",
@@ -59,19 +51,16 @@ async function fetchDocenteData() {
   }
 }
 
-// Cargar los datos del docente al montar el componente
 onMounted(() => {
   fetchDocenteData()
 })
 
-
 async function handleLogout() {
   try {
     await logoutDocente()
-    router.push('/ing_profesores') // redirige al login de docentes
+    router.push('/ing_profesores') 
   } catch (error) {
     console.error('Error al cerrar sesión:', error)
-    // Como fallback, igual borramos los tokens y redirigimos
     localStorage.removeItem('access')
     localStorage.removeItem('refresh')
     localStorage.removeItem('user')
@@ -151,7 +140,6 @@ async function handleLogout() {
 </template>
 
 <style scoped>
-/* Tu estilo existente */
 #app-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   height: 100vh;
@@ -213,7 +201,7 @@ async function handleLogout() {
   border-radius: 50%;
   border: 2px solid #d90429;
   margin-right: 15px;
-  object-fit: cover; /* Asegura que la imagen no se distorsione */
+  object-fit: cover; 
 }
 .user-info {
   display: flex;

@@ -168,14 +168,12 @@ function goBack() {
   display: flex;
   flex-direction: column;
 }
-
 .main-content {
   flex-grow: 1;
   display: flex;
   padding: 30px;
   gap: 30px;
 }
-
 .sidebar,
 .content-form {
   background: rgba(255, 255, 255, 0.6);
@@ -184,7 +182,6 @@ function goBack() {
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
-
 .sidebar {
   width: 321px;
   padding: 20px;
@@ -192,13 +189,11 @@ function goBack() {
   display: flex;
   flex-direction: column;
 }
-
 .sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0 0 20px 0;
 }
-
 .sidebar li {
   padding: 15px 20px;
   font-weight: 500;
@@ -207,13 +202,11 @@ function goBack() {
   cursor: pointer;
   position: relative;
 }
-
 .sidebar li.active {
   background-color: #ff0000;
   color: white;
   font-weight: bold;
 }
-
 .sidebar li.active::before {
   content: "";
   position: absolute;
@@ -224,16 +217,13 @@ function goBack() {
   border-bottom: 10px solid transparent;
   border-left: 10px solid #ff0000;
 }
-
 .sidebar-action {
   padding-top: 5px;
 }
-
 .action-margin {
   margin-top: auto;
   padding-top: 20px !important;
 }
-
 .cancel-button {
   background-color: #ff0000;
   color: white;
@@ -246,53 +236,43 @@ function goBack() {
   cursor: pointer;
   transition: background-color 0.2s;
 }
-
 .cancel-button:hover {
   background-color: #d60000;
 }
-
 .content-form {
   flex-grow: 1;
   padding: 25px 35px;
 }
-
 .content-form h2 {
   color: #333;
   margin-top: 0;
   margin-bottom: 25px;
   font-size: 24px;
 }
-
 form {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 20px;
 }
-
 .form-group.half-width {
   grid-column: span 3;
 }
-
 .form-group.third-width {
   grid-column: span 2;
 }
-
 .form-group.full-width {
   grid-column: 1 / -1;
 }
-
 .form-group {
   display: flex;
   flex-direction: column;
 }
-
 .form-group label {
   margin-bottom: 6px;
   font-size: 14px;
   font-weight: 600;
   color: #333;
 }
-
 .form-input {
   background-color: rgba(80, 80, 80, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -303,20 +283,16 @@ form {
   outline: none;
   transition: background-color 0.3s;
 }
-
 .form-input::placeholder {
   color: rgba(255, 255, 255, 0.8);
 }
-
 .form-input:focus {
   background-color: rgba(80, 80, 80, 0.7);
 }
-
 textarea.form-input {
   height: 100px;
   resize: vertical;
 }
-
 .evidence-field {
   display: flex;
   justify-content: space-between;
@@ -326,12 +302,10 @@ textarea.form-input {
   color: rgba(255, 255, 255, 0.8);
   font-weight: 500;
 }
-
 .evidence-actions {
   display: flex;
   gap: 10px;
 }
-
 .view-evidence-button {
   background-color: #1ec900;
   color: white;
@@ -343,11 +317,9 @@ textarea.form-input {
   cursor: pointer;
   transition: background-color 0.2s;
 }
-
 .view-evidence-button:hover {
   background-color: #189e00;
 }
-
 @media (max-width: 768px) {
   .main-content {
     flex-direction: column;

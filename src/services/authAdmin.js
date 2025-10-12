@@ -1,5 +1,6 @@
 import api from "./api"
 
+
 export async function loginAdmin(email, password) {
   try {
     const response = await api.post("/loginAdmin/", {
@@ -15,6 +16,7 @@ export async function loginAdmin(email, password) {
     }
   }
 }
+
 
 export async function logoutAdmin() {
   try {

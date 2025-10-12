@@ -1,7 +1,7 @@
-// services/listaEstudiantes.js
+
 import api from "./api"
 
-// ✅ Obtener estudiantes filtrados por grado y grupo
+
 export async function getEstudiantes(grado = null, grupo = null) {
   try {
     const params = {}
@@ -15,6 +15,8 @@ export async function getEstudiantes(grado = null, grupo = null) {
     throw error
   }
 }
+
+
 export async function getActividadesPorEstudiante(estudianteId) {
   try {
     const response = await api.get(`/estudiante/${estudianteId}/actividades/`)

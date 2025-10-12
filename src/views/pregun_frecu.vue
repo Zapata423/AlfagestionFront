@@ -2,7 +2,6 @@
 import { reactive } from "vue"
 import estudianteNavbar from "./estudianteNavbar.vue"
 
-// Definir el nuevo listado de preguntas y respuestas
 const faqItems = reactive([
   {
     question: "¿Qué es el servicio social obligatorio y por qué debo realizarlo?",
@@ -92,7 +91,6 @@ const faqItems = reactive([
   },
 ])
 
-// Función para alternar el estado de despliegue de una FAQ específica
 function toggleFaq(item) {
   item.isOpen = !item.isOpen
 }
@@ -133,7 +131,6 @@ function toggleFaq(item) {
   background-position: center;
   background-attachment: fixed;
 }
-
 .content {
   display: flex;
   justify-content: center;
@@ -141,7 +138,6 @@ function toggleFaq(item) {
   margin-top: 1rem;
   padding-left: 60px;
 }
-
 .main-faq {
   background: rgba(255, 255, 255, 0.85);
   border-radius: 24px;
@@ -151,7 +147,6 @@ function toggleFaq(item) {
   max-width: 900px;
   width: 90%;
 }
-
 .titulo {
   font-family: "Orbitron", Arial, sans-serif;
   font-size: 2.2rem;
@@ -159,7 +154,6 @@ function toggleFaq(item) {
   margin-bottom: 1.5rem;
   text-align: center;
 }
-
 .faq-list ul {
   list-style: none;
   font-size: 1.2rem;
@@ -167,11 +161,9 @@ function toggleFaq(item) {
   color: #111;
   padding-left: 0;
 }
-
 .faq-list li {
   margin-bottom: 1.5rem;
 }
-
 @media (max-width: 900px) {
   .content {
     flex-direction: column;
@@ -188,7 +180,6 @@ function toggleFaq(item) {
     left: 10px;
   }
 }
-
 .question {
   display: block;
   cursor: pointer;
@@ -199,7 +190,6 @@ function toggleFaq(item) {
   position: relative;
   padding-right: 30px;
 }
-
 .question::after {
   content: "+";
   position: absolute;
@@ -210,16 +200,13 @@ function toggleFaq(item) {
   line-height: 1;
   transition: transform 0.2s;
 }
-
 .question.active {
   color: #d90000;
 }
-
 .question.active::after {
   content: "−";
   transform: translateY(-50%) rotate(0deg);
 }
-
 .answer {
   padding: 10px 20px;
   margin-top: 5px;
@@ -229,7 +216,6 @@ function toggleFaq(item) {
   font-size: 1.1rem;
   color: #333;
 }
-
 .back-button {
   position: fixed;
   top: 75px;
@@ -245,7 +231,6 @@ function toggleFaq(item) {
   z-index: 1000;
   text-decoration: none;
 }
-
 .back-button:hover {
   background-color: #c62828;
   transform: scale(1.1);

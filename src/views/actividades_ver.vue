@@ -55,8 +55,8 @@ export default {
         <h1 class="user-title">Actividades Del Estudiante</h1>
       </div>
 
-      <div v-if="cargando">⏳ Cargando actividades...</div>
-      <div v-else-if="error">⚠️ Error cargando actividades</div>
+      <div v-if="cargando"> Cargando actividades...</div>
+      <div v-else-if="error"> Error cargando actividades</div>
       <div v-else class="tabla-estudiantes">
         <table>
           <thead>
@@ -108,13 +108,12 @@ export default {
 <style scoped>
 .main-container {
   min-height: 100vh;
-  background-image: url("../assets/img/patio.png"); /* fondo tipo patio */
+  background-image: url("../assets/img/patio.png"); 
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   font-family: 'Segoe UI', Arial, sans-serif;
 }
-
 .main-content {
   flex: 1;
   padding: 1.5rem 2rem;
@@ -124,7 +123,6 @@ export default {
   max-width: 1000px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-
 .title-with-arrow {
   display: flex;
   align-items: center;
@@ -133,7 +131,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-
 .back-button {
   background-color: #e53935;
   border: none;
@@ -150,7 +147,6 @@ export default {
   background-color: #c62828;
   transform: scale(1.1);
 }
-
 .user-title {
   color: #d90000;
   font-size: 2em;
@@ -158,7 +154,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-
 .tabla-estudiantes {
   background: #fff;
   border-radius: 24px;
@@ -167,19 +162,16 @@ export default {
   max-width: 900px;
   box-shadow: 0 2px 8px #0001;
 }
-
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 0.7em;
 }
-
 td, th {
   text-align: center;
   font-size: 1em;
   padding: 0.5em 0.7em;
 }
-
 .btn-evidencia {
   background: #ff3c3c;
   color: #fff;
@@ -187,7 +179,6 @@ td, th {
   padding: 0.6em 2em;
   font-weight: 600;
 }
-
 .btn-verificar {
   background: #099e1d;
   color: #fff;
@@ -195,7 +186,6 @@ td, th {
   padding: 0.6em 2em;
   font-weight: 600;
 }
-
 .estado {
   border-radius: 8px;
   padding: 0.2em 1em;
@@ -205,7 +195,6 @@ td, th {
 .estado.pendiente { background: #ffee00; color: #000; }
 .estado.aprobada { background: #03ff20; color: #fff; }
 .estado.rechazada { background: #d90000; color: #fff; }
-
 @media (max-width: 900px) {
   .main-content { padding: 1rem 0.5rem; }
   .tabla-estudiantes { padding: 1rem; }

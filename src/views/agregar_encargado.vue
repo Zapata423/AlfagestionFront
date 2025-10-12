@@ -6,7 +6,6 @@ import estudianteNavbar from "./estudianteNavbar.vue"
 
 const router = useRouter()
 
-// Datos del formulario
 const formData = ref({
   nombre: "",
   apellido: "",
@@ -16,7 +15,6 @@ const formData = ref({
   observaciones: "", 
 })
 
-// Método submit
 async function submitForm() {
   try {
     const data = await createEncargado(formData.value)
@@ -29,7 +27,6 @@ async function submitForm() {
   }
 }
 
-// Función para simular la acción del botón "Cancelar" y navegar a otra vista
 function cancelAction() {
   router.push('/encargado_vista')
 }
@@ -139,7 +136,6 @@ export default {
     };
   },
   methods: {
-    // Esta función es ignorada por <script setup> pero se mantiene por estructura
     submitForm() {
       console.log('Datos del formulario:', this.formData);
       alert('Revisa la consola para ver los datos del formulario.');
@@ -150,7 +146,6 @@ export default {
 
 
 <style scoped>
-/* Estilos Generales y de Encabezado (sin cambios) */
 .app-container {
   min-height: 100vh;
   width: 100vw;
@@ -163,15 +158,12 @@ export default {
   background-size: cover;
   position: relative;
 }
-/* Contenido Principal */
 .main-content {
   flex-grow: 1;
   display: flex;
   padding: 30px;
   gap: 30px;
 }
-
-/* Efecto de Cristal (Glassmorphism) */
 .sidebar, .content-form {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(8px);
@@ -179,8 +171,6 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
-
-/* Barra Lateral (Sidebar) con Flexbox para alinear botón abajo */
 .sidebar {
   width: 227px;
   padding: 20px;
@@ -203,20 +193,15 @@ export default {
 .sidebar-nav-list li.active { background-color: #ff0000; color: white; font-weight: bold; }
 .sidebar-nav-list li.active::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #ff0000; }
 .sidebar-nav-list li svg { width: 28px; height: 28px; }
-
-/* Contenedor de Acción para el botón "Subir" (usa margin-top: auto) */
 .sidebar-action.action-margin {
-    margin-top: auto; /* Empuja el botón "Subir" y el grupo de botones al fondo */
+    margin-top: auto; 
     padding-top: 20px;
 }
-/* Contenedor de Acción para el botón "Cancelar" */
 .sidebar-action:not(.action-margin) {
-    padding-top: 10px; /* Separación entre botones */
+    padding-top: 10px; 
 }
-
-/* Estilo para el Botón SUBIR (VERDE) */
 .submit-button.green-button {
-    background-color: #28a745; /* Verde */
+    background-color: #28a745; 
     color: white;
     border: none;
     width: 100%;
@@ -230,10 +215,8 @@ export default {
 .submit-button.green-button:hover {
     background-color: #218838;
 }
-
-/* Estilo para el Botón CANCELAR (ROJO) */
 .cancel-button {
-    background-color: #ff0000; /* Rojo */
+    background-color: #ff0000; 
     color: white;
     border: none;
     width: 100%;
@@ -247,8 +230,6 @@ export default {
 .cancel-button:hover {
     background-color: #d60000;
 }
-
-/* Formulario Central (sin cambios en inputs) */
 .content-form {
   flex-grow: 1;
   padding: 25px 35px;
@@ -273,5 +254,4 @@ form {
 .form-input.full-width { grid-column: 1 / -1; }
 .form-input::placeholder { color: rgba(255, 255, 255, 0.8); }
 textarea.form-input { height: 120px; resize: vertical; }
-
 </style>

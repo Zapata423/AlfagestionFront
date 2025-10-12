@@ -142,7 +142,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
 }
-
 .main-header {
   display: flex;
   justify-content: space-between;
@@ -152,11 +151,9 @@ onMounted(() => {
   border-bottom: 1px solid #e0e0e0;
   flex-shrink: 0;
 }
-
 .logo-container .logo {
   height: 60px;
 }
-
 .title-container .title {
   color: #d90429;
   font-size: 2.5em;
@@ -164,7 +161,6 @@ onMounted(() => {
   margin: 0;
   text-transform: uppercase;
 }
-
 .content-area {
   flex-grow: 1;
   display: flex;
@@ -172,14 +168,12 @@ onMounted(() => {
   background-size: cover;
   position: relative;
 }
-
 .content-area::before {
   content: '';
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.3);
 }
-
 .sidebar-nav {
   z-index: 10;
   width: 280px;
@@ -190,14 +184,12 @@ onMounted(() => {
   flex-direction: column;
   padding: 20px 15px;
 }
-
 .user-profile {
   display: flex;
   align-items: center;
   padding: 10px;
   margin-bottom: 25px;
 }
-
 .avatar {
   width: 60px;
   height: 60px;
@@ -206,27 +198,22 @@ onMounted(() => {
   margin-right: 15px;
   object-fit: cover;
 }
-
 .user-info {
   display: flex;
   flex-direction: column;
 }
-
 .user-name {
   color: #f0f0f0;
   font-weight: bold;
   font-size: 1.1em;
 }
-
 .user-role {
   color: #b0b0b0;
   font-size: 0.9em;
 }
-
 .main-nav {
   flex-grow: 1;
 }
-
 .main-nav ul {
   list-style-type: none;
   padding: 0;
@@ -235,7 +222,6 @@ onMounted(() => {
   flex-direction: column;
   gap: 10px;
 }
-
 .nav-button {
   display: flex;
   align-items: center;
@@ -254,25 +240,21 @@ onMounted(() => {
   position: relative;
   text-decoration: none;
 }
-
 .nav-button :deep(svg) {
   width: 24px;
   height: 24px;
   stroke-width: 1.5;
 }
-
 .nav-button:hover {
   background-color: rgba(217, 4, 41, 0.2);
   color: #ffffff;
 }
-
 .nav-button.active {
   background-color: #d90429;
   color: #ffffff;
   font-weight: bold;
   box-shadow: 0 4px 15px rgba(217, 4, 41, 0.4);
 }
-
 .nav-button.active::before {
   content: '';
   position: absolute;
@@ -284,13 +266,11 @@ onMounted(() => {
   background-color: #ffffff;
   border-radius: 0 4px 4px 0;
 }
-
 .logout-section {
   padding-top: 15px;
   margin-top: auto;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .nav-button.logout:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }

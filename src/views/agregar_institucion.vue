@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from "vue"
 import { useRouter } from "vue-router" 
-import { createInstitucion } from "../services/instituciones" // tu servicio
+import { createInstitucion } from "../services/instituciones" 
 import estudianteNavbar from "./estudianteNavbar.vue"
 const router = useRouter()
 
-// Datos del formulario
 const formData = ref({
   nombre: "",
   telefono: "",
@@ -16,7 +15,6 @@ const formData = ref({
   ciudad: "", 
 })
 
-// Método submit
 async function submitForm() {
   try {
     const data = await createInstitucion(formData.value)
@@ -130,7 +128,6 @@ function cancelAction() {
   </div>
 </template>
 
-
 <script>
 export default {
   name: 'DashboardInstitucionForm',
@@ -148,7 +145,6 @@ export default {
     };
   },
   methods: {
-    // Nota: esta función submitForm es ignorada por Vue si existe en <script setup>
     submitForm() {
       console.log('Datos del formulario:', this.formData);
       alert('Revisa la consola para ver los datos del formulario.');
@@ -157,9 +153,7 @@ export default {
 }
 </script>
 
-
 <style scoped>
-/* Estilos Generales y de Encabezado (sin cambios) */
 .app-container {
   height: 100vh;
   width: 100vw;
@@ -171,15 +165,12 @@ export default {
   display: flex;
   flex-direction: column;
 }
-/* Contenido Principal */
 .main-content {
   flex-grow: 1;
   display: flex;
   padding: 30px;
   gap: 30px;
 }
-
-/* Efecto de Cristal (Glassmorphism) */
 .sidebar, .content-form {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(8px);
@@ -187,8 +178,6 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
-
-/* Barra Lateral (Sidebar) con Flexbox para alinear botón abajo */
 .sidebar {
   width: 227px;
   padding: 20px;
@@ -211,22 +200,15 @@ export default {
 .sidebar-nav-list li.active { background-color: #ff0000; color: white; font-weight: bold; }
 .sidebar-nav-list li.active::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #ff0000; }
 .sidebar-nav-list li svg { width: 28px; height: 28px; }
-
-/* Botón "Subir" y contenedor general de acción */
 .sidebar-action {
-    /* Quitamos margin-top: auto del contenedor general para que los dos botones
-       se muestren al final del sidebar, pero añadimos una clase de margen
-       al botón superior para separarlos. */
-    padding-top: 5px; /* Reducido para juntar los botones */
+    padding-top: 5px; 
 }
 .action-margin {
-    margin-top: auto; /* Solo el primer contenedor de acción empuja hacia abajo */
+    margin-top: auto; 
     padding-top: 20px !important;
 }
-
-/* Estilo para el botón Subir (verde por defecto en tu código, lo mantengo) */
 .submit-button {
-    background-color: #28a745; /* Color verde para el botón Subir */
+    background-color: #28a745; 
     color: white;
     border: none;
     width: 100%;
@@ -236,15 +218,13 @@ export default {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s;
-    margin-bottom: 10px; /* Separación entre botones */
+    margin-bottom: 10px; 
 }
 .submit-button:hover {
     background-color: #218838;
 }
-
-/* NUEVO ESTILO: Botón Cancelar (ROJO) */
 .cancel-button {
-    background-color: #ff0000; /* Color rojo para el botón Cancelar */
+    background-color: #ff0000; 
     color: white;
     border: none;
     width: 100%;
@@ -258,9 +238,6 @@ export default {
 .cancel-button:hover {
     background-color: #d60000;
 }
-
-
-/* Formulario Central (sin cambios) */
 .content-form {
   flex-grow: 1;
   padding: 25px 35px;

@@ -46,7 +46,6 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos Generales (Se mantienen igual) */
 .login-container {
   height: 100vh;
   width: 100vw;
@@ -79,17 +78,11 @@ export default {
   z-index: 1;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-/* ⚠️ NUEVO ESTILO PARA LA IMAGEN DEL LOGO ⚠️ */
 .logo-image {
-  max-width: 450px; /* Ajusta este valor al ancho deseado de tu logo */
+  max-width: 450px; 
   height: auto;
   margin: 0;
 }
-/* La clase .logo anterior (para h1) fue eliminada/reemplazada por .logo-image */
-
-
-/* Modificación: Aumentar el espacio entre tarjetas para 3 */
 .card-container {
   display: flex;
   justify-content: center;
@@ -98,8 +91,6 @@ export default {
   z-index: 1;
   flex-wrap: wrap;
 }
-
-/* Estilo de las tarjetas de login */
 .login-card {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
@@ -114,9 +105,6 @@ export default {
   text-align: center;
   color: #333;
 }
-
-
-
 .icon-wrapper {
   border-radius: 50%; 
   width: 110px; 
@@ -129,34 +117,24 @@ export default {
   overflow: hidden; 
   border: 4px solid; 
 }
-
-/* Estilo para las etiquetas <img> dentro del wrapper */
 .icon-wrapper img {
   width: 100%; 
   height: 100%;
   object-fit: cover; 
   border-radius: 50%; 
 }
-
-
-/* ESTUDIANTE: Verde */
 .icon-wrapper.student-icon {
   background-color: rgba(76, 175, 80, 0.2); 
-  border-color: #2e7d32; /* Borde verde oscuro */
+  border-color: #2e7d32; 
 }
-
-/* DOCENTES: Azul */
 .icon-wrapper.teacher-icon {
   background-color: rgba(33, 150, 243, 0.2); 
-  border-color: #1565c0; /* Borde azul oscuro */
+  border-color: #1565c0; 
 }
-
-/* ADMINISTRADOR: Rojo */
 .icon-wrapper.admin-icon {
   background-color: rgba(229, 57, 53, 0.2); 
-  border-color: #b71c1c; /* Borde rojo oscuro */
+  border-color: #b71c1c; 
 }
-
 .login-button {
   background-color: #e53935;
   color: white;
@@ -179,15 +157,12 @@ export default {
   margin: 0 0 30px 0;
   min-height: 40px;
 }
-
-/* Media Query para pantallas pequeñas */
 @media (max-width: 1000px) {
   .login-card {
     width: 350px;
   }
 }
 @media (max-width: 800px) {
-  /* Se eliminó el estilo .main-title del media query anterior */
   .card-container {
     flex-direction: column;
     gap: 30px;

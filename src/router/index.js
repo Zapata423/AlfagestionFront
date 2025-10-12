@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import ing_profesores from '../views/ing_profesores.vue'
 import ing_estudiantes from '../views/ing_estudiantes.vue'
 import ing_admin from '../views/ing_admin.vue'
@@ -94,16 +95,16 @@ const router = createRouter({
       props: true
     },
     { 
-    path: "/ver_comentarios/:actividadId",
-    name: "ver_comentarios",
-    component: ver_comentarios,
-    props: true
+      path: "/ver_comentarios/:actividadId",
+      name: "ver_comentarios",
+      component: ver_comentarios,
+      props: true
     },
     {
-    path: "/editar_verificacion/:idEstudiante/:actividadId/:verificacionId",
-    name: "editar_verificacion",
-    component: editar_verificacion,
-    props: true
+      path: "/editar_verificacion/:idEstudiante/:actividadId/:verificacionId",
+      name: "editar_verificacion",
+      component: editar_verificacion,
+      props: true
     },
     {
       path: "/actividades_registro/:idEstudiante/:actividadId",

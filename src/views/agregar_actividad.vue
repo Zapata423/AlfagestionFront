@@ -8,7 +8,6 @@ import estudianteNavbar from "./estudianteNavbar.vue"
 
 const router = useRouter()
 
-// Datos del formulario
 const formData = ref({
   titulo: "",
   descripcion: "",
@@ -19,11 +18,9 @@ const formData = ref({
   archivo: null,
 })
 
-// Listas dinámicas
 const instituciones = ref([])
 const encargados = ref([])
 
-// Cargar datos al montar el componente
 onMounted(async () => {
   try {
     instituciones.value = await getMisInstituciones()
@@ -35,7 +32,6 @@ onMounted(async () => {
   }
 })
 
-// Enviar formulario
 async function submitForm() {
   try {
     const payload = new FormData()
@@ -61,6 +57,7 @@ function cancelAction() {
 <template>
   <div class="app-container">
     <estudianteNavbar />
+
     <main class="main-content">
       <aside class="sidebar">
         <ul class="sidebar-nav-list">
@@ -130,11 +127,7 @@ function cancelAction() {
   display: flex;
   flex-direction: column;
 }
-
-/* Main content (sin cambios) */
 .main-content { flex-grow: 1; display: flex; padding: 30px; gap: 30px; }
-
-/* Sidebar (sin cambios en layout principal) */
 .sidebar, .content-form {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(8px);
@@ -171,19 +164,15 @@ function cancelAction() {
   border-left: 10px solid #ff0000;
 }
 .sidebar-nav-list li svg { width: 28px; height: 28px; }
-
-/* Botones en sidebar */
 .sidebar-action {
-  padding-top: 10px; /* Espaciado entre botones */
+  padding-top: 10px; 
 }
 .sidebar-action.action-margin {
-  margin-top: auto; /* Empuja el primer botón (Subir) y el resto al fondo */
-  padding-top: 20px; /* Espacio superior para separarlo del menú */
+  margin-top: auto; 
+  padding-top: 20px; 
 }
-
-/* Estilo para el Botón SUBIR (VERDE) */
 .submit-button.green-button {
-  background-color: #28a745; /* Verde */
+  background-color: #28a745; 
   color: white;
   border: none;
   width: 100%;
@@ -195,10 +184,8 @@ function cancelAction() {
   transition: background-color 0.2s;
 }
 .submit-button.green-button:hover { background-color: #218838; }
-
-/* Estilo para el Botón CANCELAR (ROJO) */
 .cancel-button {
-  background-color: #ff0000; /* Rojo */
+  background-color: #ff0000; 
   color: white;
   border: none;
   width: 100%;
@@ -212,9 +199,6 @@ function cancelAction() {
 .cancel-button:hover {
   background-color: #d60000;
 }
-
-
-/* Formulario (sin cambios en layout) */
 .content-form { flex-grow: 1; padding: 25px 35px; }
 .content-form h2 { color: #333; margin-top: 0; margin-bottom: 25px; font-size: 24px; }
 form {
@@ -236,7 +220,4 @@ form {
 .form-input.full-width { grid-column: 1 / -1; }
 .form-input::placeholder { color: rgba(255, 255, 255, 0.8); }
 textarea.form-input { height: 120px; resize: vertical; }
-
-/* Se eliminan los estilos antiguos de back-button y submit-button si no tenían clases específicas */
-/* Se mantuvieron los back-button:hover y submit-button:hover */
 </style>

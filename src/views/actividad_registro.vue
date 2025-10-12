@@ -1,8 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import estudianteNavbar from "./estudianteNavbar.vue"
+
 const router = useRouter()
-// Función para simular la acción del botón "Cancelar" y navegar a otra vista
+
 function cancelAction() {
   router.push('/actividad_vista')
 }
@@ -11,7 +12,7 @@ function cancelAction() {
 <template>
   <div class="app-container">
     <estudianteNavbar />
-    
+
     <main class="main-content">
       <aside class="sidebar">
         <ul>
@@ -75,16 +76,12 @@ export default {
   display: flex;
   flex-direction: column;
 }
-
-/* Contenido Principal */
 .main-content {
   flex-grow: 1;
   display: flex;
   padding: 30px;
   gap: 30px;
 }
-
-/* Efecto de Cristal (Glassmorphism) */
 .sidebar, .content-panel {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(8px);
@@ -92,8 +89,6 @@ export default {
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
-
-/* Barra Lateral (Sidebar) */
 .sidebar {
   width: 316px;
   padding: 20px;
@@ -123,17 +118,13 @@ export default {
   width: 28px;
   height: 28px;
 }
-
-/* Contenedor del botón */
 .sidebar-action.action-bottom {
-  margin-top: auto; /* ¡Esto lo empuja hacia el fondo! */
+  margin-top: auto; 
   padding-top: 20px;
 }
 .sidebar-action {
   padding-top: 20px;
 }
-
-/* Panel de Contenido Informativo */
 .content-panel {
   flex-grow: 1;
   padding: 25px 45px;

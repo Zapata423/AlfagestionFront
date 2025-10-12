@@ -1,6 +1,7 @@
 
 import api from "./api"
 
+
 export async function loginDocente(email, password) {
   try {
     const response = await api.post("/loginDocentes/", {
@@ -16,6 +17,7 @@ export async function loginDocente(email, password) {
     }
   }
 }
+
 
 export async function logoutDocente() {
   try {

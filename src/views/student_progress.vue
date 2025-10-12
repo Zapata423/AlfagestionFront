@@ -55,6 +55,7 @@ onMounted(() => {
 
 <template>
   <estudianteNavbar />
+
   <div class="horas-container">
     <div class="background-overlay"></div>
     <main>
@@ -138,7 +139,6 @@ onMounted(() => {
   font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
   position: relative;
 }
-
 .background-overlay {
   position: absolute;
   top: 0;
@@ -148,7 +148,6 @@ onMounted(() => {
   background-color: rgba(0, 0, 0, 0.25);
   z-index: 1;
 }
-
 main {
   padding: 2rem 0;
   max-width: 900px;
@@ -156,7 +155,6 @@ main {
   position: relative;
   z-index: 2;
 }
-
 .titulo {
   text-align: center;
   font-size: 2.3rem;
@@ -165,7 +163,6 @@ main {
   color: #fff;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
 }
-
 .progress-section {
   display: flex;
   align-items: center;
@@ -173,7 +170,6 @@ main {
   gap: 2rem;
   margin-bottom: 2rem;
 }
-
 .progress-bar-bg {
   position: relative;
   background: #d3d3d3;
@@ -183,7 +179,6 @@ main {
   min-width: 300px;
   max-width: 600px;
 }
-
 .progress-bar {
   background: #1ec900;
   height: 20px;
@@ -193,7 +188,6 @@ main {
   top: 0;
   transition: width 0.5s;
 }
-
 .progress-dot {
   position: absolute;
   top: 50%;
@@ -206,7 +200,6 @@ main {
   left: 30%;
   transition: left 0.5s;
 }
-
 .porcentaje-box {
   background: #fff;
   border-radius: 16px;
@@ -216,11 +209,9 @@ main {
   color: #111;
   box-shadow: 0 2px 8px #0001;
 }
-
 .porcentaje {
   font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
 }
-
 .tabla-actividades {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 24px;
@@ -229,13 +220,11 @@ main {
   max-width: 800px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 0.5em;
 }
-
 th {
   text-align: left;
   font-size: 1.2em;
@@ -243,46 +232,37 @@ th {
   padding-bottom: 0.5em;
   padding-left: 0.7em;
 }
-
 td {
   font-size: 1.1em;
   padding: 0.4em 0.7em;
 }
-
 tr {
   background: none;
   border-radius: 12px;
   transition: transform 0.1s;
 }
-
 tr:nth-child(odd) td {
   background-color: #f7f7f7;
 }
-
 tr:nth-child(even) td {
   background-color: #e3e3e3;
 }
-
 tr:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-
 tr td:first-child {
   border-radius: 10px 0 0 10px;
   padding-left: 1.5em;
 }
-
 tr td:last-child {
   border-radius: 0 10px 10px 0;
   text-align: center;
 }
-
 .actividad {
   color: #000000;
   font-weight: 600;
 }
-
 .estado {
   border-radius: 8px;
   padding: 0.2em 1em;
@@ -290,20 +270,16 @@ tr td:last-child {
   color: #fff;
   display: inline-block;
 }
-
 .estado.pendiente {
   background: #ffd600;
   color: #444;
 }
-
 .estado.aprobado {
   background: #1ec900;
 }
-
 .estado.rechazado {
   background: #ff0000;
 }
-
 .comentarios-btn {
   display: inline-block;
   background-color: #5d5dff;
@@ -317,11 +293,9 @@ tr td:last-child {
   border: none;
   cursor: pointer;
 }
-
 .comentarios-btn:hover {
   background-color: #4a4aed;
 }
-
 @media (max-width: 700px) {
   .tabla-actividades {
     padding: 1rem;
@@ -335,7 +309,6 @@ tr td:last-child {
     font-size: 1.5rem;
   }
 }
-
 .back-button {
   position: fixed;
   top: 75px;
@@ -351,7 +324,6 @@ tr td:last-child {
   z-index: 1000;
   text-decoration: none;
 }
-
 .back-button:hover {
   background-color: #c62828;
   transform: scale(1.1);

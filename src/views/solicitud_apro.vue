@@ -128,7 +128,6 @@ html, body {
   background: none;
   overflow: hidden;
 }
-
 .main-container {
   min-height: 100vh;
   display: flex;
@@ -136,13 +135,10 @@ html, body {
   font-family: 'Segoe UI', Arial, sans-serif;
   background: none;
 }
-
-/* Elimina la franja blanca superior */
 :deep(nav) {
   margin-top: 0;
   padding-top: 0;
 }
-
 .content {
   display: flex;
   flex: 1;
@@ -152,8 +148,6 @@ html, body {
   background-position: center;
   background-attachment: fixed;
 }
-
-/* Sidebar más corto y centrado */
 .sidebar {
   width: 220px;
   background: rgba(255, 255, 255, 0.9);
@@ -167,7 +161,6 @@ html, body {
   align-items: flex-start;
   height: fit-content;
 }
-
 .tabla-estudiantes {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
@@ -176,12 +169,10 @@ html, body {
   max-width: 900px;
   box-shadow: 0 2px 8px #0001;
 }
-
 .grado-select {
   width: 100%;
   margin-bottom: 1.5rem;
 }
-
 .grado-select select {
   width: 100px;
   padding: 0.3rem 0.5rem;
@@ -190,7 +181,6 @@ html, body {
   margin-bottom: 0.5rem;
   font-size: 1rem;
 }
-
 .grado-label {
   background: #eee;
   border-radius: 8px;
@@ -200,14 +190,12 @@ html, body {
   font-weight: 600;
   text-align: center;
 }
-
 .menu {
   list-style: none;
   padding: 0;
   margin: 0.5rem 0;
   width: 100%;
 }
-
 .menu li {
   padding: 0.7rem 1rem;
   border-radius: 8px;
@@ -220,22 +208,18 @@ html, body {
   gap: 0.7em;
   transition: background 0.2s;
 }
-
 .menu li.active,
 .menu li:hover {
   background: #ffd6d6;
   color: #d90000;
 }
-
 .main-content {
   flex: 1;
   padding: 1.5rem 2rem;
 }
-
 .grado-header {
   margin-bottom: 1rem;
 }
-
 .grado-title {
   background: #fff;
   border-radius: 8px;
@@ -244,13 +228,11 @@ html, body {
   font-weight: 600;
   box-shadow: 0 2px 8px #0001;
 }
-
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 0.7em;
 }
-
 th.th-espaciado {
   text-align: left;
   font-size: 1.1em;
@@ -260,19 +242,16 @@ th.th-espaciado {
   padding-right: 32px;
   font-weight: bold;
 }
-
 td {
   font-size: 1em;
   padding: 0.5em 0.7em;
 }
-
 .estudiante {
   color: #fff;
   border-radius: 10px 0 0 10px;
   font-weight: 600;
    color: #222;
 }
-
 .btn-evidencia {
   background: #ff3c3c;
   color: #fff;
@@ -283,7 +262,6 @@ td {
   cursor: pointer;
   font-size: 1em;
 }
-
 @media (max-width: 900px) {
   .main-content {
     padding: 1rem 0.5rem;

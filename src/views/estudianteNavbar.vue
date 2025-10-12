@@ -1,5 +1,6 @@
 
 <script setup>
+
 import { ref, onMounted } from "vue"
 import { getEstudiantePerfil } from "../services/perfilEstudiante.js"
 
@@ -72,18 +73,15 @@ html, body {
   height: 60px;
   flex-shrink: 0;
 }
-
 .header-left,
 .header-right {
   display: flex;
   align-items: center;
   gap: 25px;
 }
-
 .logo {
   height: 45px;
 }
-
 .main-nav a {
   color: white;
   text-decoration: none;
@@ -92,7 +90,6 @@ html, body {
   border-radius: 6px;
   transition: background-color 0.2s;
 }
-
 .main-nav a.active-link,
 .main-nav a:hover {
   background-color: rgba(0, 0, 0, 0.2);
@@ -107,17 +104,14 @@ html, body {
   justify-content: center;
   align-items: center;
 }
-
 .profile-icon.default-bg {
   background-color: #28a745;
 }
-
 .profile-img-nav {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .fallback-text {
   color: white;
   font-size: 10px;

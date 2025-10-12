@@ -1,16 +1,15 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { logoutAdmin} from '../services/authAdmin'  // 
+import { logoutAdmin} from '../services/authAdmin'  
 
 const router = useRouter()
 
 async function handleLogout() {
   try {
-    await logoutAdmin() // 
-    router.push('/ing_Admin') // redirige al login de docentes
+    await logoutAdmin() 
+    router.push('/ing_Admin') 
   } catch (error) {
     console.error('Error al cerrar sesión:', error)
-    // Como fallback, igual borramos los tokens y redirigimos
     localStorage.removeItem('access')
     localStorage.removeItem('refresh')
     localStorage.removeItem('user')
@@ -64,7 +63,6 @@ async function handleLogout() {
           </ul>
         </nav>
 
-        <!-- Botón de logout -->
         <div class="logout-section">
           <button class="nav-button logout" @click="handleLogout">
             <svg

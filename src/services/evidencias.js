@@ -5,10 +5,12 @@ export function getActividadDetalle(actividadId) {
     .then(res => res.data)
 }
 
+
 export function getEncargadoDetalle(actividadId) {
   return api.get(`/actividades/${actividadId}/encargado/`)
     .then(res => res.data);
 }
+
 
 export function getInstitucionDetalle(actividadId) {
   return api.get(`/actividades/${actividadId}/institucion/`)

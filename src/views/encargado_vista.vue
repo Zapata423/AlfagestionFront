@@ -1,4 +1,5 @@
 <script setup>
+
 import { ref, onMounted } from "vue"
 import { getMisEncargados, deleteEncargado } from "../services/encargados"
 import estudianteNavbar from "./estudianteNavbar.vue"
@@ -6,7 +7,6 @@ import estudianteNavbar from "./estudianteNavbar.vue"
 const encargados = ref([])
 const errorMsg = ref("")
 
-// Cargar encargados del usuario
 async function cargarEncargados() {
   try {
     encargados.value = await getMisEncargados()
@@ -16,7 +16,6 @@ async function cargarEncargados() {
   }
 }
 
-// Eliminar encargado
 async function deleteEncargadoById(idToDelete) {
   if (!confirm("¿Seguro que quieres eliminar este encargado?")) return
   try {
@@ -119,7 +118,6 @@ onMounted(() => {
 .add-button:hover {
   transform: scale(1.05);
 }
-
 .list-card {
   background: white;
   border-radius: 20px;
@@ -131,24 +129,20 @@ onMounted(() => {
   font-size: 1.5rem;
   color: #333;
 }
-
-/* 🆕 Estilos para la Tabla */
 .table-container {
   overflow-x: auto;
 }
 .data-table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px; /* Espacio entre filas */
+  border-spacing: 0 10px; 
 }
-
 .data-table th {
   text-align: left;
   padding: 10px 15px;
   font-weight: 600;
 
 }
-
 .data-table td {
   padding: 15px 15px;
   background-color: #f9f9f9;
@@ -156,14 +150,11 @@ onMounted(() => {
   color: #333;
   font-size: 0.95rem;
 }
-
 .data-table tbody tr:hover td {
   background-color: #f3f3f3;
 }
-
-/* Bordes redondeados en la primera y última celda de cada fila */
 .data-table tbody tr td:first-child {
-  border-left: 5px solid #ff0000; /* Borde de color de la marca */
+  border-left: 5px solid #ff0000; 
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   font-weight: 500;
@@ -172,12 +163,10 @@ onMounted(() => {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-
 .action-cell {
   text-align: center;
   width: 100px;
 }
-
 .empty-row {
   text-align: center;
   padding: 20px !important;
@@ -186,8 +175,6 @@ onMounted(() => {
   background-color: white !important;
   border-left: none !important;
 }
-
-/* Botón Eliminar */
 .delete-button {
   background-color: #ff3b30;
   color: white;
@@ -201,8 +188,6 @@ onMounted(() => {
 .delete-button:hover {
   background-color: #e02b21;
 }
-
-/* Botón de regreso */
 .back-button {
   position: fixed;
   top: 80px;

@@ -1,4 +1,5 @@
 <script setup>
+
 import { reactive } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { validarActividad } from "../services/validaciones"
@@ -11,7 +12,6 @@ const actividadIdRaw = route.params.actividadId ?? route.params.id ?? route.quer
 const actividadId = actividadIdRaw ? Number(actividadIdRaw) : null
 console.log("Actividad ID:", actividadId)
 
-// Supongamos que idEstudiante viene como query o param
 let idEstudiante = route.params.idEstudiante ?? route.query.idEstudiante ?? null
 
 const formData = reactive({
@@ -19,10 +19,9 @@ const formData = reactive({
   comentarios: "" 
 })
 
-// Función para cancelar y navegar al listado de actividades del estudiante
 function onCancel() {
   if (!idEstudiante) {
-    alert("❌ No se pudo identificar al estudiante")
+    alert(" No se pudo identificar al estudiante")
     return
   }
   router.push(`/actividades_ver/${idEstudiante}`)
@@ -30,12 +29,12 @@ function onCancel() {
 
 async function onSubmit() {
   if (!actividadId) {
-    alert("❌ No se pudo identificar la actividad")
+    alert(" No se pudo identificar la actividad")
     return
   }
 
   if (!formData.status) {
-    alert("❌ Debes seleccionar un estado")
+    alert(" Debes seleccionar un estado")
     return
   }
 
@@ -46,14 +45,13 @@ async function onSubmit() {
       comentarios: formData.comentarios
     })
     console.log("Respuesta validación:", res)
-    alert("✅ Actividad validada con éxito")
-    
-    // Llama a la función de cancelación para redirigir después del éxito
+    alert(" Actividad validada con éxito")
+
     onCancel() 
     
   } catch (err) {
     console.error("Error validando actividad:", err.response?.data || err)
-    alert("❌ Hubo un error al validar la actividad: " + JSON.stringify(err.response?.data))
+    alert(" Hubo un error al validar la actividad: " + JSON.stringify(err.response?.data))
   }
 }
 </script>
@@ -101,7 +99,6 @@ async function onSubmit() {
 </template>
 
 <style scoped>
-/* Contenedor general */
 .app-container {
   height: 100vh;
   width: 100vw;
@@ -113,16 +110,12 @@ async function onSubmit() {
   display: flex;
   flex-direction: column;
 }
-
-/* Contenido principal */
 .main-content {
   flex-grow: 1;
   display: flex;
   padding: 30px;
   gap: 30px;
 }
-
-/* Caja con efecto cristal */
 .content-form {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(8px);
@@ -139,7 +132,6 @@ async function onSubmit() {
   font-size: 24px;
 }
 
-/* Formulario en grid */
 form {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -155,8 +147,6 @@ form {
 .form-group.full-width {
   grid-column: 1 / -1;
 }
-
-/* Inputs */
 .form-input {
   background-color: rgba(80, 80, 80, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -175,8 +165,6 @@ form {
   color: #f5f5f5;
   background-color: rgba(50, 50, 50, 0.45);
 }
-
-/* Botón guardar */
 .btn-guardar {
   cursor: pointer;
   background: #28a745;
@@ -191,7 +179,6 @@ form {
 .btn-guardar:hover {
   transform: translateY(-2px);
 }
-
 .btn-cancelar {
   cursor: pointer;
   background: #ff0000;
@@ -206,8 +193,6 @@ form {
 .btn-cancelar:hover {
   transform: translateY(-2px);
 }
-
-/* Responsive */
 @media (max-width: 900px) {
   form {
     grid-template-columns: 1fr;

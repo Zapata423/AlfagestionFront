@@ -1,8 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import estudianteNavbar from "./estudianteNavbar.vue"
+
 const router = useRouter()
-// Función para simular la acción del botón "Cancelar" y navegar a otra vista
+
 function cancelAction() {
   router.push('/institucion_vista')
 }
@@ -74,11 +75,9 @@ function cancelAction() {
 </template>
 
 <script>
-// Elimino el export default ya que se usa <script setup> arriba
 </script>
 
 <style scoped>
-/* Estilos Generales y de Encabezado (sin cambios) */
 .app-container {
   height: 100vh;
   width: 100vw;
@@ -90,16 +89,12 @@ function cancelAction() {
   display: flex;
   flex-direction: column;
 }
-
-/* Contenido Principal */
 .main-content {
   flex-grow: 1;
   display: flex;
   padding: 30px;
   gap: 30px;
 }
-
-/* Efecto de Cristal (Glassmorphism) */
 .sidebar, .content-panel {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(8px);
@@ -107,12 +102,6 @@ function cancelAction() {
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
-
-/* ---------------------------------------------------- */
-/* ESTILOS DEL SIDEBAR (Conservados) */
-/* ---------------------------------------------------- */
-
-/* Barra Lateral (Sidebar) con Flexbox para alinear botón abajo */
 .sidebar {
   width: 342px;
   padding: 20px;
@@ -120,8 +109,6 @@ function cancelAction() {
   display: flex;
   flex-direction: column;
 }
-
-/* Se cambió de 'ul' a '.sidebar-nav-list' para aplicar los estilos del Código 1 */
 .sidebar-nav-list { list-style: none; padding: 0; margin: 0; }
 .sidebar-nav-list li {
     padding: 15px 20px;
@@ -134,19 +121,13 @@ function cancelAction() {
     justify-content: center;
     align-items: center;
 }
-
-/* Se usa '.sidebar-nav-list li.active' en lugar de '.sidebar li.active' */
 .sidebar-nav-list li.active { background-color: #ff0000; color: white; font-weight: bold; }
 .sidebar-nav-list li.active::before { content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid #ff0000; }
 .sidebar-nav-list li svg { width: 28px; height: 28px; }
-
-/* Contenedor del Botón (del Código 1) */
 .sidebar-action {
-    margin-top: auto; /* Empuja este contenedor al fondo */
+    margin-top: auto; 
     padding-top: 20px;
 }
-
-/* Estilo para el botón "Cancelar" (llamado submit-button en el Código 1) */
 .back-button {
     background-color: #ff0000;
     color: white;
@@ -162,11 +143,6 @@ function cancelAction() {
 .back-button:hover {
     background-color: #d60000;
 }
-
-/* ---------------------------------------------------- */
-/* ESTILOS DE CONTENT-PANEL (Panel de Contenido) - MODIFICADOS PARA COINCIDIR CON EL SEGUNDO CUADRO */
-/* ---------------------------------------------------- */
-
 .content-panel {
   flex-grow: 1;
   padding: 25px 45px;
@@ -188,7 +164,6 @@ function cancelAction() {
     padding: 0 20px;
     border: none;
 }
-/* 🚀 MODIFICADO: Separador con ancho del 100% (del Componente 2) y 3px de alto */
 .separator {
     border: none;
     height: 3px; 
@@ -196,16 +171,13 @@ function cancelAction() {
     width: 100%; 
     margin: 0 auto 30px auto;
 }
-/* 🚀 MODIFICADO: Párrafos alineados a la izquierda (del Componente 2) */
 .info-text p {
     margin-bottom: 25px;
     text-align: left; 
 }
-/* 🚀 MODIFICADO: Lista (ol) alineada a la izquierda y padding (del Componente 2) */
 .info-text ol {
     text-align: left;
     padding-left: 25px; 
-    /* Se elimina 'display: inline-block;' */
 }
 .info-text ol li {
     margin-bottom: 15px;
@@ -213,5 +185,4 @@ function cancelAction() {
 .info-text ol li strong {
     color: #000;
 }
-/* El estilo .back-button se elimina ya que usamos .submit-button */
 </style>

@@ -6,7 +6,7 @@ import estudianteNavbar from "./estudianteNavbar.vue"
 const actividades = ref([])
 const errorMsg = ref("")
 
-// Formatea una fecha ISO a formato local (dd/mm/yyyy hh:mm)
+
 function formatFecha(fechaIso) {
   if (!fechaIso) return ''
   try {
@@ -23,7 +23,7 @@ function formatFecha(fechaIso) {
   }
 }
 
-// Cargar actividades del usuario
+
 async function cargarActividades() {
   try {
     actividades.value = await getMisActividades()
@@ -33,7 +33,7 @@ async function cargarActividades() {
   }
 }
 
-// Eliminar actividad
+
 async function deleteActividadById(idToDelete) {
   if (!confirm("¿Seguro que quieres eliminar esta actividad?")) return
   try {
@@ -45,7 +45,7 @@ async function deleteActividadById(idToDelete) {
   }
 }
 
-// Abrir el archivo en nueva pestaña
+
 function verEvidencia(url) {
   if (url) window.open(url, "_blank")
   else alert("No hay evidencia disponible.")
@@ -65,12 +65,9 @@ onMounted(() => {
       <div class="content-header">
         <a class="add-button" href="/actividad_registro">Agregar actividad</a>
       </div>
-
       <section class="list-card">
         <h2>Actividades Registradas</h2>
-
         <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
-
         <div class="table-container">
           <table class="data-table">
             <thead>
@@ -146,7 +143,6 @@ onMounted(() => {
   transition: transform 0.2s;
 }
 .add-button:hover { transform: scale(1.05); }
-
 .list-card {
   background: white;
   border-radius: 20px;
@@ -154,7 +150,6 @@ onMounted(() => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .list-card h2 { margin: 0 0 20px; font-size: 1.5rem; color: #333; }
-
 .table-container { overflow-x: auto; }
 .data-table {
   width: 100%;
@@ -196,7 +191,6 @@ onMounted(() => {
   background-color: white !important;
   border-left: none !important;
 }
-
 .delete-button { 
   background-color: #ff3b30; 
   color: white; 
@@ -208,7 +202,6 @@ onMounted(() => {
   transition: background-color 0.2s; 
 }
 .delete-button:hover { background-color: #e02b21; }
-
 .view-file-button {
   background-color: #007bff;
   color: white;
@@ -221,7 +214,6 @@ onMounted(() => {
   white-space: nowrap;
 }
 .view-file-button:hover { background-color: #0056b3; }
-
 .back-button {
   position: fixed;
   top: 80px;

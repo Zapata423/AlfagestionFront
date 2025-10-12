@@ -2,9 +2,6 @@
 import { reactive } from 'vue'
 import { registrarDocenteCompleto as apiRegistrarDocenteCompleto } from '../services/registro'
 
-// =========================================================
-// Lógica para el Formulario de Datos Personales (Docente)
-// =========================================================
 const formDatosPersonales = reactive({
   nombre: '',
   apellido: '',
@@ -12,9 +9,6 @@ const formDatosPersonales = reactive({
   fechaNacimiento: ''
 })
 
-// =========================================================
-// Lógica para la Tarjeta de Registro de Cuenta (Docente)
-// =========================================================
 const formDocenteCuenta = reactive({
   rol: 'Docente',
   email: '',
@@ -23,9 +17,6 @@ const formDocenteCuenta = reactive({
   cargo: ''
 })
 
-// =========================================================
-// Función principal de registro
-// =========================================================
 const registrarDocenteCompleto = async () => {
   if (formDocenteCuenta.password !== formDocenteCuenta.password_confirm) {
     alert('Las contraseñas no coinciden.')
@@ -226,8 +217,6 @@ const onCancelCuenta = () => {
   </div>
 </template>
 
-
-
 <style scoped>
 .app-container {
   height: 100vh;
@@ -240,7 +229,6 @@ const onCancelCuenta = () => {
   display: flex;
   flex-direction: column;
 }
-
 .main-header {
   background-color: #ff0000;
   color: white;
@@ -279,7 +267,6 @@ const onCancelCuenta = () => {
   border-radius: 50%;
   border: 2px solid white;
 }
-
 .main-content {
   flex-grow: 1;
   display: flex;
@@ -289,7 +276,6 @@ const onCancelCuenta = () => {
   align-items: flex-start;
   overflow-y: auto;
 }
-
 .content-card {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(8px);
@@ -300,7 +286,6 @@ const onCancelCuenta = () => {
   flex: 1 1 450px;
   max-width: 500px; 
 }
-
 .content-card h2 {
   color: #333;
   margin-top: 0;
@@ -308,7 +293,6 @@ const onCancelCuenta = () => {
   font-size: 24px;
   text-align: center;
 }
-
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr; 
@@ -321,7 +305,6 @@ const onCancelCuenta = () => {
 .form-group.full-width {
   grid-column: 1 / -1; 
 }
-
 .form-input {
   background-color: rgba(80, 80, 80, 0.5); 
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -343,7 +326,6 @@ label {
     font-weight: 600;
     margin-bottom: 5px;
 }
-
 .button-group {
     display: flex;
     gap: 15px;
@@ -372,7 +354,6 @@ label {
 .btn-cancelar:hover {
   transform: translateY(-2px);
 }
-
 @media (max-width: 1050px) {
     .main-content {
         flex-direction: column; 
@@ -407,7 +388,6 @@ label {
   z-index: 1000;
   text-decoration: none;
 }
-
 .back-button:hover {
   background-color: #c62828;
   transform: scale(1.1);

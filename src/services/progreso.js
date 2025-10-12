@@ -1,7 +1,7 @@
-// progreso.js
+
 import api from "./api"
 
-// Obtener actividades con su estado (última validación asociada)
+
 export async function getActividadesConEstado() {
   try {
     const response = await api.get("/validaciones/mias/") 
@@ -11,6 +11,7 @@ export async function getActividadesConEstado() {
     throw error
   }
 }
+
 
 export async function getComentariosPorActividad(actividadId) {
   try {
