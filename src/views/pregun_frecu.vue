@@ -73,7 +73,7 @@ const faqItems = reactive([
     isOpen: false,
   },
   {
-    question: "¿Qué ocurre si no completo las horas requeridas antes de grado 11°?",
+    question: "¿Qué ocurre si no completo las horas requeridas antes del grado 11°?",
     answer: "No podrás graduarte hasta cumplir la totalidad de las horas exigidas por el programa.",
     isOpen: false,
   },

@@ -11,7 +11,7 @@ const estudianteNombre = ref('Estudiante')
 const fotoUrl = ref(null)
 
 const menuItems = ref([
-  { id: 'gestion', text: 'Gestion de Horas', href: '/student_progress' },
+  { id: 'gestion', text: 'Gestión de Horas', href: '/student_progress' },
   { id: 'calendario', text: 'Agregar Actividades', href: '/actividad_vista'},
   { id: 'registradas', text: 'Agregar Instituciones', href: '/institucion_vista'},
   { id: 'mapa', text: 'Agregar Encargados', href: '/encargado_vista' },
@@ -74,7 +74,7 @@ onMounted(() => {
         />
       </div>
       <div class="title-container">
-        <h1 class="title">AlfaGestion</h1>
+        <h1 class="title">AlfaGestión</h1>
       </div>
     </header>
 

@@ -63,7 +63,7 @@ function cancelAction() {
               href="/agregar_institucion"
               style="color: inherit; text-decoration: none; display: block;"
             >
-              Institucion
+              Institución
             </a>
           </li>
         </ul>
@@ -76,25 +76,25 @@ function cancelAction() {
         </aside>
 
       <section class="content-form">
-      <h2>Agregar Institucion</h2>
+      <h2>Agregar Institución</h2>
         <form @submit.prevent="submitForm">
           <input
             class="form-input full-width"
             type="text"
-            placeholder="Centro o lugar de proyeccion social"
+            placeholder="Centro o lugar de proyección social"
             v-model="formData.nombre"
           />
 
           <input
             class="form-input"
             type="text"
-            placeholder="Telefono"
+            placeholder="Teléfono"
             v-model="formData.telefono"
           />
           <input
             class="form-input"
             type="text"
-            placeholder="Poblacion Intervenida"
+            placeholder="Población Intervenida"
             v-model="formData.poblacion_intervenida"
           />
           <input

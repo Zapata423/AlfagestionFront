@@ -73,7 +73,7 @@ async function onSubmit() {
 
     <main class="main-content">
       <section class="content-form">
-        <h2>Editar Verificacion</h2>
+        <h2>Editar Verificación</h2>
         <form @submit.prevent="onSubmit">
           <div class="form-group select-center">
             <label>Selecciona el estado de la actividad</label>

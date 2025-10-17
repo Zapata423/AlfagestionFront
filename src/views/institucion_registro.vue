@@ -41,7 +41,7 @@ function cancelAction() {
               href="/agregar_institucion"
               style="color: inherit; text-decoration: none; display: block;"
             >
-              Institucion
+              Institución
             </a>
           </li>
         </ul>

@@ -29,7 +29,7 @@ async function handleLogout() {
         />
       </div>
       <div class="title-container">
-        <h1 class="title">AlfaGestion</h1>
+        <h1 class="title">AlfaGestión</h1>
       </div>
     </header>
 

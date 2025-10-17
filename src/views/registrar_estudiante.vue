@@ -167,7 +167,7 @@ const onCancelCuenta = () => {
 
 
         <section class="content-card student-card">
-            <h2>Asignacion de Cuenta y Grado </h2>
+            <h2>Asignación de Cuenta y Grado </h2>
             <form @submit.prevent="registrarEstudianteCompleto">
                 <div class="form-grid">
                     

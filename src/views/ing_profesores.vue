@@ -28,7 +28,7 @@ async function handleLogin() {
 <div class="login-container">
   <div class="login-form">
     <a href="/" class="back-button">←</a>
-    <h1 class="logo">AlfaGestion</h1>
+    <h1 class="logo">AlfaGestión</h1>
     <h2 class="welcome-title">Bienvenido al sistema de Docentes</h2>
 
     <form @submit.prevent="handleLogin">

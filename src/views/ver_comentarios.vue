@@ -30,7 +30,7 @@ async function cargarComentarios() {
       comentarios.value = "Esta actividad no tiene comentarios de validación.";
     }
   } catch (error) {
-    comentarios.value = "Error al cargar los comentarios. Intenta de nuevo más tarde.";
+    comentarios.value = "Esta actividad no tiene comentarios de validación.";
     errorCarga.value = true;
   } finally {
     cargando.value = false;
@@ -51,11 +51,12 @@ onMounted(() => {
 
     <main class="main-content">
       <section class="content-form">
-        <h2>Comentarios de la Actividad </h2>
+        <h2>Comentarios de la Actividad</h2>
 
         <div v-if="cargando" class="loading-message">
           Cargando comentarios...
         </div>
+
         <div v-else-if="errorCarga" class="error-message">
           {{ comentarios }}
         </div>
@@ -70,20 +71,22 @@ onMounted(() => {
               readonly
             ></textarea>
           </div>
-            <div class="form-group full-width">
-                <button type="button" class="btn-volver" @click="onCancel">Volver</button>
-          </div>
         </form>
+
+        <div class="form-group full-width">
+          <button type="button" class="btn-volver" @click="onCancel">Volver</button>
+        </div>
       </section>
     </main>
   </div>
 </template>
 
+
 <style scoped>
 .app-container {
   height: 100vh;
   width: 100vw;
-  background-image: url("../assets/img/fondo 1.jpeg");
+  background-image: url('../assets/img/prescolar.png');
   background-size: cover;
   background-position: center;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -99,7 +102,7 @@ onMounted(() => {
   gap: 30px;
 }
 .content-form {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(8px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -142,8 +145,8 @@ form {
   resize: none;
 }
 .form-input[readonly] {
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #f5f5f5;
+  background-color: #f9f9f9;
+  color: #000000;
   cursor: default;
 }
 .loading-message,

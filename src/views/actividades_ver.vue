@@ -52,7 +52,7 @@ export default {
     <main class="main-content">
       <a href="../solicitud_apro" class="back-button">←</a>
       <div class="title-with-arrow"> 
-        <h1 class="user-title">Actividades Del Estudiante</h1>
+        <h1 class="user-title">Actividades del Estudiante</h1>
       </div>
 
       <div v-if="cargando"> Cargando actividades...</div>
