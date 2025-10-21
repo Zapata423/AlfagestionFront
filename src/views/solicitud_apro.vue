@@ -8,7 +8,7 @@ const router = useRouter()
 
 const grados = ["10", "11"]
 const gradoSeleccionado = ref("10")
-const grupos = ["A", "B", "C", "D", "E"]
+const grupos = ["A", "B", "C",]
 const grupoSeleccionado = ref("A")
 const estudiantes = ref([])
 const cargando = ref(false)
